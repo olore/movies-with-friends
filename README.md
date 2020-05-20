@@ -1,5 +1,7 @@
 # movie-friends-vue
 
+API: https://www.omdbapi.com/
+
 ## Project setup
 ```
 npm install

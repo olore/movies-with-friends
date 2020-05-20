@@ -1,7 +1,7 @@
 <template>
   <v-card
     class="mx-auto"
-    max-width="400"
+    max-width="300"
   >
     <v-img
       class="white--text align-end"
@@ -17,8 +17,8 @@
       <div>6.6/10 | 62%</div>
 
       <div>
-        Young Ender Wiggin is recruited by the International Military to lead the fight against the Formics, 
-        an insectoid alien race who had previously tried to invade Earth and had inflicted heavy losses on humankind.
+        Young Ender Wiggin is recruited by the International Military to lead the fight against the Formics...
+        <!-- an insectoid alien race who had previously tried to invade Earth and had inflicted heavy losses on humankind. -->
       </div>
     </v-card-text>
 
