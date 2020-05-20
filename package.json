@@ -13,6 +13,7 @@
     "vuetify": "^2.2.11"
   },
   "devDependencies": {
+    "@mdi/font": "^5.2.45",
     "@vue/cli-plugin-babel": "~4.3.0",
     "@vue/cli-plugin-eslint": "~4.3.0",
     "@vue/cli-service": "~4.3.0",
@@ -23,6 +24,7 @@
     "eslint-plugin-vue": "^6.2.2",
     "husky": "^4.2.5",
     "lint-staged": "^10.2.4",
+    "minify-css-string": "^1.0.0",
     "prettier": "2.0.5",
     "sass": "^1.19.0",
     "sass-loader": "^8.0.0",
