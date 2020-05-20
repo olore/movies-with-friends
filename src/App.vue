@@ -1,5 +1,5 @@
 <template>
-  <v-app id="inspire">
+  <v-app id="olore">
     <v-navigation-drawer v-model="drawer" app clipped>
       <v-list dense>
         <v-list-item link>
@@ -7,15 +7,19 @@
             <v-icon>{{ iconDashboard }}</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title>Dashboard</v-list-item-title>
+            <v-list-item-title v-on:click="navTo('/')">Home</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
         <v-list-item link>
           <v-list-item-action>
-            <v-icon>mdi-settings</v-icon>
+            <v-icon>{{ iconSettings }}</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title>Settings</v-list-item-title>
+            <v-list-item-title>
+              <v-list-item-title v-on:click="navTo('/settings')"
+                >Settings</v-list-item-title
+              >
+            </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -23,34 +27,23 @@
 
     <v-app-bar app clipped-left>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-toolbar-title>Application</v-toolbar-title>
+      <v-toolbar-title>Movies with Friends</v-toolbar-title>
     </v-app-bar>
 
     <v-content>
-      <v-row>
-        <v-col cols="12">
-          <v-row>
-            <Card tile v-for="n in 15" :key="n" class="ma-1 pa-1" />
-          </v-row>
-        </v-col>
-      </v-row>
+      <router-view></router-view>
     </v-content>
 
     <v-footer app>
-      <span>&copy; 2020</span>
+      <span>&copy; 2020 - Brian Olore - brian@olore.net</span>
     </v-footer>
   </v-app>
 </template>
 
 <script>
-import Card from "./components/Card";
-import { mdiViewDashboard } from "@mdi/js";
+import { mdiViewDashboard, mdiCog } from "@mdi/js";
 
 export default {
-  components: {
-    Card,
-  },
-
   props: {
     source: String,
   },
@@ -58,6 +51,12 @@ export default {
   data: () => ({
     drawer: null,
     iconDashboard: mdiViewDashboard,
+    iconSettings: mdiCog,
   }),
+  methods: {
+    navTo: function (componentName) {
+      this.$router.push(componentName);
+    },
+  },
 };
 </script>
