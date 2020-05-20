@@ -1,0 +1,27 @@
+{
+  "Search": [
+    {
+      "Title": "Ender's Game",
+      "Year": "2013",
+      "imdbID": "tt1731141",
+      "Type": "movie",
+      "Poster": "https://m.media-amazon.com/images/M/MV5BMjAzMzI5OTgzMl5BMl5BanBnXkFtZTgwMTU5MTAwMDE@._V1_SX300.jpg"
+    },
+    {
+      "Title": "Ender's Game: The Candy Crusher",
+      "Year": "2013",
+      "imdbID": "tt3403214",
+      "Type": "movie",
+      "Poster": "N/A"
+    },
+    {
+      "Title": "The Making of 'Ender's Game'",
+      "Year": "2014",
+      "imdbID": "tt5258054",
+      "Type": "movie",
+      "Poster": "N/A"
+    }
+  ],
+  "totalResults": "3",
+  "Response": "True"
+}
