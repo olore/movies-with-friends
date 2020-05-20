@@ -26,15 +26,14 @@
       <v-toolbar-title>Application</v-toolbar-title>
     </v-app-bar>
 
-
     <v-content>
-        <v-row>
-      <v-col cols="12">
-        <v-row>
-          <Card tile v-for="n in 15" :key="n" class="ma-1 pa-1" />
-        </v-row>
-      </v-col>
-        </v-row>
+      <v-row>
+        <v-col cols="12">
+          <v-row>
+            <Card tile v-for="n in 15" :key="n" class="ma-1 pa-1" />
+          </v-row>
+        </v-col>
+      </v-row>
     </v-content>
 
     <v-footer app>
@@ -48,19 +47,19 @@ import Card from "./components/Card";
 
 export default {
   components: {
-    Card
+    Card,
   },
 
   props: {
-    source: String
+    source: String,
   },
 
   data: () => ({
-    drawer: null
+    drawer: null,
   }),
 
   created() {
     this.$vuetify.theme.dark = true;
-  }
+  },
 };
 </script>
