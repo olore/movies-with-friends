@@ -4,7 +4,7 @@
       <v-list dense>
         <v-list-item link>
           <v-list-item-action>
-            <v-icon>mdi-view-dashboard</v-icon>
+            <v-icon>{{ iconDashboard }}</v-icon>
           </v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>Dashboard</v-list-item-title>
@@ -44,6 +44,7 @@
 
 <script>
 import Card from "./components/Card";
+import { mdiViewDashboard } from "@mdi/js";
 
 export default {
   components: {
@@ -56,6 +57,7 @@ export default {
 
   data: () => ({
     drawer: null,
+    iconDashboard: mdiViewDashboard,
   }),
 };
 </script>
