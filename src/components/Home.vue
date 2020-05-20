@@ -2,8 +2,7 @@
   <div>
     <v-row>
       <v-col cols="12">
-        <div class="pa-1">Here is a test</div>
-        <div class="pa-1">Here is a test</div>
+        <h1 class="pa-2">Recently favorited movies</h1>
       </v-col>
     </v-row>
 

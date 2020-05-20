@@ -2,7 +2,7 @@
   <div class="pa-1">
     <v-row>
       <v-col cols="12">
-        <h1>Settings</h1>
+        <h1>Recommendations</h1>
       </v-col>
     </v-row>
   </div>
@@ -10,6 +10,6 @@
 
 <script>
 export default {
-  name: "Settings",
+  name: "Recommendations",
 };
 </script>
