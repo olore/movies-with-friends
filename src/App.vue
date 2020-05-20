@@ -2,23 +2,21 @@
   <v-app id="olore">
     <v-navigation-drawer v-model="drawer" app clipped>
       <v-list dense>
-        <v-list-item link>
+        <v-list-item link v-on:click="navTo('/')">
           <v-list-item-action>
             <v-icon>{{ iconDashboard }}</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title v-on:click="navTo('/')">Home</v-list-item-title>
+            <v-list-item-title>Home</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item link>
+        <v-list-item link v-on:click="navTo('/settings')">
           <v-list-item-action>
             <v-icon>{{ iconSettings }}</v-icon>
           </v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>
-              <v-list-item-title v-on:click="navTo('/settings')"
-                >Settings</v-list-item-title
-              >
+              <v-list-item-title>Settings</v-list-item-title>
             </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
