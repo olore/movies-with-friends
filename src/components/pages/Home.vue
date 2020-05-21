@@ -1,25 +1,16 @@
 <template>
-  <div class="pa-1">
+  <v-container class="">
     <v-row>
       <v-col cols="12">
         <span class="headline pa-2">Recent favorites</span>
       </v-col>
     </v-row>
-
     <v-row>
-      <v-col cols="12">
-        <v-row>
-          <Card
-            :movie="movie"
-            tile
-            v-for="movie in movies"
-            :key="movie.imdbID"
-            class="ma-1 pa-1"
-          />
-        </v-row>
+      <v-col xs="6" sm="4" v-for="movie in movies" :key="movie.imdbID">
+        <Card :movie="movie" tile class="ma-1 pa-1" />
       </v-col>
     </v-row>
-  </div>
+  </v-container>
 </template>
 
 <script>
@@ -33,7 +24,7 @@ export default {
     Card,
   },
   data: () => ({
-    movies: Movie.all(),
+    movies: [...Movie.all()],
   }),
 };
 </script>

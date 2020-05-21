@@ -41,15 +41,12 @@
     <v-card-actions class="d-none d-sm-flex">
       <v-btn
         color="orange"
+        class="subtitle-2"
         text
         target="_blank"
         :href="movie.getReelGoodLink()"
       >
         Where to watch?
-      </v-btn>
-
-      <v-btn color="orange" text>
-        Seen this?
       </v-btn>
     </v-card-actions>
   </v-card>

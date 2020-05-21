@@ -1,11 +1,11 @@
 <template>
-  <div class="pa-1">
+  <v-container class="pa-1">
     <v-row>
       <v-col cols="12">
         <span class="headline pa-2">Recommendations</span>
       </v-col>
     </v-row>
-  </div>
+  </v-container>
 </template>
 
 <script>

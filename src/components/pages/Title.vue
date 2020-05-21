@@ -1,5 +1,5 @@
 <template>
-  <div class="pa-1">
+  <v-container class="pa-1">
     <v-row>
       <v-col cols="12" class="pa-3">
         <v-row class="d-flex justify-space-between px-5">
@@ -11,7 +11,7 @@
     </v-row>
 
     <v-row>
-      <v-col cols="12" class="pa-3">
+      <v-col cols="6" class="pa-3">
         <div class="d-flex justify-space-around pt-3">
           <v-img
             alt="movie poster"
@@ -19,20 +19,21 @@
             :contain="false"
             :src="movie.Poster"
           />
+        </div>
+      </v-col>
+      <v-col>
+        <div align-top>
+          <IMDBRating
+            :rating="movie.imdbRating"
+            :imdbid="movie.imdbID"
+            class="mr-3"
+          ></IMDBRating>
 
-          <div align-top>
-            <IMDBRating
-              :rating="movie.imdbRating"
-              :imdbid="movie.imdbID"
-              class="mr-3"
-            ></IMDBRating>
-
-            <RottenTomatoesRating
-              v-if="movie.hasRottenTomatoesRating()"
-              :rating="movie.getRottenTomatoesRating()"
-              :title="movie.Title"
-            ></RottenTomatoesRating>
-          </div>
+          <RottenTomatoesRating
+            v-if="movie.hasRottenTomatoesRating()"
+            :rating="movie.getRottenTomatoesRating()"
+            :title="movie.Title"
+          ></RottenTomatoesRating>
         </div>
       </v-col>
     </v-row>
@@ -65,7 +66,7 @@
         </v-btn>
       </v-col>
     </v-row>
-  </div>
+  </v-container>
 </template>
 
 <script>
