@@ -2,7 +2,7 @@
   <div class="pa-1">
     <v-row>
       <v-col cols="12">
-        <h1>Recommendations</h1>
+        <span class="headline pa-2">Recommendations</span>
       </v-col>
     </v-row>
   </div>

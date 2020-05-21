@@ -11,7 +11,7 @@
       <router-view></router-view>
     </v-content>
 
-    <v-footer app>
+    <v-footer app class="justify-end">
       <span>&copy; 2020 - Brian Olore - brian@olore.net</span>
     </v-footer>
   </v-app>

@@ -10,79 +10,27 @@
     </v-list-item>
 
     <v-list-item v-if="onRecommendationPage()">
-      <v-list-item-group v-model="settings" multiple>
-        <v-list-item>
-          <template v-slot:default="{ active, toggle }">
-            <v-list-item-action>
-              <v-checkbox
-                v-model="active"
-                color="primary"
-                @click="toggle"
-              ></v-checkbox>
-            </v-list-item-action>
-            <v-list-item-content>
-              <v-list-item-title>Joseph O</v-list-item-title>
-            </v-list-item-content>
-          </template>
-        </v-list-item>
-
-        <v-list-item>
-          <template v-slot:default="{ active, toggle }">
-            <v-list-item-action>
-              <v-checkbox
-                v-model="active"
-                color="primary"
-                @click="toggle"
-              ></v-checkbox>
-            </v-list-item-action>
-            <v-list-item-content>
-              <v-list-item-title>Grace O</v-list-item-title>
-            </v-list-item-content>
-          </template>
-        </v-list-item>
-
-        <v-list-item>
-          <template v-slot:default="{ active, toggle }">
-            <v-list-item-action>
-              <v-checkbox
-                v-model="active"
-                color="primary"
-                @click="toggle"
-              ></v-checkbox>
-            </v-list-item-action>
-            <v-list-item-content>
-              <v-list-item-title>Brian O</v-list-item-title>
-            </v-list-item-content>
-          </template>
-        </v-list-item>
-
-        <v-list-item>
-          <template v-slot:default="{ active, toggle }">
-            <v-list-item-action>
-              <v-checkbox
-                v-model="active"
-                color="primary"
-                @click="toggle"
-              ></v-checkbox>
-            </v-list-item-action>
-            <v-list-item-content>
-              <v-list-item-title>Dana O</v-list-item-title>
-            </v-list-item-content>
-          </template>
-        </v-list-item>
+      <v-list-item-group v-model="settings" multiple style="width: 100%;">
+        <RecommendationNavItem name="Joseph O" />
+        <RecommendationNavItem name="Grace O" />
+        <RecommendationNavItem name="Dana O" />
+        <RecommendationNavItem name="Brian O" />
       </v-list-item-group>
     </v-list-item>
   </v-list>
 </template>
 <script>
 import { mdiStar } from "@mdi/js";
+import RecommendationNavItem from "./RecommendationNavItem";
 
 export default {
   name: "RecommendationNav",
   props: {
     source: String,
   },
-
+  components: {
+    RecommendationNavItem,
+  },
   data: () => ({
     drawer: null,
     iconStar: mdiStar,

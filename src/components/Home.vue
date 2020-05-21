@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div class="pa-1">
     <v-row>
       <v-col cols="12">
-        <h1 class="pa-2">Recently favorited movies</h1>
+        <span class="headline pa-2">Recently favorited movies</span>
       </v-col>
     </v-row>
 
