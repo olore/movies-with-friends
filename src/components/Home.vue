@@ -2,7 +2,7 @@
   <div class="pa-1">
     <v-row>
       <v-col cols="12">
-        <span class="headline pa-2">Recently favorited movies</span>
+        <span class="headline pa-2">Recent favorites</span>
       </v-col>
     </v-row>
 

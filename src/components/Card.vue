@@ -15,8 +15,11 @@
         class="d-inline-flex align-self-stretch justify-center"
         style="width: 100%;"
       >
-        <IMDBRating value="6.6" class="mr-3"></IMDBRating>
-        <RottenTomatoesRating value="62%"></RottenTomatoesRating>
+        <IMDBRating rating="6.6" imdbid="tt1731141" class="mr-3"></IMDBRating>
+        <RottenTomatoesRating
+          rating="62%"
+          title="Ender's game"
+        ></RottenTomatoesRating>
       </div>
 
       <div>
@@ -30,6 +33,7 @@
       <v-btn
         color="orange"
         text
+        target="_blank"
         href="https://reelgood.com/movie/enders-game-2013"
       >
         Where to watch?
