@@ -4,7 +4,7 @@
       <v-col cols="12" class="d-flex justify-space-between">
         <button @click="goBack()">Back</button>
         <h2 class="headline">{{ movie.Title }}</h2>
-        <button @click="goBack()">Close</button>
+        <span></span>
       </v-col>
     </v-row>
 

@@ -1,8 +1,11 @@
 <template>
-  <button
-    v-on:click="clicked"
+  <v-btn
+    color="transparent"
+    target="_blank"
+    :href="`https://www.imdb.com/title/${this.imdbid}`"
     title="Open on rottentomatoes.com"
-    class="align-center d-inline-flex"
+    :depressed="true"
+    class="pa-1 align-center d-inline-flex"
   >
     <v-img
       class="icon-rt"
@@ -10,7 +13,7 @@
       :src="require('../../assets/rotten-tomatoes.svg')"
     ></v-img>
     <div class="body-1 ml-2">{{ rating }}</div>
-  </button>
+  </v-btn>
 </template>
 <script>
 export default {
@@ -30,5 +33,8 @@ export default {
 .icon-rt {
   height: 17px;
   width: 17px;
+}
+.v-btn:not(.v-btn--text):not(.v-btn--outlined):hover:before {
+  opacity: 0;
 }
 </style>
