@@ -1,5 +1,5 @@
 <template>
-  <v-container class="pa-1">
+  <v-container>
     <v-row>
       <v-col cols="12">
         <span class="headline pa-2">Settings</span>

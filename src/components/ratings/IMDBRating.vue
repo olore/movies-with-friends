@@ -21,10 +21,7 @@ export default {
   props: ["rating", "imdbid"],
   methods: {
     clicked: function () {
-      window.open(
-        `https://www.imdb.com/title/${this.imdbid}/?ref_=nv_sr_srsg_0`,
-        "_blank"
-      );
+      window.open(`https://www.imdb.com/title/${this.imdbid}`, "_blank");
     },
   },
 };

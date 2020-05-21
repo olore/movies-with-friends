@@ -1,18 +1,16 @@
 <template>
-  <v-container class="pa-1">
+  <v-container>
     <v-row>
-      <v-col cols="12" class="pa-3">
-        <v-row class="d-flex justify-space-between px-5">
-          <button @click="goBack()">Back</button>
-          <h2 class="headline">{{ movie.Title }}</h2>
-          <button @click="goBack()">Close</button>
-        </v-row>
+      <v-col cols="12" class="d-flex justify-space-between">
+        <button @click="goBack()">Back</button>
+        <h2 class="headline">{{ movie.Title }}</h2>
+        <button @click="goBack()">Close</button>
       </v-col>
     </v-row>
 
-    <v-row>
-      <v-col cols="6" class="pa-3">
-        <div class="d-flex justify-space-around pt-3">
+    <v-row class="d-flex justify-center">
+      <v-col cols="3">
+        <div>
           <v-img
             alt="movie poster"
             max-width="140"
@@ -21,20 +19,27 @@
           />
         </div>
       </v-col>
-      <v-col>
-        <div align-top>
-          <IMDBRating
-            :rating="movie.imdbRating"
-            :imdbid="movie.imdbID"
-            class="mr-3"
-          ></IMDBRating>
+      <v-col cols="3" d-flex-vertical>
+        <IMDBRating
+          :rating="movie.imdbRating"
+          :imdbid="movie.imdbID"
+          class="mr-3"
+        ></IMDBRating>
 
-          <RottenTomatoesRating
-            v-if="movie.hasRottenTomatoesRating()"
-            :rating="movie.getRottenTomatoesRating()"
-            :title="movie.Title"
-          ></RottenTomatoesRating>
-        </div>
+        <RottenTomatoesRating
+          v-if="movie.hasRottenTomatoesRating()"
+          :rating="movie.getRottenTomatoesRating()"
+          :title="movie.Title"
+        ></RottenTomatoesRating>
+        <v-btn
+          class="pa-0"
+          color="orange"
+          text
+          target="_blank"
+          :href="movie.getReelGoodLink()"
+        >
+          Where to watch?
+        </v-btn>
       </v-col>
     </v-row>
 
@@ -55,16 +60,7 @@
     </v-row>
 
     <v-row>
-      <v-col cols="12" class="pa-3">
-        <v-btn
-          color="orange"
-          text
-          target="_blank"
-          :href="movie.getReelGoodLink()"
-        >
-          Where to watch?
-        </v-btn>
-      </v-col>
+      <v-col cols="12" class="pa-3"> </v-col>
     </v-row>
   </v-container>
 </template>
