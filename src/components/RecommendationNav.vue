@@ -8,6 +8,7 @@
         <v-list-item-title>Recommendations</v-list-item-title>
       </v-list-item-content>
     </v-list-item>
+
     <v-list-item v-if="onRecommendationPage()">
       <v-list-item-group v-model="settings" multiple>
         <v-list-item>
@@ -19,7 +20,6 @@
                 @click="toggle"
               ></v-checkbox>
             </v-list-item-action>
-
             <v-list-item-content>
               <v-list-item-title>Joseph O</v-list-item-title>
             </v-list-item-content>
@@ -35,7 +35,6 @@
                 @click="toggle"
               ></v-checkbox>
             </v-list-item-action>
-
             <v-list-item-content>
               <v-list-item-title>Grace O</v-list-item-title>
             </v-list-item-content>
@@ -51,7 +50,6 @@
                 @click="toggle"
               ></v-checkbox>
             </v-list-item-action>
-
             <v-list-item-content>
               <v-list-item-title>Brian O</v-list-item-title>
             </v-list-item-content>
@@ -67,7 +65,6 @@
                 @click="toggle"
               ></v-checkbox>
             </v-list-item-action>
-
             <v-list-item-content>
               <v-list-item-title>Dana O</v-list-item-title>
             </v-list-item-content>

@@ -36,15 +36,24 @@ export default {
   components: {
     RecommendationNav,
   },
-  props: {
-    source: String,
+  props: ["value"],
+
+  computed: {
+    drawer: {
+      get() {
+        return this.value;
+      },
+      set(val) {
+        this.$emit("input", val);
+      },
+    },
   },
 
   data: () => ({
-    drawer: null,
     iconDashboard: mdiViewDashboard,
     iconSettings: mdiCog,
   }),
+
   methods: {
     navTo: function (path) {
       if (path !== this.$route.path) {
