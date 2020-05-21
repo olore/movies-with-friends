@@ -1,8 +1,8 @@
 import VueRouter from "vue-router";
 
-import Home from "./components/Home";
-import Settings from "./components/Settings";
-import Recommendations from "./components/Recommendations";
+import Home from "./components/pages/Home";
+import Settings from "./components/pages/Settings";
+import Recommendations from "./components/pages/Recommendations";
 
 const routes = [
   { path: "/", component: Home },

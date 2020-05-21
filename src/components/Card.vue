@@ -39,8 +39,8 @@
   </v-card>
 </template>
 <script>
-import IMDBRating from "./IMDBRating";
-import RottenTomatoesRating from "./RottenTomatoesRating";
+import IMDBRating from "./ratings/IMDBRating";
+import RottenTomatoesRating from "./ratings/RottenTomatoesRating";
 export default {
   name: "Card",
   data: () => ({

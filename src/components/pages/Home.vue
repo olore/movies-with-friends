@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import Card from "./Card";
+import Card from "../Card";
 import { mdiViewDashboard, mdiCog } from "@mdi/js";
 
 export default {

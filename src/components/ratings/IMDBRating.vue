@@ -7,7 +7,7 @@
     <v-img
       class="icon-imdb"
       alt="imdb logo"
-      :src="require('../assets/imdb.svg')"
+      :src="require('../../assets/imdb.svg')"
     ></v-img>
     <div class="ml-2">
       <span class="body-1">{{ rating }}</span
@@ -16,8 +16,6 @@
   </button>
 </template>
 <script>
-import imdbIcon from "../assets/imdb.svg";
-
 export default {
   name: "IMDBRating",
   props: ["rating", "imdbid"],

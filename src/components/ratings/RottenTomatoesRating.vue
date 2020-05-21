@@ -7,14 +7,12 @@
     <v-img
       class="icon-rt"
       alt="rottentomatoes logo"
-      :src="require('../assets/rotten-tomatoes.svg')"
+      :src="require('../../assets/rotten-tomatoes.svg')"
     ></v-img>
     <div class="body-1 ml-2">{{ rating }}</div>
   </button>
 </template>
 <script>
-import rottenTomatoesIcon from "../assets/rotten-tomatoes.svg";
-
 export default {
   name: "RottenTomatoesRating",
   props: ["rating", "title"],
