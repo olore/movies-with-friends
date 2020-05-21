@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mx-auto" max-width="300">
+  <v-card class="mx-auto" :max-width="cardWidth">
     <v-img
       class="white--text align-end"
       height="200px"
@@ -10,9 +10,9 @@
       <v-card-title></v-card-title>
     </v-img>
 
-    <v-card-subtitle class="pb-0">{{ movie.Title }}</v-card-subtitle>
+    <v-card-subtitle class="pa-1">{{ movie.Title }}</v-card-subtitle>
 
-    <v-card-text class="text--primary">
+    <v-card-text class="text--primary d-none d-md-block pb-1">
       <div
         class="d-inline-flex align-self-stretch justify-center"
         style="width: 100%;"
@@ -30,11 +30,11 @@
       </div>
 
       <div>
-        {{ movie.Plot }}
+        {{ `${movie.Plot.substring(0, 100)}...` }}
       </div>
     </v-card-text>
 
-    <v-card-actions>
+    <v-card-actions class="d-none d-sm-flex">
       <v-btn
         color="orange"
         text
@@ -60,6 +60,18 @@ export default {
   components: {
     IMDBRating,
     RottenTomatoesRating,
+  },
+  computed: {
+    cardWidth() {
+      switch (this.$vuetify.breakpoint.name) {
+        case "xs":
+          return "150px";
+        case "sm":
+          return "200px";
+        default:
+          return "300px";
+      }
+    },
   },
 };
 </script>
