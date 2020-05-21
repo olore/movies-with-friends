@@ -1,7 +1,12 @@
 <template>
-  <button v-on:click="clicked" class="align-center d-inline-flex">
+  <button
+    v-on:click="clicked"
+    title="Open on rottentomatoes.com"
+    class="align-center d-inline-flex"
+  >
     <v-img
       class="icon-rt"
+      alt="rottentomatoes logo"
       :src="require('../assets/rotten-tomatoes.svg')"
     ></v-img>
     <div class="body-1 ml-2">{{ rating }}</div>
