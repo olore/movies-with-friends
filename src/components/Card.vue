@@ -1,10 +1,16 @@
 <template>
   <v-card class="mx-auto" max-width="300">
-    <v-img class="white--text align-end" height="200px" :src="movie.image">
+    <v-img
+      class="white--text align-end"
+      height="200px"
+      alt="movie poster"
+      position="center top"
+      :src="movie.Poster"
+    >
       <v-card-title></v-card-title>
     </v-img>
 
-    <v-card-subtitle class="pb-0">{{ movie.title }}</v-card-subtitle>
+    <v-card-subtitle class="pb-0">{{ movie.Title }}</v-card-subtitle>
 
     <v-card-text class="text--primary">
       <div
@@ -13,27 +19,33 @@
       >
         <IMDBRating
           :rating="movie.imdbRating"
-          :imdbid="movie.imdbid"
+          :imdbid="movie.imdbID"
           class="mr-3"
         ></IMDBRating>
         <RottenTomatoesRating
-          :rating="movie.tomatoesRating"
-          :title="movie.title"
+          v-if="movie.hasRottenTomatoesRating()"
+          :rating="movie.getRottenTomatoesRating()"
+          :title="movie.Title"
         ></RottenTomatoesRating>
       </div>
 
       <div>
-        {{ movie.description }}
+        {{ movie.Plot }}
       </div>
     </v-card-text>
 
     <v-card-actions>
-      <v-btn color="orange" text target="_blank" :href="reelGoodLink()">
+      <v-btn
+        color="orange"
+        text
+        target="_blank"
+        :href="movie.getReelGoodLink()"
+      >
         Where to watch?
       </v-btn>
 
       <v-btn color="orange" text>
-        Explore
+        Seen this?
       </v-btn>
     </v-card-actions>
   </v-card>
@@ -41,35 +53,13 @@
 <script>
 import IMDBRating from "./ratings/IMDBRating";
 import RottenTomatoesRating from "./ratings/RottenTomatoesRating";
+
 export default {
   name: "Card",
-  data: () => ({
-    movie: {
-      title: "Ender's Game",
-      description:
-        "Young Ender Wiggin is recruited by the International Military to lead the fight against the Formics...",
-      //an insectoid alien race who had previously tried to invade Earth and had inflicted heavy losses on humankind.
-      image:
-        "https://m.media-amazon.com/images/M/MV5BMjAzMzI5OTgzMl5BMl5BanBnXkFtZTgwMTU5MTAwMDE@._V1_SX300.jpg",
-      imdbRating: "6.6",
-      tomatoesRating: "62%",
-      imdbid: "tt1731141",
-      year: "2013",
-    },
-  }),
+  props: ["movie"],
   components: {
     IMDBRating,
     RottenTomatoesRating,
-  },
-  methods: {
-    reelGoodLink: function () {
-      return (
-        "https://reelgood.com/movie/" +
-        this.movie.title.replace(/ /, "-").replace("'", "") +
-        "-" +
-        this.movie.year
-      );
-    },
   },
 };
 </script>
