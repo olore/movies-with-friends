@@ -1,5 +1,9 @@
 <template>
-  <v-card class="mx-auto" :max-width="cardWidth">
+  <v-card
+    class="mx-auto"
+    :max-width="cardWidth"
+    :to="{ name: 'title', params: { title: movie.getKebab() } }"
+  >
     <v-img
       class="white--text align-end"
       height="200px"
