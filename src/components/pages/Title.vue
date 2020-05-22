@@ -15,7 +15,7 @@
           alt="movie poster"
           :contain="false"
           :src="movie.Poster"
-          :max-width="imageHeight"
+          :max-width="imageWidth"
         />
       </v-col>
 
@@ -51,14 +51,14 @@
             <RatingDialog class="ma-3" />
           </v-row>
 
-          <v-row v-if="viewSize() !== 'xs'">
+          <v-row v-if="$vuetify.breakpoint.smAndUp">
             <LikesList :likes="movie.likes" />
           </v-row>
         </v-container>
       </v-col>
     </v-row>
 
-    <LikesList v-if="viewSize() === 'xs'" :likes="movie.likes" />
+    <LikesList v-if="$vuetify.breakpoint.xsOnly" :likes="movie.likes" />
 
     <v-row class="d-flex">
       <v-col cols="12" class="px-5">
@@ -89,12 +89,9 @@ export default {
     goBack() {
       window.history.length > 1 ? this.$router.go(-1) : this.$router.push("/");
     },
-    viewSize() {
-      return this.$vuetify.breakpoint.name;
-    },
   },
   computed: {
-    imageHeight() {
+    imageWidth() {
       switch (this.$vuetify.breakpoint.name) {
         case "xs":
           return "150px";
