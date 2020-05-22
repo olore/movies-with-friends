@@ -48,10 +48,19 @@
           {{ movie.Plot }}
           <br />
           <br />
-          <h2 class="headline">Liked by</h2>
+          <h2 class="headline">Your Friends</h2>
           <ul class="pl-8">
             <li v-for="like in movie.likes" :key="like.person.name">
-              {{ like.person.name }}
+              <div class="d-flex align-end">
+                <v-rating
+                  v-model="like.rating"
+                  readonly
+                  dense
+                  size="22"
+                  class="mr-3"
+                ></v-rating>
+                <span>{{ like.person.name }}</span>
+              </div>
             </li>
           </ul>
         </div>
@@ -66,10 +75,19 @@
 
     <v-row class="d-flex d-sm-none">
       <v-col cols="12" class="pa-3">
-        <h2 class="headLikeline">Liked by</h2>
+        <h2 class="headline">Your Friends</h2>
         <ul class="pl-8">
           <li v-for="like in movie.likes" :key="like.person.name">
-            {{ like.person.name }}
+            <div class="d-flex align-end">
+              <v-rating
+                v-model="like.rating"
+                readonly
+                dense
+                size="22"
+                class="mr-3"
+              ></v-rating>
+              <span>{{ like.person.name }}</span>
+            </div>
           </li>
         </ul>
       </v-col>

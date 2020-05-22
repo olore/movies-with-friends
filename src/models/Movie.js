@@ -205,8 +205,8 @@ export default class Movie {
 
   static addLikes(movie) {
     movie.likes = [
-      new Like(movie, Person.get("Brian O")),
-      new Like(movie, Person.get("Joseph O")),
+      new Like(movie, Person.get("Brian O"), { rating: 4 }),
+      new Like(movie, Person.get("Joseph O"), { rating: 2 }),
     ];
     return movie;
   }
