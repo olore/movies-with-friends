@@ -2,7 +2,7 @@
   <v-btn
     color="transparent"
     target="_blank"
-    :href="`https://www.imdb.com/title/${this.imdbid}`"
+    :href="`https://www.rottentomatoes.com/search?search=${this.title}`"
     title="Open on rottentomatoes.com"
     :depressed="true"
     class="pa-1 align-center d-inline-flex"
@@ -18,15 +18,7 @@
 <script>
 export default {
   name: "RottenTomatoesRating",
-  props: ["rating", "title"],
-  methods: {
-    clicked: function () {
-      window.open(
-        `https://www.rottentomatoes.com/search?search=${this.title}`,
-        "_blank"
-      );
-    },
-  },
+  props: ["rating", "title", "imdbid"],
 };
 </script>
 <style lang="scss" scoped>

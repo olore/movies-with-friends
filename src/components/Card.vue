@@ -30,6 +30,7 @@
           v-if="movie.hasRottenTomatoesRating()"
           :rating="movie.getRottenTomatoesRating()"
           :title="movie.Title"
+          :imdbid="movie.imdbID"
         ></RottenTomatoesRating>
       </div>
 

@@ -1,5 +1,7 @@
 import jaycue from "jaycue";
 import kebabCase from "lodash.kebabcase";
+import Like from "./Like";
+import Person from "./Person";
 
 export default class Movie {
   constructor(data) {
@@ -151,8 +153,18 @@ export default class Movie {
   }
 
   static getByTitle(titleKebab) {
-    return this.all().find((movie) => {
-      return kebabCase(movie.Title) === titleKebab;
-    });
+    return this.addLikes(
+      this.all().find((movie) => {
+        return kebabCase(movie.Title) === titleKebab;
+      })
+    );
+  }
+
+  static addLikes(movie) {
+    movie.likes = [
+      new Like(movie, Person.get("Brian O")),
+      new Like(movie, Person.get("Joseph O")),
+    ];
+    return movie;
   }
 }

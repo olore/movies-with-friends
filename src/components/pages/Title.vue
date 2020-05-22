@@ -30,6 +30,7 @@
           v-if="movie.hasRottenTomatoesRating()"
           :rating="movie.getRottenTomatoesRating()"
           :title="movie.Title"
+          :imdbid="movie.imdbID"
         ></RottenTomatoesRating>
         <v-btn
           class="pa-0"
@@ -51,10 +52,11 @@
 
     <v-row>
       <v-col cols="12" class="pa-3">
-        <h2 class="headline">Liked by</h2>
+        <h2 class="headLikeline">Liked by</h2>
         <ul class="pl-8">
-          <li>Brian O</li>
-          <li>Dana O</li>
+          <li v-for="like in movie.likes" :key="like.person.name">
+            {{ like.person.name }}
+          </li>
         </ul>
       </v-col>
     </v-row>
