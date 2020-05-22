@@ -2,9 +2,9 @@
   <v-container>
     <v-row>
       <v-col cols="12" class="d-flex justify-space-between">
-        <button @click="goBack()">Back</button>
+        <button @click="goBack()" class="mr-2">Back</button>
         <h2 class="headline">{{ movie.Title }}</h2>
-        <span></span>
+        <button @click="goBack()" class="mr-2">Back</button>
       </v-col>
     </v-row>
 
@@ -19,7 +19,7 @@
         />
       </v-col>
 
-      <v-col sm="4" xs="6" d-flex-vertical>
+      <v-col sm="4" xs="6" class="d-flex flex-column align-start">
         <IMDBRating
           :rating="movie.imdbRating"
           :imdbid="movie.imdbID"
@@ -33,7 +33,7 @@
           :imdbid="movie.imdbID"
         ></RottenTomatoesRating>
         <v-btn
-          class="pa-0"
+          class="pa-0 d-inline-flex"
           color="orange"
           text
           target="_blank"
@@ -41,7 +41,10 @@
         >
           Where to watch?
         </v-btn>
-        <div class="d-none d-sm-flex flex-column">
+
+        <RatingDialog class="ma-3" />
+
+        <div class="d-none d-sm-flex flex-column pt-3">
           {{ movie.Plot }}
           <br />
           <br />
@@ -82,10 +85,11 @@
 import Movie from "../../models/Movie";
 import IMDBRating from "../ratings/IMDBRating";
 import RottenTomatoesRating from "../ratings/RottenTomatoesRating";
+import RatingDialog from "../RatingDialog";
 
 export default {
   name: "Title",
-  components: { IMDBRating, RottenTomatoesRating },
+  components: { IMDBRating, RottenTomatoesRating, RatingDialog },
   data: () => ({
     movie: null,
   }),
