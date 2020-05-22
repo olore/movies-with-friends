@@ -8,18 +8,18 @@
       </v-col>
     </v-row>
 
-    <v-row class="d-flex justify-center">
-      <v-col cols="3">
-        <div>
-          <v-img
-            alt="movie poster"
-            max-width="140"
-            :contain="false"
-            :src="movie.Poster"
-          />
-        </div>
+    <v-row class="d-flex justify-md-center">
+      <v-col sm="4" xs="6">
+        <v-img
+          class="float-right"
+          alt="movie poster"
+          :contain="false"
+          :src="movie.Poster"
+          :max-width="imageHeight"
+        />
       </v-col>
-      <v-col cols="3" d-flex-vertical>
+
+      <v-col sm="4" xs="6" d-flex-vertical>
         <IMDBRating
           :rating="movie.imdbRating"
           :imdbid="movie.imdbID"
@@ -41,16 +41,27 @@
         >
           Where to watch?
         </v-btn>
+        <div class="d-none d-sm-flex flex-column">
+          {{ movie.Plot }}
+          <br />
+          <br />
+          <h2 class="headline">Liked by</h2>
+          <ul class="pl-8">
+            <li v-for="like in movie.likes" :key="like.person.name">
+              {{ like.person.name }}
+            </li>
+          </ul>
+        </div>
       </v-col>
     </v-row>
 
-    <v-row>
+    <v-row class="d-flex d-sm-none">
       <v-col cols="12" class="px-5">
         {{ movie.Plot }}
       </v-col>
     </v-row>
 
-    <v-row>
+    <v-row class="d-flex d-sm-none">
       <v-col cols="12" class="pa-3">
         <h2 class="headLikeline">Liked by</h2>
         <ul class="pl-8">
@@ -85,6 +96,16 @@ export default {
   methods: {
     goBack() {
       window.history.length > 1 ? this.$router.go(-1) : this.$router.push("/");
+    },
+  },
+  computed: {
+    imageHeight() {
+      switch (this.$vuetify.breakpoint.name) {
+        case "xs":
+          return "150px";
+        default:
+          return "300px";
+      }
     },
   },
 };
