@@ -19,7 +19,7 @@
         />
       </v-col>
 
-      <v-col sm="4" xs="6" class="d-flex flex-column align-start">
+      <v-col sm="6" xs="6" class="d-flex flex-column align-start">
         <IMDBRating
           :rating="movie.imdbRating"
           :imdbid="movie.imdbID"
@@ -44,52 +44,17 @@
 
         <RatingDialog class="ma-3" />
 
-        <div class="d-none d-sm-flex flex-column pt-3">
-          {{ movie.Plot }}
-          <br />
-          <br />
-          <h2 class="headline">Your Friends</h2>
-          <ul class="pl-8">
-            <li v-for="like in movie.likes" :key="like.person.name">
-              <div class="d-flex align-end">
-                <v-rating
-                  v-model="like.rating"
-                  readonly
-                  dense
-                  size="22"
-                  class="mr-3"
-                ></v-rating>
-                <span>{{ like.person.name }}</span>
-              </div>
-            </li>
-          </ul>
+        <div class="d-none d-sm-flex pt-3 flex-column">
+          <LikesList :likes="movie.likes" />
         </div>
       </v-col>
     </v-row>
 
-    <v-row class="d-flex d-sm-none">
+    <LikesList :likes="movie.likes" class="d-flex d-sm-none" />
+
+    <v-row class="d-flex">
       <v-col cols="12" class="px-5">
         {{ movie.Plot }}
-      </v-col>
-    </v-row>
-
-    <v-row class="d-flex d-sm-none">
-      <v-col cols="12" class="pa-3">
-        <h2 class="headline">Your Friends</h2>
-        <ul class="pl-8">
-          <li v-for="like in movie.likes" :key="like.person.name">
-            <div class="d-flex align-end">
-              <v-rating
-                v-model="like.rating"
-                readonly
-                dense
-                size="22"
-                class="mr-3"
-              ></v-rating>
-              <span>{{ like.person.name }}</span>
-            </div>
-          </li>
-        </ul>
       </v-col>
     </v-row>
 
@@ -104,10 +69,11 @@ import Movie from "../../models/Movie";
 import IMDBRating from "../ratings/IMDBRating";
 import RottenTomatoesRating from "../ratings/RottenTomatoesRating";
 import RatingDialog from "../RatingDialog";
+import LikesList from "../LikesList";
 
 export default {
   name: "Title",
-  components: { IMDBRating, RottenTomatoesRating, RatingDialog },
+  components: { IMDBRating, RottenTomatoesRating, RatingDialog, LikesList },
   data: () => ({
     movie: null,
   }),
