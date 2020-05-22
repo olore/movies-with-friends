@@ -1,7 +1,8 @@
-# movie-friends-vue
+# Movies with Friends
 
 API: https://www.omdbapi.com/
 DATA: https://www.imdb.com/interfaces/
+AUTH: https://magic.link/home
 
 ## Project setup
 ```
