@@ -19,47 +19,51 @@
         />
       </v-col>
 
-      <v-col sm="6" xs="6" class="d-flex flex-column align-start">
-        <IMDBRating
-          :rating="movie.imdbRating"
-          :imdbid="movie.imdbID"
-          class="mr-3"
-        ></IMDBRating>
+      <v-col sm="6" xs="6" class="d-flex flex-column">
+        <v-container class="pa-0 pl-3">
+          <v-row>
+            <IMDBRating
+              :rating="movie.imdbRating"
+              :imdbid="movie.imdbID"
+              class="mr-3"
+            ></IMDBRating>
+          </v-row>
+          <v-row v-if="movie.hasRottenTomatoesRating()">
+            <RottenTomatoesRating
+              :rating="movie.getRottenTomatoesRating()"
+              :title="movie.Title"
+              :imdbid="movie.imdbID"
+            ></RottenTomatoesRating>
+          </v-row>
+          <v-row>
+            <v-btn
+              class="pa-0 d-inline-flex"
+              color="orange"
+              text
+              target="_blank"
+              :href="movie.getReelGoodLink()"
+            >
+              Where to watch?
+            </v-btn>
+          </v-row>
 
-        <RottenTomatoesRating
-          v-if="movie.hasRottenTomatoesRating()"
-          :rating="movie.getRottenTomatoesRating()"
-          :title="movie.Title"
-          :imdbid="movie.imdbID"
-        ></RottenTomatoesRating>
-        <v-btn
-          class="pa-0 d-inline-flex"
-          color="orange"
-          text
-          target="_blank"
-          :href="movie.getReelGoodLink()"
-        >
-          Where to watch?
-        </v-btn>
+          <v-row>
+            <RatingDialog class="ma-3" />
+          </v-row>
 
-        <RatingDialog class="ma-3" />
-
-        <div class="d-none d-sm-flex pt-3 flex-column">
-          <LikesList :likes="movie.likes" />
-        </div>
+          <v-row v-if="viewSize() !== 'xs'">
+            <LikesList :likes="movie.likes" />
+          </v-row>
+        </v-container>
       </v-col>
     </v-row>
 
-    <LikesList :likes="movie.likes" class="d-flex d-sm-none" />
+    <LikesList v-if="viewSize() === 'xs'" :likes="movie.likes" />
 
     <v-row class="d-flex">
       <v-col cols="12" class="px-5">
         {{ movie.Plot }}
       </v-col>
-    </v-row>
-
-    <v-row>
-      <v-col cols="12" class="pa-3"> </v-col>
     </v-row>
   </v-container>
 </template>
@@ -84,6 +88,9 @@ export default {
   methods: {
     goBack() {
       window.history.length > 1 ? this.$router.go(-1) : this.$router.push("/");
+    },
+    viewSize() {
+      return this.$vuetify.breakpoint.name;
     },
   },
   computed: {
