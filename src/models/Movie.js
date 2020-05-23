@@ -247,20 +247,24 @@ export default class Movie {
 
   static addLikes(movie) {
     movie.likes = [
-      new Like(movie, Person.get("Brian O"), {
+      new Like(movie, Person.get("APrettyLong FirstAndLastName"), {
+        rating: 5,
+        comment: "I'd see it again. Wish I cuold have seen it in a theater.",
+      }),
+      new Like(movie, Person.get("Brian Olore"), {
         rating: 4,
         comment:
           "Pretty funny. I think you'll want to watch it without the kids, there are some sketchy scenes",
       }),
-      new Like(movie, Person.get("Joseph O"), {
+      new Like(movie, Person.get("Joseph Olore"), {
         rating: 2,
         comment: "just ok, not my fave",
       }),
-      new Like(movie, Person.get("Dana O"), {
+      new Like(movie, Person.get("Dana Olore"), {
         rating: 1,
         comment: "Too scary",
       }),
-      new Like(movie, Person.get("Grace O"), {
+      new Like(movie, Person.get("Grace Olore"), {
         rating: 5,
       }),
     ];

@@ -18,8 +18,7 @@
           class="mb-3 d-flex flex-row justify-center"
         ></v-rating>
         <v-textarea
-          solo
-          label="Optionally leave a note..."
+          label="Optionally leave a comment..."
           name="ratingText"
         ></v-textarea>
       </v-card-text>

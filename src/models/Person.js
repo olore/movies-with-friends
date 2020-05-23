@@ -11,10 +11,11 @@ export default class Person {
 
   static all() {
     return [
-      new Person({ name: "Brian O" }),
-      new Person({ name: "Dana O" }),
-      new Person({ name: "Grace O" }),
-      new Person({ name: "Joseph O" }),
+      new Person({ name: "Brian Olore" }),
+      new Person({ name: "Dana Olore" }),
+      new Person({ name: "Grace Olore" }),
+      new Person({ name: "Joseph Olore" }),
+      new Person({ name: "APrettyLong FirstAndLastName" }),
     ];
   }
 }
