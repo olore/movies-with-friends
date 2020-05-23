@@ -260,6 +260,9 @@ export default class Movie {
         rating: 1,
         comment: "Too scary",
       }),
+      new Like(movie, Person.get("Grace O"), {
+        rating: 5,
+      }),
     ];
     return movie;
   }

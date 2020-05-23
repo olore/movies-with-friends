@@ -2,7 +2,7 @@
   <v-container class="">
     <v-row>
       <v-col cols="12">
-        <span class="headline pa-2">Recent favorites</span>
+        <span class="headline">Recent favorites</span>
       </v-col>
     </v-row>
     <v-row>

@@ -19,6 +19,16 @@
           </v-list-item-title>
         </v-list-item-content>
       </v-list-item>
+      <v-list-item link v-on:click="navTo('/invite')">
+        <v-list-item-action>
+          <v-icon>{{ iconInvite }}</v-icon>
+        </v-list-item-action>
+        <v-list-item-content>
+          <v-list-item-title>
+            <v-list-item-title>Invite</v-list-item-title>
+          </v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
     </v-list>
 
     <v-divider></v-divider>
@@ -28,7 +38,7 @@
 </template>
 
 <script>
-import { mdiViewDashboard, mdiCog } from "@mdi/js";
+import { mdiViewDashboard, mdiCog, mdiAccountMultiplePlus } from "@mdi/js";
 import RecommendationNav from "./RecommendationNav";
 
 export default {
@@ -52,6 +62,7 @@ export default {
   data: () => ({
     iconDashboard: mdiViewDashboard,
     iconSettings: mdiCog,
+    iconInvite: mdiAccountMultiplePlus,
   }),
 
   methods: {
