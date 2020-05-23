@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container v-if="movie">
     <v-row>
       <v-col cols="12" class="d-flex justify-space-between">
         <button @click="goBack()" class="mr-2">Back</button>
@@ -81,9 +81,11 @@ export default {
   data: () => ({
     movie: null,
   }),
-  created: function () {
-    let title = this.$route.params.title;
-    this.movie = Movie.getByKebabTitle(title);
+  async beforeRouteEnter(to, from, next) {
+    const movie = await Movie.getById(to.params.id);
+    next((vm) => {
+      vm.movie = movie;
+    });
   },
   methods: {
     goBack() {

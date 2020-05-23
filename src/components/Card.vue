@@ -2,7 +2,7 @@
   <v-card
     class="mx-auto"
     :max-width="cardWidth"
-    :to="{ name: 'title', params: { title: movie.getKebab() } }"
+    :to="{ name: 'title', params: { id: movie.imdbID } }"
   >
     <v-img
       class="white--text align-end"

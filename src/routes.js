@@ -15,7 +15,7 @@ const routes = [
     name: "recommendations",
     component: Recommendations,
   },
-  { path: "/title/:title", name: "title", component: Title },
+  { path: "/title/:id", name: "title", component: Title },
 ];
 
 const router = new VueRouter({

@@ -76,24 +76,21 @@ export default {
 
   methods: {
     selected: function (movie) {
-      let m = new Movie(movie);
-      this.$router.push({ name: "title", params: { title: m.getKebab() } });
+      this.$router.push({ name: "title", params: { id: movie.imdbID } });
     },
   },
 
   watch: {
     search(val) {
-      if (val.length < 8) return;
+      if (val.length < 5) return;
 
       // Items have already been requested
       if (this.isLoading) return;
 
       this.isLoading = true;
 
-      fetch(`https://www.omdbapi.com/?apikey=4ec99377&s=${val}`)
-        .then((results) => results.json())
+      Movie.search(val)
         .then((results) => {
-          console.log({ results });
           this.count = results.totalResults;
           this.entries = results.Search;
         })

@@ -34,6 +34,10 @@ export default class Movie {
     return `https://reelgood.com/${type}/${title}-${year}`.toLowerCase();
   }
 
+  static kebabTitle(title) {
+    return kebabCase(title);
+  }
+
   static all() {
     return [
       new Movie({
@@ -237,17 +241,23 @@ export default class Movie {
     return kebabCase(this.Title);
   }
 
-  static getByKebabTitle(titleKebab) {
-    let movie = this.all().find((movie) => {
-      return kebabCase(movie.Title) === titleKebab;
-    });
+  static async search(val) {
+    return fetch(
+      `https://www.omdbapi.com/?apikey=4ec99377&s=${val}`
+    ).then((results) => results.json());
+  }
 
-    if (movie === undefined) {
-      // TODO fetch it
-      movie = this.all()[0];
-    }
-
-    return this.addLikes(movie);
+  static async getById(id) {
+    return fetch(`https://www.omdbapi.com/?apikey=4ec99377&i=${id}`)
+      .then((results) => results.json())
+      .then((data) => {
+        let movie = new Movie(data);
+        return this.addLikes(movie);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => (this.isLoading = false));
   }
 
   static addLikes(movie) {
