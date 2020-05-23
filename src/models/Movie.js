@@ -237,12 +237,17 @@ export default class Movie {
     return kebabCase(this.Title);
   }
 
-  static getByTitle(titleKebab) {
-    return this.addLikes(
-      this.all().find((movie) => {
-        return kebabCase(movie.Title) === titleKebab;
-      })
-    );
+  static getByKebabTitle(titleKebab) {
+    let movie = this.all().find((movie) => {
+      return kebabCase(movie.Title) === titleKebab;
+    });
+
+    if (movie === undefined) {
+      // TODO fetch it
+      movie = this.all()[0];
+    }
+
+    return this.addLikes(movie);
   }
 
   static addLikes(movie) {

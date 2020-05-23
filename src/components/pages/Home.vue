@@ -2,6 +2,11 @@
   <v-container class="">
     <v-row>
       <v-col cols="12">
+        <Search />
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col cols="12">
         <span class="headline">Recent favorites</span>
       </v-col>
     </v-row>
@@ -17,11 +22,13 @@
 import Card from "../Card";
 import { mdiViewDashboard, mdiCog } from "@mdi/js";
 import Movie from "../../models/Movie";
+import Search from "../Search";
 
 export default {
   name: "Home",
   components: {
     Card,
+    Search,
   },
   data: () => ({
     movies: [...Movie.all()],

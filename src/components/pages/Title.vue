@@ -83,7 +83,7 @@ export default {
   }),
   created: function () {
     let title = this.$route.params.title;
-    this.movie = Movie.getByTitle(title);
+    this.movie = Movie.getByKebabTitle(title);
   },
   methods: {
     goBack() {
