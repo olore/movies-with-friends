@@ -12,8 +12,10 @@
         ></v-rating>
       </v-col>
       <v-col cols="8" sm="9">
-        <span>{{ like.person.name }}</span> -
-        <span class="">&quot;{{ like.comment }}&quot;</span>
+        <span class="font-weight-bold">{{ like.person.name }}</span>
+        <span class="" v-if="like.comment">
+          - &quot;{{ like.comment }}&quot;</span
+        >
       </v-col>
     </v-row>
   </div>

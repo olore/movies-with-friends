@@ -37,6 +37,48 @@ export default class Movie {
   static all() {
     return [
       new Movie({
+        Title: "Dumb and Dumber",
+        Year: "1994",
+        Rated: "PG-13",
+        Released: "16 Dec 1994",
+        Runtime: "107 min",
+        Genre: "Comedy",
+        Director: "Peter Farrelly, Bobby Farrelly",
+        Writer: "Peter Farrelly, Bennett Yellin, Bobby Farrelly",
+        Actors: "Jim Carrey, Jeff Daniels, Lauren Holly, Mike Starr",
+        Plot:
+          "After a woman leaves a briefcase at the airport terminal, a dumb limo driver and his dumber friend set out on a hilarious cross-country road trip to Aspen, to return the briefcase to its owner.",
+        Language: "English, Swedish, German",
+        Country: "USA",
+        Awards: "5 wins & 3 nominations.",
+        Poster:
+          "https://m.media-amazon.com/images/M/MV5BZDQwMjNiMTQtY2UwYy00NjhiLTk0ZWEtZWM5ZWMzNGFjNTVkXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg",
+        Ratings: [
+          {
+            Source: "Internet Movie Database",
+            Value: "7.3/10",
+          },
+          {
+            Source: "Rotten Tomatoes",
+            Value: "67%",
+          },
+          {
+            Source: "Metacritic",
+            Value: "41/100",
+          },
+        ],
+        Metascore: "41",
+        imdbRating: "7.3",
+        imdbVotes: "342,005",
+        imdbID: "tt0109686",
+        Type: "movie",
+        DVD: "N/A",
+        BoxOffice: "N/A",
+        Production: "N/A",
+        Website: "N/A",
+        Response: "True",
+      }),
+      new Movie({
         Title: "Star Wars: Episode V - The Empire Strikes Back",
         Year: "1980",
         Rated: "PG",
