@@ -3,6 +3,9 @@ const fastify = require("fastify")({
   logger: true,
 });
 
+require("dotenv").config();
+const API_KEY = process.env.API_KEY;
+
 fastify.register(require("fastify-cors"), {
   // put your options here
   // TODO only allow it to process requests from same host?
@@ -10,7 +13,7 @@ fastify.register(require("fastify-cors"), {
 
 fastify.get("/movie/:id", async (request, reply) => {
   return fetch(
-    `https://www.omdbapi.com/?apikey=4ec99377&i=${request.params.id}`
+    `https://www.omdbapi.com/?apikey=${API_KEY}&i=${request.params.id}`
   ).then((results) => results.json());
 });
 
@@ -19,7 +22,7 @@ fastify.get("/movie", async (request, reply) => {
   const query = request.query.s;
   fastify.log.info(`search for ${query}`);
   return fetch(
-    `https://www.omdbapi.com/?apikey=4ec99377&s=${query}`
+    `https://www.omdbapi.com/?apikey=${API_KEY}&s=${query}`
   ).then((results) => results.json());
 });
 

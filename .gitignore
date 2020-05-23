@@ -5,6 +5,7 @@ node_modules
 .eslintcache
 
 # local env files
+.env
 .env.local
 .env.*.local
 
