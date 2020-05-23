@@ -242,13 +242,15 @@ export default class Movie {
   }
 
   static async search(val) {
-    return fetch(`http://localhost:3000/movie?s=${val}`).then((results) =>
-      results.json()
-    );
+    return fetch(
+      `${document.location.protocol}//${document.location.hostname}:3000/movie?s=${val}`
+    ).then((results) => results.json());
   }
 
   static async getById(id) {
-    return fetch(`http://localhost:3000/movie/${id}`)
+    return fetch(
+      `${document.location.protocol}//${document.location.hostname}:3000/movie/${id}`
+    )
       .then((results) => results.json())
       .then((data) => {
         let movie = new Movie(data);
