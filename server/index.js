@@ -5,6 +5,7 @@ const fastify = require("fastify")({
 
 fastify.register(require("fastify-cors"), {
   // put your options here
+  // TODO only allow it to process requests from same host?
 });
 
 fastify.get("/movie/:id", async (request, reply) => {

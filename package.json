@@ -3,13 +3,15 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "build": "npm run build:client && npm run build:server",
+    "build:server": "babel server --out-dir build-server",
+    "build:client": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "start:dev:server": "nodemon --exec babel-node server/index.js --watch server"
+    "start:dev": "concurrently -k -n 'server,client' 'npm run start:dev:server' 'npm run start:dev:client'",
+    "start:dev:server": "nodemon --exec babel-node server/index.js --watch server",
+    "start:dev:client": "vue-cli-service serve"
   },
   "dependencies": {
-    "@babel/node": "^7.8.7",
     "core-js": "^3.6.4",
     "fastify": "^2.14.1",
     "fastify-cors": "^3.0.3",
@@ -22,11 +24,14 @@
     "vuetify": "^2.2.11"
   },
   "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/node": "^7.8.7",
     "@mdi/js": "^5.2.45",
     "@vue/cli-plugin-babel": "~4.3.0",
     "@vue/cli-plugin-eslint": "~4.3.0",
     "@vue/cli-service": "~4.3.0",
     "babel-eslint": "^10.1.0",
+    "concurrently": "^5.2.0",
     "eslint": "^6.7.2",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-prettier": "^3.1.3",
