@@ -242,13 +242,13 @@ export default class Movie {
   }
 
   static async search(val) {
-    return fetch(
-      `https://www.omdbapi.com/?apikey=4ec99377&s=${val}`
-    ).then((results) => results.json());
+    return fetch(`http://localhost:3000/movie?s=${val}`).then((results) =>
+      results.json()
+    );
   }
 
   static async getById(id) {
-    return fetch(`https://www.omdbapi.com/?apikey=4ec99377&i=${id}`)
+    return fetch(`http://localhost:3000/movie/${id}`)
       .then((results) => results.json())
       .then((data) => {
         let movie = new Movie(data);

@@ -5,12 +5,18 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "start:dev:server": "nodemon --exec babel-node server/index.js --watch server"
   },
   "dependencies": {
+    "@babel/node": "^7.8.7",
     "core-js": "^3.6.4",
+    "fastify": "^2.14.1",
+    "fastify-cors": "^3.0.3",
     "jaycue": "^1.2.6",
     "lodash.kebabcase": "^4.1.1",
+    "node-fetch": "^2.6.0",
+    "nodemon": "^2.0.4",
     "vue": "^2.6.11",
     "vue-router": "^3.2.0",
     "vuetify": "^2.2.11"

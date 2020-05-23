@@ -78,26 +78,34 @@ export default {
     selected: function (movie) {
       this.$router.push({ name: "title", params: { id: movie.imdbID } });
     },
+    fetchEntriesDebounced(val) {
+      // cancel pending call
+      clearTimeout(this._timerId);
+
+      // delay new call 500ms
+      this._timerId = setTimeout(() => {
+        // Items have already been requested
+        if (this.isLoading) return;
+
+        this.isLoading = true;
+
+        Movie.search(val)
+          .then((results) => {
+            this.count = results.totalResults;
+            this.entries = results.Search;
+          })
+          .catch((err) => {
+            console.log(err);
+          })
+          .finally(() => (this.isLoading = false));
+      }, 500);
+    },
   },
 
   watch: {
     search(val) {
       if (val.length < 5) return;
-
-      // Items have already been requested
-      if (this.isLoading) return;
-
-      this.isLoading = true;
-
-      Movie.search(val)
-        .then((results) => {
-          this.count = results.totalResults;
-          this.entries = results.Search;
-        })
-        .catch((err) => {
-          console.log(err);
-        })
-        .finally(() => (this.isLoading = false));
+      this.fetchEntriesDebounced(val);
     },
   },
 };
