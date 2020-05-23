@@ -23,9 +23,7 @@
     </v-row>
     <v-row justify="center">
       <v-col cols="12" class="d-flex justify-center">
-        <v-btn color="orange" class="title" raised large text
-          >Send Invites</v-btn
-        >
+        <v-btn color="primary" class="title" large>Send Invites</v-btn>
       </v-col>
     </v-row>
     <v-row justify="center">

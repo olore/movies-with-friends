@@ -9,7 +9,7 @@
         <span class="" v-if="like.comment">
           &quot;{{ like.comment }}&quot;</span
         >
-        <span class="overline vmiddle">{{ like.smallDate() }}</span>
+        <span class="overline vmiddle grey--text">{{ like.smallDate() }}</span>
       </v-col>
     </v-row>
   </div>

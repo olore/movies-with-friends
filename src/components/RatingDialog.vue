@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="dialog" width="500">
     <template v-slot:activator="{ on }">
-      <v-btn color="green lighten-2" class="text-align-left" v-on="on">
+      <v-btn color="primary" class="text-align-left" v-on="on">
         I've seen this
       </v-btn>
     </template>
