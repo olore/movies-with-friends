@@ -22,12 +22,14 @@ jobs:
           key: ${{ secrets.KEY }}
           source: "dist/*"
           target: "/home/olore/apps/movies-with-friends"
-      - name: scp server code
-        uses: appleboy/scp-action@master
+      - name: ssh with multiple commands
+        uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
-          port: ${{ secrets.PORT }}
           key: ${{ secrets.KEY }}
-          source: "build-server/*"
-          target: "/home/olore/apps/movies-with-friends"
+          port: ${{ secrets.PORT }}
+          script: |
+            cd /home/olore/apps/movie-with-friends
+            npm i
+            npm build:server
