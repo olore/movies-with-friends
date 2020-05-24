@@ -7,29 +7,12 @@ jobs:
   deploy:
     runs-on: ubuntu-16.04
     steps:
-      - name: Check out repository
-        uses: actions/checkout@v2
-      - name: Use Node.js
-        uses: actions/setup-node@v1
-      - run: npm install
-      - run: npm run build
-      - name: scp client code
-        uses: appleboy/scp-action@master
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          port: ${{ secrets.PORT }}
-          key: ${{ secrets.KEY }}
-          source: "dist/*"
-          target: "/home/olore/apps/movies-with-friends"
       - name: ssh with multiple commands
         uses: appleboy/ssh-action@master
         with:
+          debug: true
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
           port: ${{ secrets.PORT }}
-          script: |
-            cd /home/olore/apps/movie-with-friends
-            npm i
-            npm build:server
+          script: sh /home/olore/bin/update-movies
