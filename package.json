@@ -19,6 +19,7 @@
     "fastify-cors": "^3.0.3",
     "jaycue": "^1.2.6",
     "lodash.kebabcase": "^4.1.1",
+    "nedb": "^1.8.0",
     "node-fetch": "^2.6.0",
     "nodemon": "^2.0.4",
     "vue": "^2.6.11",
@@ -28,6 +29,7 @@
   "devDependencies": {
     "@babel/cli": "^7.8.4",
     "@babel/node": "^7.8.7",
+    "@babel/preset-env": "^7.9.6",
     "@mdi/js": "^5.2.45",
     "@vue/cli-plugin-babel": "~4.3.0",
     "@vue/cli-plugin-eslint": "~4.3.0",
