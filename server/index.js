@@ -12,69 +12,45 @@ fastify.register(require("fastify-cors"), {
   // TODO only allow it to process requests from same host?
 });
 
+// show
 fastify.get("/movie/:id", async (request, reply) => {
   const id = request.params.id;
-  return new Promise((resolve, reject) => {
-    // get it from the db
-    db.movies.findOne({ imdbID: id }, function (err, doc) {
-      if (!doc) {
-        // get it from API
-        fetch(
-          `https://www.omdbapi.com/?apikey=${API_KEY}&i=${request.params.id}`
-        )
-          .then((results) => results.json())
-          .then((data) => {
-            db.movies.insert(data, function (err, newDoc) {
-              if (err) {
-                console.error("Failed to insert into db", err);
-                reject(err);
-              }
-              console.log("found in API", id, data);
-              console.log(`inserted ${newDoc._id} for movie id ${id}`);
-              resolve(newDoc);
-            });
-          })
-          .catch((err) => {
-            console.log(err);
-            reject(err);
-          });
-      } else {
-        console.log("found in DB", id);
-        resolve(doc);
-      }
-    });
-  });
+
+  const fromDb = await db.findOne(db.movies, { imdbID: id });
+  if (!fromDb) {
+    const fromApi = await fetch(
+      `https://www.omdbapi.com/?apikey=${API_KEY}&i=${request.params.id}`
+    );
+    const json = await fromApi.json();
+    console.log("Found in API", id);
+
+    await db.insert(db.movies, json);
+    return json;
+  } else {
+    console.log("Found in DB", id);
+    return fromDb;
+  }
 });
 
+// search
 fastify.get("/movie", async (request, reply) => {
-  // TODO check cache ?
   const query = request.query.s;
   fastify.log.info(`search for ${query}`);
 
-  return new Promise((resolve, reject) => {
-    db.searches.findOne({ searchTerm: query }, function (err, doc) {
-      if (!doc) {
-        // get it from API
-        fetch(`https://www.omdbapi.com/?apikey=${API_KEY}&s=${query}`)
-          .then((results) => results.json())
-          .then((json) => {
-            json.searchTerm = query;
-            db.searches.insert(json, function (err, newDoc) {
-              if (err) {
-                console.error("Failed to insert into db", err);
-                reject(err);
-              }
-              console.log(`inserted ${newDoc._id} for search term ${query}`);
-              resolve(newDoc);
-            });
-          });
-      } else {
-        // this.addLikes(movie);
-        console.log("Found in DB");
-        resolve(doc);
-      }
-    });
-  });
+  const fromDb = await db.findOne(db.searches, { searchTerm: query });
+  if (!fromDb) {
+    const fromApi = await fetch(
+      `https://www.omdbapi.com/?apikey=${API_KEY}&s=${query}`
+    );
+    const json = await fromApi.json();
+    json.searchTerm = query;
+    fastify.log.debug("Found in API", json.searchTerm);
+    await db.insert(db.searches, json);
+    return json;
+  } else {
+    fastify.log.debug("Found in DB", fromDb.searchTerm);
+    return fromDb;
+  }
 });
 
 const start = async () => {
