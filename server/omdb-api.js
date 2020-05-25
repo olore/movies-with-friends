@@ -6,12 +6,10 @@ const URL = `https://www.omdbapi.com/?apikey=${API_KEY}`;
 
 const api = {
   getById: async (id) => {
-    const fromApi = await fetch(`${URL}&i=${id}`);
-    return fromApi.json();
+    return (await fetch(`${URL}&i=${id}`)).json();
   },
   search: async (query) => {
-    const fromApi = await fetch(`${URL}&s=${query}`);
-    return fromApi.json();
+    return (await fetch(`${URL}&s=${query}`)).json();
   },
 };
 module.exports = api;
