@@ -1,4 +1,5 @@
 import Datastore from "nedb";
+require("dotenv").config();
 
 const db = {
   movies: new Datastore({
@@ -34,5 +35,12 @@ const db = {
     });
   },
 };
+
+db.movies.ensureIndex({ fieldName: "imdbID" }, function (err) {
+  if (err) console.error(err);
+});
+db.searches.ensureIndex({ fieldName: "searchTerm" }, function (err) {
+  if (err) console.error(err);
+});
 
 module.exports = db;
