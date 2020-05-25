@@ -1,28 +1,34 @@
 # Movies with Friends
 
-API: https://www.omdbapi.com/
-DATA: https://www.imdb.com/interfaces/
-AUTH: https://magic.link/home
-
 ## Project setup
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+Get a key from https://www.omdbapi.com/
+
+Create a `.env` file with
 ```
-npm run serve
+API_KEY=omdb_api_key
+DB_FILE_PATH=/path/for/dbs
 ```
 
-### Compiles and minifies for production
+### Run Development 
 ```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
+npm run start:dev
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### Run Production
+Build it with `npm run build`
+Run it with
+* Frontend: Host `dist/` somewhere (like `python -m SimpleHTTPServer 8000`)
+* Backend: `npm run start`
+
+## Future?
+* https://www.imdb.com/interfaces/
+* https://magic.link/home
+
+## Thanks
+* https://vuetifyjs.com/
+* https://www.omdbapi.com/
+* https://github.com/louischatriot/nedb
