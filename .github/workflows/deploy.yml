@@ -15,4 +15,4 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
           port: ${{ secrets.PORT }}
-          script: sh /home/olore/bin/update-movies
+          script: sh /home/olore/apps/movies-with-friends/scripts/update.sh
