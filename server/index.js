@@ -5,6 +5,24 @@ const fastify = require("fastify")({
 });
 const db = require("./db");
 const api = require("./omdb-api");
+const google = require("./google");
+
+// check for google auth
+fastify.addHook("onRequest", async (request, reply) => {
+  try {
+    console.log("headers", request.headers);
+    const token = request.headers["token"];
+    if (token && token !== "") {
+      fastify.log.info("sending token to google", token);
+      // await google.verify(token).catch((err) => {
+      //   fastify.log.error("ERROR", err);
+      // });
+      await google.verify(token).catch(console.error);
+    }
+  } catch (err) {
+    fastify.log.error("123 Error", err);
+  }
+});
 
 fastify.register(require("fastify-cors"), {
   // put your options here
@@ -43,6 +61,12 @@ fastify.get("/movie", async (request, reply) => {
     fastify.log.debug("Found in DB", fromDb.searchTerm);
     return fromDb;
   }
+});
+
+// search
+fastify.get("/oauth-callback", async (request, reply) => {
+  console.log("query", request.query);
+  console.log(params, request.params);
 });
 
 const start = async () => {
