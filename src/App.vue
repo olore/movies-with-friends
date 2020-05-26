@@ -8,17 +8,11 @@
 
       <v-spacer></v-spacer>
 
-      <div
-        v-if="!state.user"
-        v-google-signin-button="clientId"
-        id="my-signin2"
-      ></div>
-
-      <div v-if="state.user && $vuetify.breakpoint.smAndUp">
+      <div v-if="state.user">
         <v-img height="40" width="40" :src="state.user.image" />
       </div>
 
-      <v-menu v-if="state.user" left bottom>
+      <v-menu left bottom>
         <template v-slot:activator="{ on }">
           <v-btn icon v-on="on">
             <v-icon>{{ iconDots }}</v-icon>
@@ -26,7 +20,13 @@
         </template>
 
         <v-list>
-          <v-list-item :to="{ name: 'settings' }">
+          <v-list-item v-if="!state.user">
+            <v-list-item-title>
+              <div v-google-signin-button="clientId" id="my-signin2"></div>
+            </v-list-item-title>
+          </v-list-item>
+
+          <v-list-item v-if="state.user" :to="{ name: 'settings' }">
             <v-list-item-title>Settings</v-list-item-title>
           </v-list-item>
         </v-list>
@@ -84,3 +84,7 @@ export default {
   },
 };
 </script>
+<style lang="scss" scoped>
+#my-signin2 {
+}
+</style>

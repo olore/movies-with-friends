@@ -1,3 +1,4 @@
+// from https://github.com/mejiamanuel57/vue-google-signin-button-directive
 import Vue from "vue";
 
 export default Vue.directive("google-signin-button", {
