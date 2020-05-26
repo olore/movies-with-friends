@@ -1,15 +1,15 @@
 const store = {
   debug: true,
   state: {
-    googleToken: null,
+    user: null,
   },
-  set(newValue) {
-    if (this.debug) console.log("set triggered with", newValue);
-    this.state.googleToken = newValue;
+  set(key, newValue) {
+    if (this.debug) console.log("set triggered with ", key, newValue);
+    this.state[key] = newValue;
   },
-  clear() {
-    if (this.debug) console.log("clear triggered");
-    this.state.googleToken = "";
+  clear(key) {
+    if (this.debug) console.log("clear triggered for ", key);
+    this.state[key] = "";
   },
 };
 export { store };
