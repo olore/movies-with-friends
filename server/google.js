@@ -11,8 +11,8 @@ const verify = async (token) => {
   });
 
   const payload = ticket.getPayload();
-  const userid = payload["sub"]; // see payload below
-  return userid;
+  // const userid = payload["sub"]; // see payload below
+  return payload;
 };
 
 module.exports = { verify };

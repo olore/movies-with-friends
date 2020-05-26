@@ -7,17 +7,58 @@ const db = require("./db");
 const api = require("./omdb-api");
 const google = require("./google");
 
+fastify.decorateRequest("user", null);
+
 // check for google auth
 fastify.addHook("onRequest", async (request, reply) => {
+  if (request.raw.method === "OPTIONS") return;
+
   try {
-    console.log("headers", request.headers);
-    const token = request.headers["token"];
+    // check if authenticated
+    const token = request.headers["googletoken"];
     if (token && token !== "") {
-      fastify.log.info("sending token to google", token);
-      // await google.verify(token).catch((err) => {
-      //   fastify.log.error("ERROR", err);
-      // });
-      await google.verify(token).catch(console.error);
+      // look up in DB by token
+      let user = await db.findOne(db.users, { googleToken: token });
+
+      if (user && user.exp * 1000 > Date.now()) {
+        fastify.log.info("Got user from db");
+        request.user = user;
+      } else {
+        fastify.log.info("Verifying user token with Google");
+        let googleUser = await google.verify(token).catch((err) => {
+          fastify.log.error("ERROR", err);
+        });
+        googleUser.googleToken = token;
+        googleUser.googleId = googleUser.sub;
+        // look up in DB by id
+        user = await db.findOne(db.users, { googleId: googleUser.googleId });
+        if (user) {
+          await db.users.update(
+            { googleId: googleUser.googleId },
+            {
+              $set: {
+                exp: googleUser.exp,
+                googleToken: googleUser.googleToken,
+              },
+            },
+            (err, numReplaced) => {
+              fastify.log.info(
+                "Updated expiry and token for user in db",
+                numReplaced
+              );
+              if (err) {
+                fastify.log.error("Failed updating user in db", err);
+              }
+            }
+          );
+        } else {
+          fastify.log.info("Adding user to db");
+          user = await db.insert(db.users, googleUser);
+        }
+        request.user = user;
+      }
+    } else {
+      fastify.log.error("No user token");
     }
   } catch (err) {
     fastify.log.error("123 Error", err);
@@ -32,7 +73,6 @@ fastify.register(require("fastify-cors"), {
 // show
 fastify.get("/movie/:id", async (request, reply) => {
   const id = request.params.id;
-
   const fromDb = await db.findOne(db.movies, { imdbID: id });
   if (!fromDb) {
     const json = await api.getById(id);

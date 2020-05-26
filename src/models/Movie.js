@@ -247,7 +247,7 @@ export default class Movie {
       `${document.location.protocol}//${document.location.hostname}:3000/movie?s=${val}`,
       {
         headers: {
-          token: store.state.googleToken,
+          googleToken: store.state.user.googleToken,
         },
       }
     ).then((results) => results.json());
@@ -258,7 +258,7 @@ export default class Movie {
       `${document.location.protocol}//${document.location.hostname}:3000/movie/${id}`,
       {
         headers: {
-          token: store.state.googleToken,
+          googleToken: store.state.user.googleToken,
         },
       }
     )

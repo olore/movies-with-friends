@@ -36,10 +36,15 @@ const db = {
   },
 };
 
-db.movies.ensureIndex({ fieldName: "imdbID" }, function (err) {
+db.movies.ensureIndex({ fieldName: "imdbID", unique: true }, function (err) {
   if (err) console.error(err);
 });
-db.searches.ensureIndex({ fieldName: "searchTerm" }, function (err) {
+db.searches.ensureIndex({ fieldName: "searchTerm", unique: true }, function (
+  err
+) {
+  if (err) console.error(err);
+});
+db.users.ensureIndex({ fieldName: "googleId", unique: true }, function (err) {
   if (err) console.error(err);
 });
 
