@@ -2,6 +2,7 @@ import jaycue from "jaycue";
 import kebabCase from "lodash.kebabcase";
 import Like from "./Like";
 import Person from "./Person";
+import { store } from "../store";
 
 export default class Movie {
   constructor(data) {
@@ -243,13 +244,23 @@ export default class Movie {
 
   static async search(val) {
     return fetch(
-      `${document.location.protocol}//${document.location.hostname}:3000/movie?s=${val}`
+      `${document.location.protocol}//${document.location.hostname}:3000/movie?s=${val}`,
+      {
+        headers: {
+          googleToken: store.state.user.googleToken,
+        },
+      }
     ).then((results) => results.json());
   }
 
   static async getById(id) {
     return fetch(
-      `${document.location.protocol}//${document.location.hostname}:3000/movie/${id}`
+      `${document.location.protocol}//${document.location.hostname}:3000/movie/${id}`,
+      {
+        headers: {
+          googleToken: store.state.user.googleToken,
+        },
+      }
     )
       .then((results) => results.json())
       .then((data) => {
