@@ -22,7 +22,7 @@ export default Vue.directive("google-signin-button", {
         // auth2.then(vnode.context.OnGoogleAuthSuccess);
         auth2.attachClickHandler(el, {}, OnSuccess, Onfail);
         gapi.signin2.render("my-signin2", {
-          scope: "profile email",
+          scope: "profile",
           width: 240,
           height: 50,
           longtitle: false,

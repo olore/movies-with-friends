@@ -8,17 +8,17 @@
 
       <v-spacer></v-spacer>
 
-      <div v-if="state.user && $vuetify.breakpoint.smAndUp">
-        <v-icon>{{ iconStar }}</v-icon>
-        {{ state.user.name }}
-      </div>
-
       <div
         v-if="!state.user"
         v-google-signin-button="clientId"
         id="my-signin2"
       ></div>
-      <v-menu left bottom v-if="state.user">
+
+      <div v-if="state.user && $vuetify.breakpoint.smAndUp">
+        <v-img height="40" width="40" :src="state.user.image" />
+      </div>
+
+      <v-menu v-if="state.user" left bottom>
         <template v-slot:activator="{ on }">
           <v-btn icon v-on="on">
             <v-icon>{{ iconDots }}</v-icon>
@@ -64,9 +64,12 @@ export default {
   methods: {
     OnGoogleAuthSuccess(googleUser) {
       let profile = googleUser.getBasicProfile();
+      console.log({ profile });
       if (profile) {
         store.set("user", {
           googleToken: googleUser.getAuthResponse().id_token,
+          givenName: profile.getGivenName(),
+          image: profile.getImageUrl(),
           name: profile.getName(),
           email: profile.getEmail(),
         });
