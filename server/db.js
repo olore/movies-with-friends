@@ -29,7 +29,9 @@ const db = {
           console.error("Failed to insert into db", err);
           reject(err);
         }
-        console.log(`inserted doc for "${doc.imdbID || doc.searchTerm}"`);
+        console.log(
+          `inserted doc for "${doc.imdbID || doc.searchTerm || doc.email}"`
+        );
         resolve(newDoc);
       });
     });
@@ -44,7 +46,13 @@ db.searches.ensureIndex({ fieldName: "searchTerm", unique: true }, function (
 ) {
   if (err) console.error(err);
 });
+
 db.users.ensureIndex({ fieldName: "googleId", unique: true }, function (err) {
+  if (err) console.error(err);
+});
+db.users.ensureIndex({ fieldName: "googleToken", unique: true }, function (
+  err
+) {
   if (err) console.error(err);
 });
 
