@@ -20,12 +20,6 @@
         </template>
 
         <v-list>
-          <v-list-item v-if="!state.user">
-            <v-list-item-title>
-              <div v-google-signin-button="clientId" id="my-signin2"></div>
-            </v-list-item-title>
-          </v-list-item>
-
           <v-list-item v-if="state.user" :to="{ name: 'settings' }">
             <v-list-item-title>Settings</v-list-item-title>
           </v-list-item>
@@ -35,6 +29,11 @@
 
     <v-content>
       <router-view></router-view>
+      <div
+        v-if="!state.user"
+        v-google-signin-button="clientId"
+        id="my-signin2"
+      ></div>
     </v-content>
 
     <v-footer app class="justify-end">
