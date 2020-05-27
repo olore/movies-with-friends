@@ -1,7 +1,7 @@
 import jaycue from "jaycue";
 import kebabCase from "lodash.kebabcase";
 import Like from "./Like";
-import Person from "./Person";
+import User from "./User";
 import { store } from "../store";
 
 export default class Movie {
@@ -33,10 +33,6 @@ export default class Movie {
 
     let title = this.Title.replace(/ /g, "-").replace("'", "");
     return `https://reelgood.com/${type}/${title}-${year}`.toLowerCase();
-  }
-
-  static kebabTitle(title) {
-    return kebabCase(title);
   }
 
   static all() {
@@ -238,61 +234,51 @@ export default class Movie {
     ];
   }
 
-  getKebab() {
-    return kebabCase(this.Title);
+  static getHost() {
+    return `${document.location.protocol}//${document.location.hostname}`;
   }
 
+  static getHeaders() {
+    return {
+      googleToken: store.state.user.googleToken,
+    };
+  }
   static async search(val) {
-    return fetch(
-      `${document.location.protocol}//${document.location.hostname}:3000/movie?s=${val}`,
-      {
-        headers: {
-          googleToken: store.state.user.googleToken,
-        },
-      }
-    ).then((results) => results.json());
+    let results = await fetch(`${getHost()}:3000/movie?s=${val}`, {
+      headers: this.getHeaders(),
+    });
+    return await results.json();
   }
 
   static async getById(id) {
-    return fetch(
-      `${document.location.protocol}//${document.location.hostname}:3000/movie/${id}`,
-      {
-        headers: {
-          googleToken: store.state.user.googleToken,
-        },
-      }
-    )
-      .then((results) => results.json())
-      .then((data) => {
-        let movie = new Movie(data);
-        return this.addLikes(movie);
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-      .finally(() => (this.isLoading = false));
+    let results = await fetch(`${getHost()}:3000/movie/${id}`, {
+      headers: this.getHeaders(),
+    });
+    let data = await results.json();
+    let movie = new Movie(data);
+    return this.addLikes(movie);
   }
 
   static addLikes(movie) {
     movie.likes = [
-      new Like(movie, Person.get("APrettyLong FirstAndLastName"), {
+      new Like(movie, User.get("APrettyLong FirstAndLastName"), {
         rating: 5,
         comment: "I'd see it again. Wish I cuold have seen it in a theater.",
       }),
-      new Like(movie, Person.get("Brian Olore"), {
+      new Like(movie, User.get("Brian Olore"), {
         rating: 4,
         comment:
           "Pretty funny. I think you'll want to watch it without the kids, there are some sketchy scenes",
       }),
-      new Like(movie, Person.get("Joseph Olore"), {
+      new Like(movie, User.get("Joseph Olore"), {
         rating: 2,
         comment: "just ok, not my fave",
       }),
-      new Like(movie, Person.get("Dana Olore"), {
+      new Like(movie, User.get("Dana Olore"), {
         rating: 1,
         comment: "Too scary",
       }),
-      new Like(movie, Person.get("Grace Olore"), {
+      new Like(movie, User.get("Grace Olore"), {
         rating: 5,
       }),
     ];

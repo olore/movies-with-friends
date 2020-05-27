@@ -1,6 +1,6 @@
 export default class Like {
-  constructor(movie, person, other) {
-    Object.assign(this, { movie, person, ...other });
+  constructor(movie, user, other) {
+    Object.assign(this, { movie, user, ...other });
   }
 
   smallDate() {
