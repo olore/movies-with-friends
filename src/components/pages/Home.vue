@@ -30,8 +30,12 @@ export default {
     Card,
     Search,
   },
+  mounted: async function () {
+    this.movies = await Movie.getRecentlyViewed();
+    console.log(this.movies);
+  },
   data: () => ({
-    movies: [...Movie.all()],
+    movies: [],
   }),
 };
 </script>

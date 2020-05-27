@@ -2,8 +2,7 @@ const api = require("../omdb-api");
 const db = require("../db");
 
 async function routes(fastify, options) {
-  // show
-  fastify.get("/movie/:id", async (request, reply) => {
+  fastify.get("/movie/show/:id", async (request, reply) => {
     const id = request.params.id;
     const fromDb = await db.findOne(db.movies, { imdbID: id });
     if (!fromDb) {
@@ -17,9 +16,8 @@ async function routes(fastify, options) {
     }
   });
 
-  // search
-  fastify.get("/movie", async (request, reply) => {
-    const query = request.query.s;
+  fastify.get("/movie/search/:query", async (request, reply) => {
+    const query = request.params.query;
     fastify.log.info(`${request.user.name} - search for ${query}`);
 
     const fromDb = await db.findOne(db.searches, { searchTerm: query });
@@ -33,6 +31,20 @@ async function routes(fastify, options) {
       fastify.log.debug("Found in DB", fromDb.searchTerm);
       return fromDb;
     }
+  });
+
+  fastify.get("/movie/recent", async (request, reply) => {
+    let limit = request.query.limit || 12;
+    return new Promise((resolve, reject) => {
+      db.movies
+        .find({ Plot: { $ne: "N/A" } })
+        .sort({ updatedAt: -1, createdAt: -1, Title: 1 })
+        .limit(limit)
+        .exec((err, docs) => {
+          if (err) reject(err);
+          resolve(docs);
+        });
+    });
   });
 }
 module.exports = routes;
