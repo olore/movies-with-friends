@@ -56,9 +56,7 @@
             />
           </v-row>
 
-          <v-row v-if="$vuetify.breakpoint.smAndUp">
-            <LikesList :likes="movie.likes" />
-          </v-row>
+          <LikesList :likes="movie.likes" v-if="$vuetify.breakpoint.smAndUp" />
         </v-container>
       </v-col>
     </v-row>
@@ -94,7 +92,7 @@ export default {
           const movie = await Movie.getById(to.params.id);
           next((vm) => {
             vm.movie = movie;
-            clearInterval();
+            clearInterval(waitForUserInterval);
           });
         }
       }, 200);

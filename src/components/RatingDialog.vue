@@ -2,7 +2,7 @@
   <v-dialog v-model="dialog" width="500">
     <template v-slot:activator="{ on }">
       <v-btn color="primary" class="text-align-left" v-on="on">
-        I've seen this
+        {{ myLike ? "Edit my Rating" : "I've seen this" }}
       </v-btn>
     </template>
 

@@ -9,6 +9,9 @@
         <span class="" v-if="like.comment">
           &quot;{{ like.comment }}&quot;</span
         >
+        <span v-else class="font-italic">
+          No comment
+        </span>
         <span class="overline vmiddle grey--text">{{ like.smallDate() }}</span>
       </v-col>
     </v-row>
