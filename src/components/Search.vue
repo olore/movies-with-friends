@@ -95,9 +95,13 @@ export default {
         Movie.search(val)
           .then((results) => {
             // this.count = results.totalResults;
-            this.entries = results.Search.filter((result) => {
-              return result.Poster !== "N/A" && result.Type !== "game";
-            });
+            if (results.Search) {
+              this.entries = results.Search.filter((result) => {
+                return result.Poster !== "N/A" && result.Type !== "game";
+              });
+            } else {
+              // this.entries = [];
+            }
           })
           .catch((err) => {
             console.log(err);

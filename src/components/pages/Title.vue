@@ -88,15 +88,21 @@ export default {
     movie: null,
   }),
   async beforeRouteEnter(to, from, next) {
-    let waitForUserInterval = setInterval(async function () {
-      if (store.state && store.state.user) {
-        const movie = await Movie.getById(to.params.id);
-        next((vm) => {
-          vm.movie = movie;
-          clearInterval(waitForUserInterval);
-        });
-      }
-    }, 200);
+    if (store.state === undefined || store.state.user == undefined) {
+      let waitForUserInterval = setInterval(async function () {
+        if (store.state && store.state.user) {
+          const movie = await Movie.getById(to.params.id);
+          next((vm) => {
+            vm.movie = movie;
+            clearInterval();
+          });
+        }
+      }, 200);
+    } else {
+      next(async (vm) => {
+        vm.movie = await Movie.getById(to.params.id);
+      });
+    }
   },
   watch: {
     movie: function (val, oldVal) {
