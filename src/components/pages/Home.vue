@@ -31,7 +31,7 @@ export default {
     Search,
   },
   created: async function () {
-    // TODO don't call this every time the home page loads
+    // TODO don't call this every time the home page loads?
     this.movies = await Movie.getRecentlyViewed();
   },
   data: () => ({

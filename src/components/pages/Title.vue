@@ -78,6 +78,7 @@ import IMDBRating from "../ratings/IMDBRating";
 import RottenTomatoesRating from "../ratings/RottenTomatoesRating";
 import RatingDialog from "../RatingDialog";
 import LikesList from "../LikesList";
+import { store } from "../../store";
 
 export default {
   name: "Title",
@@ -86,10 +87,15 @@ export default {
     movie: null,
   }),
   async beforeRouteEnter(to, from, next) {
-    const movie = await Movie.getById(to.params.id);
-    next((vm) => {
-      vm.movie = movie;
-    });
+    let waitForUserInterval = setInterval(async function () {
+      if (store.state && store.state.user) {
+        const movie = await Movie.getById(to.params.id);
+        next((vm) => {
+          vm.movie = movie;
+          clearInterval(waitForUserInterval);
+        });
+      }
+    }, 200);
   },
   methods: {
     goBack() {
