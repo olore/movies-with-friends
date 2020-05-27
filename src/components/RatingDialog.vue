@@ -47,7 +47,7 @@ export default {
       isLoading: false,
     };
   },
-  props: ["imdbID"],
+  props: ["imdbID", "onSave"],
   methods: {
     save: async function () {
       this.isLoading = true;
@@ -59,6 +59,7 @@ export default {
         });
         if (res) {
           this.dialog = false; // close dialog
+          this.onSave();
         } else {
           console.error(err);
         }

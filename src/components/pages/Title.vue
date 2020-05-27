@@ -48,7 +48,11 @@
           </v-row>
 
           <v-row>
-            <RatingDialog :imdbID="movie.imdbID" class="ma-3" />
+            <RatingDialog
+              :imdbID="movie.imdbID"
+              :onSave="reload"
+              class="ma-3"
+            />
           </v-row>
 
           <v-row v-if="$vuetify.breakpoint.smAndUp">
@@ -90,6 +94,9 @@ export default {
   methods: {
     goBack() {
       window.history.length > 1 ? this.$router.go(-1) : this.$router.push("/");
+    },
+    reload: async function () {
+      this.movie = await Movie.getById(this.movie.imdbID);
     },
   },
   computed: {
