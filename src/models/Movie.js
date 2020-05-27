@@ -77,6 +77,21 @@ export default class Movie {
     });
   }
 
+  static async like(data) {
+    let results = await fetch(
+      `${this.getHost()}:3000/movie/like/${data.imdbID}`,
+      {
+        method: "POST",
+        headers: this.getHeaders(),
+        body: JSON.stringify({
+          rating: data.rating,
+          comment: data.comment,
+        }),
+      }
+    );
+    return results.json();
+  }
+
   static addLikes(movie) {
     movie.likes = [
       new Like(movie, User.get("APrettyLong FirstAndLastName"), {

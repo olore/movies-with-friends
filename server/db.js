@@ -37,12 +37,47 @@ const db = {
         if (err) {
           console.error("Failed to insert into db", err);
           reject(err);
+        } else {
+          console.log(
+            `inserted doc for "${doc.imdbID || doc.searchTerm || doc.email}"`
+          );
+          resolve(newDoc);
         }
-        console.log(
-          `inserted doc for "${doc.imdbID || doc.searchTerm || doc.email}"`
-        );
-        resolve(newDoc);
       });
+    });
+  },
+
+  update: (collection, query, update) => {
+    return new Promise((resolve, reject) => {
+      collection.update(
+        query,
+        update,
+        { upsert: true },
+        (err, numAffected, doc, isInserted) => {
+          // doc is only there on insert (not update), so can't return/resovle it
+          if (err) {
+            reject(err);
+          } else {
+            resolve(true);
+          }
+        }
+      );
+    });
+  },
+
+  recent: (collection, query, limit) => {
+    return new Promise((resolve, reject) => {
+      collection
+        .find(query)
+        .sort({ updatedAt: -1, createdAt: -1, Title: 1 })
+        .limit(limit)
+        .exec((err, docs) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(docs);
+          }
+        });
     });
   },
 };
@@ -52,13 +87,17 @@ const createIndex = async (collection, field, isUnique) => {
     collection.ensureIndex({ fieldName: field, unique: isUnique }, function (
       err
     ) {
-      if (err) reject(err);
-      resolve();
+      if (err) {
+        reject(err);
+      } else {
+        resolve();
+      }
     });
   });
 };
 
-async () => {
+(async () => {
+  console.log("Creating indexes");
   try {
     await createIndex(db.movies, "imdbID", true);
     await createIndex(db.searches, "searchTerm", true);
@@ -69,6 +108,6 @@ async () => {
   } catch (err) {
     console.error("Problem generating indexes", err);
   }
-};
+})();
 
 module.exports = db;

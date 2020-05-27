@@ -20,12 +20,13 @@
         <v-textarea
           label="Optionally leave a comment..."
           name="ratingText"
+          v-model="comment"
         ></v-textarea>
       </v-card-text>
 
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="primary" text @click="dialog = false">
+        <v-btn color="primary" text :loading="isLoading" @click="save">
           Save
         </v-btn>
       </v-card-actions>
@@ -34,12 +35,39 @@
 </template>
 
 <script>
+import Movie from "../models/Movie";
+
 export default {
   data() {
     return {
       dialog: false,
       rating: 3,
+      comment: "",
+      error: null,
+      isLoading: false,
     };
+  },
+  props: ["imdbID"],
+  methods: {
+    save: async function () {
+      this.isLoading = true;
+      try {
+        let res = await Movie.like({
+          comment: this.comment,
+          rating: this.rating,
+          imdbID: this.imdbID,
+        });
+        if (res) {
+          this.dialog = false; // close dialog
+        } else {
+          console.error(err);
+        }
+      } catch (err) {
+        console.error(err);
+      } finally {
+        this.isLoading = false;
+      }
+    },
   },
 };
 </script>

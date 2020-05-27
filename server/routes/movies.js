@@ -34,17 +34,32 @@ async function routes(fastify, options) {
   });
 
   fastify.get("/movie/recent", async (request, reply) => {
-    let limit = request.query.limit || 12;
-    return new Promise((resolve, reject) => {
-      db.movies
-        .find({ Plot: { $ne: "N/A" } })
-        .sort({ updatedAt: -1, createdAt: -1, Title: 1 })
-        .limit(limit)
-        .exec((err, docs) => {
-          if (err) reject(err);
-          resolve(docs);
-        });
-    });
+    const limit = request.query.limit || 12;
+    const query = { Plot: { $ne: "N/A" } };
+    return await db.recent(db.movies, query, limit);
+  });
+
+  fastify.post("/movie/like/:id", async (request, reply) => {
+    const body = JSON.parse(request.body); // TODO limit size of what is going in SPAM
+    const imdbID = request.params.id;
+    const user = request.user;
+    if (!user) {
+      reply
+        .code(401)
+        .header("Content-Type", "application/json; charset=utf-8")
+        .send({ error: "User not authenticated" });
+    }
+    let success = await db.update(
+      db.likes,
+      { imdbID, googleId: user.googleId },
+      {
+        imdbID,
+        rating: body.rating,
+        comment: body.comment,
+        googleId: user.googleId,
+      }
+    );
+    return success;
   });
 }
 module.exports = routes;

@@ -48,7 +48,7 @@
           </v-row>
 
           <v-row>
-            <RatingDialog class="ma-3" />
+            <RatingDialog :imdbID="movie.imdbID" class="ma-3" />
           </v-row>
 
           <v-row v-if="$vuetify.breakpoint.smAndUp">
