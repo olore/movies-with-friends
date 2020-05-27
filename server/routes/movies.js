@@ -4,7 +4,7 @@ const db = require("../db");
 async function routes(fastify, options) {
   fastify.get("/movie/show/:id", async (request, reply) => {
     const id = request.params.id;
-    const movie = await db.findOne(db.movies, { imdbID: id });
+    let movie = await db.findOne(db.movies, { imdbID: id });
     if (!movie) {
       const json = await api.getById(id);
       fastify.log.debug("Found in API", id);

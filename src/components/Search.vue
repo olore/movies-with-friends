@@ -39,7 +39,7 @@ import Movie from "../models/Movie";
 
 export default {
   data: () => ({
-    descriptionLimit: 60,
+    descriptionLimit: 50,
     entries: [],
     isLoading: false,
     model: null,
@@ -61,11 +61,11 @@ export default {
     items() {
       if (this.entries) {
         return this.entries.map((entry) => {
-          const Title =
+          let Title =
             entry.Title.length > this.descriptionLimit
               ? entry.Title.slice(0, this.descriptionLimit) + "..."
               : entry.Title;
-
+          Title = `${Title} (${entry.Year})`;
           return Object.assign({}, entry, { Title });
         });
       } else {
@@ -91,8 +91,10 @@ export default {
 
         Movie.search(val)
           .then((results) => {
-            this.count = results.totalResults;
-            this.entries = results.Search;
+            // this.count = results.totalResults;
+            this.entries = results.Search.filter((result) => {
+              return result.Poster !== "N/A";
+            });
           })
           .catch((err) => {
             console.log(err);
