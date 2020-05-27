@@ -1,4 +1,4 @@
-import Datastore from "nedb";
+const Datastore = require("nedb");
 require("dotenv").config();
 
 const db = {
@@ -17,6 +17,11 @@ const db = {
     autoload: true,
     timestampData: true,
   }),
+  likes: new Datastore({
+    filename: `${process.env.DB_FILE_PATH}/likes.nedb`,
+    autoload: true,
+    timestampData: true,
+  }),
 
   findOne: (collection, query) => {
     return new Promise((resolve, reject) => {
@@ -25,6 +30,7 @@ const db = {
       });
     });
   },
+
   insert: (collection, doc) => {
     return new Promise((resolve, reject) => {
       collection.insert(doc, function (err, newDoc) {
@@ -41,22 +47,28 @@ const db = {
   },
 };
 
-db.movies.ensureIndex({ fieldName: "imdbID", unique: true }, function (err) {
-  if (err) console.error(err);
-});
-db.searches.ensureIndex({ fieldName: "searchTerm", unique: true }, function (
-  err
-) {
-  if (err) console.error(err);
-});
+const createIndex = async (collection, field, isUnique) => {
+  return new Promise((resolve, reject) => {
+    collection.ensureIndex({ fieldName: field, unique: isUnique }, function (
+      err
+    ) {
+      if (err) reject(err);
+      resolve();
+    });
+  });
+};
 
-db.users.ensureIndex({ fieldName: "googleId", unique: true }, function (err) {
-  if (err) console.error(err);
-});
-db.users.ensureIndex({ fieldName: "googleToken", unique: true }, function (
-  err
-) {
-  if (err) console.error(err);
-});
+async () => {
+  try {
+    await createIndex(db.movies, "imdbID", true);
+    await createIndex(db.searches, "searchTerm", true);
+    await createIndex(db.users, "googleId", true);
+    await createIndex(db.users, "googleToken", true);
+    await createIndex(db.likes, "googleId", true);
+    await createIndex(db.likes, "imdbID", true);
+  } catch (err) {
+    console.error("Problem generating indexes", err);
+  }
+};
 
 module.exports = db;
