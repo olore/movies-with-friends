@@ -20,7 +20,10 @@
       >
         <template v-slot:item="{ item }">
           <v-list-item-content @click="selected(item)">
-            <v-list-item-title v-text="item.Title"></v-list-item-title>
+            <v-list-item-title
+              class="py-1 body-1"
+              v-text="item.Title"
+            ></v-list-item-title>
           </v-list-item-content>
         </template>
       </v-autocomplete>
@@ -93,7 +96,7 @@ export default {
           .then((results) => {
             // this.count = results.totalResults;
             this.entries = results.Search.filter((result) => {
-              return result.Poster !== "N/A";
+              return result.Poster !== "N/A" && result.Type !== "game";
             });
           })
           .catch((err) => {
