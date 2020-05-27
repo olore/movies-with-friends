@@ -32,3 +32,4 @@ Run it with
 * https://vuetifyjs.com/
 * https://www.omdbapi.com/
 * https://github.com/louischatriot/nedb
+* https://github.com/mejiamanuel57/vue-google-signin-button-directive

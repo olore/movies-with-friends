@@ -16,12 +16,20 @@ export default Vue.directive("google-signin-button", {
 
     function InitGoogleButton() {
       gapi.load("signin2:auth2", () => {
-        const auth2 = gapi.auth2.init({
+        const googleAuth = gapi.auth2.init({
           client_id: clientId,
           cookiepolicy: "single_host_origin",
         });
-        // auth2.then(vnode.context.OnGoogleAuthSuccess);
-        auth2.attachClickHandler(el, {}, OnSuccess, Onfail);
+        googleAuth.then(
+          (sth) => {
+            vnode.context.OnGoogleAuthInit(sth);
+          },
+          (err) => {
+            vnode.context.OnGoogleAuthInitError(err);
+          }
+        );
+
+        googleAuth.attachClickHandler(el, {}, OnSuccess, Onfail);
         gapi.signin2.render("my-signin2", {
           scope: "profile",
           width: 240,
@@ -40,6 +48,7 @@ export default Vue.directive("google-signin-button", {
     function Onfail(error) {
       vnode.context.OnGoogleAuthFail(error);
     }
+
     function CheckComponentMethods() {
       if (!vnode.context.OnGoogleAuthSuccess) {
         throw new Error(

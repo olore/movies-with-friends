@@ -28,12 +28,13 @@
     </v-app-bar>
 
     <v-content>
-      <router-view></router-view>
-      <div
-        v-if="!state.user"
-        v-google-signin-button="clientId"
-        id="my-signin2"
-      ></div>
+      <router-view v-if="state.user"></router-view>
+      <div v-else v-google-signin-button="clientId">
+        <v-container :class="{ 'd-none': gaLoading }">
+          <span class="headline">Please sign in</span>
+          <div id="my-signin2"></div>
+        </v-container>
+      </div>
     </v-content>
 
     <v-footer app class="justify-end">
@@ -52,18 +53,25 @@ export default {
   props: {
     source: String,
   },
-  data: () => ({
-    drawer: null,
-    clientId: "363023621937-9pdn9513cpmopcbtv7ebmhe8kokpo6s4",
-    state: store.state,
-    iconDots: mdiDotsVertical,
-    iconStar: mdiStar,
-  }),
-
+  data: function () {
+    return {
+      drawer: null,
+      clientId: "363023621937-9pdn9513cpmopcbtv7ebmhe8kokpo6s4",
+      gaLoading: true,
+      state: store.state,
+      iconDots: mdiDotsVertical,
+      iconStar: mdiStar,
+    };
+  },
   methods: {
+    OnGoogleAuthInitError(err) {
+      console.error("ga init error", googleUser);
+    },
+    OnGoogleAuthInit() {
+      this.gaLoading = false;
+    },
     OnGoogleAuthSuccess(googleUser) {
       let profile = googleUser.getBasicProfile();
-      console.log({ profile });
       if (profile) {
         store.set("user", {
           googleToken: googleUser.getAuthResponse().id_token,
@@ -73,9 +81,8 @@ export default {
           email: profile.getEmail(),
         });
       } else {
-        console.log("google not logged in, I guess?");
+        console.log("Not sure why there is no profile");
       }
-      // Receive the idToken and make your magic with the backend
     },
     OnGoogleAuthFail(error) {
       console.log(error);
@@ -83,7 +90,3 @@ export default {
   },
 };
 </script>
-<style lang="scss" scoped>
-#my-signin2 {
-}
-</style>
