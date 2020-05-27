@@ -4,16 +4,18 @@ const db = require("../db");
 async function routes(fastify, options) {
   fastify.get("/movie/show/:id", async (request, reply) => {
     const id = request.params.id;
-    const fromDb = await db.findOne(db.movies, { imdbID: id });
-    if (!fromDb) {
+    const movie = await db.findOne(db.movies, { imdbID: id });
+    if (!movie) {
       const json = await api.getById(id);
       fastify.log.debug("Found in API", id);
-      await db.insert(db.movies, json);
-      return json;
+      movie = await db.insert(db.movies, json);
     } else {
       fastify.log.debug("Found in DB", id);
-      return fromDb;
     }
+
+    //get likes
+    movie.likes = await db.recent(db.likes, { imdbID: id }, 100);
+    return movie;
   });
 
   fastify.get("/movie/search/:query", async (request, reply) => {
@@ -57,6 +59,7 @@ async function routes(fastify, options) {
         rating: body.rating,
         comment: body.comment,
         googleId: user.googleId,
+        name: user.name,
       }
     );
     return success;

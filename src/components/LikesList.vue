@@ -1,9 +1,9 @@
 <template>
   <div class="d-flex flex-column pt-3">
-    <v-row v-for="like in likes" :key="like.user.name">
+    <v-row v-for="like in likes" :key="like.name">
       <v-col cols="4">
         <v-rating v-model="like.rating" readonly dense size="20"></v-rating>
-        <span class="body-2 font-weight-bold ml-1">{{ like.user.name }}</span>
+        <span class="body-2 font-weight-bold ml-1">{{ like.name }}</span>
       </v-col>
       <v-col cols="8">
         <span class="" v-if="like.comment">

@@ -1,13 +1,15 @@
+import { format } from "date-fns";
+
 export default class Like {
-  constructor(movie, user, other) {
-    Object.assign(this, { movie, user, ...other });
+  constructor(movie) {
+    Object.assign(this, movie);
   }
 
   smallDate() {
-    if (this.date) {
-      return "Nov 20, 2008";
+    if (this.updatedAt) {
+      return format(new Date(this.updatedAt), "MMM d, yyyy"); //"Nov 20, 2008";
     } else {
-      return "Mar 18, 2020";
+      return "UNKNOWN";
     }
   }
 }

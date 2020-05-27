@@ -103,8 +103,8 @@ const createIndex = async (collection, field, isUnique) => {
     await createIndex(db.searches, "searchTerm", true);
     await createIndex(db.users, "googleId", true);
     await createIndex(db.users, "googleToken", true);
-    await createIndex(db.likes, "googleId", true);
-    await createIndex(db.likes, "imdbID", true);
+    await createIndex(db.likes, "googleId", false);
+    await createIndex(db.likes, "imdbID", false);
   } catch (err) {
     console.error("Problem generating indexes", err);
   }

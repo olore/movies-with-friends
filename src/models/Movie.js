@@ -1,6 +1,5 @@
 import jaycue from "jaycue";
 import Like from "./Like";
-import User from "./User";
 import { store } from "../store";
 
 export default class Movie {
@@ -62,7 +61,11 @@ export default class Movie {
     });
     let data = await results.json();
     let movie = new Movie(data);
-    return this.addLikes(movie);
+
+    movie.likes = movie.likes.map((like) => {
+      return new Like(like);
+    });
+    return movie;
   }
 
   static async getRecentlyViewed() {
@@ -71,9 +74,7 @@ export default class Movie {
     });
     let data = await results.json();
     return data.map((movieData) => {
-      let movie = new Movie(movieData);
-      this.addLikes(movie);
-      return movie;
+      return new Movie(movieData);
     });
   }
 
@@ -90,31 +91,5 @@ export default class Movie {
       }
     );
     return results.json();
-  }
-
-  static addLikes(movie) {
-    movie.likes = [
-      new Like(movie, User.get("APrettyLong FirstAndLastName"), {
-        rating: 5,
-        comment: "I'd see it again. Wish I cuold have seen it in a theater.",
-      }),
-      new Like(movie, User.get("Brian Olore"), {
-        rating: 4,
-        comment:
-          "Pretty funny. I think you'll want to watch it without the kids, there are some sketchy scenes",
-      }),
-      new Like(movie, User.get("Joseph Olore"), {
-        rating: 2,
-        comment: "just ok, not my fave",
-      }),
-      new Like(movie, User.get("Dana Olore"), {
-        rating: 1,
-        comment: "Too scary",
-      }),
-      new Like(movie, User.get("Grace Olore"), {
-        rating: 5,
-      }),
-    ];
-    return movie;
   }
 }
