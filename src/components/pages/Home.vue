@@ -30,9 +30,9 @@ export default {
     Card,
     Search,
   },
-  mounted: async function () {
+  created: async function () {
+    // TODO don't call this every time the home page loads
     this.movies = await Movie.getRecentlyViewed();
-    console.log(this.movies);
   },
   data: () => ({
     movies: [],
