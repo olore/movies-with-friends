@@ -51,6 +51,7 @@
             <RatingDialog
               :imdbID="movie.imdbID"
               :onSave="reload"
+              :myLike="myLike"
               class="ma-3"
             />
           </v-row>
@@ -96,6 +97,14 @@ export default {
         });
       }
     }, 200);
+  },
+  watch: {
+    movie: function (val, oldVal) {
+      this.myLike = this.movie.likes.find((like) => {
+        // return like.googleId === store.state.user.googleId;
+        return like.name === store.state.user.name; // FIXME this shouldb't be based on name, but store doesn't have googleId
+      });
+    },
   },
   methods: {
     goBack() {

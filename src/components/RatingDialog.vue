@@ -47,7 +47,13 @@ export default {
       isLoading: false,
     };
   },
-  props: ["imdbID", "onSave"],
+  props: ["imdbID", "onSave", "myLike"],
+  mounted: function () {
+    if (this.myLike) {
+      this.rating = this.myLike.rating;
+      this.comment = this.myLike.comment;
+    }
+  },
   methods: {
     save: async function () {
       this.isLoading = true;
