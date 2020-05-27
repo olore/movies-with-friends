@@ -14,7 +14,11 @@
       <v-card-title></v-card-title>
     </v-img>
 
-    <v-card-subtitle class="pa-1">{{ movie.Title }}</v-card-subtitle>
+    <v-card-subtitle
+      class="pa-1 text-center font-weight-bold"
+      :style="subTitle"
+      >{{ movie.Title }}</v-card-subtitle
+    >
 
     <v-card-text class="text--primary d-none d-md-block pb-1">
       <div
@@ -64,6 +68,13 @@ export default {
     RottenTomatoesRating,
   },
   computed: {
+    subTitle() {
+      if (this.$vuetify.breakpoint.xs) {
+        return "min-height: 50px; max-height: 50px; overflow: hidden;";
+      } else {
+        return "max-height: 25px; overflow: hidden";
+      }
+    },
     cardWidth() {
       switch (this.$vuetify.breakpoint.name) {
         case "xs":
