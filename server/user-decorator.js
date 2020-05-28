@@ -17,37 +17,23 @@ async function userDecorator(fastify, request, reply) {
         let googleUser = await google.verify(token).catch((err) => {
           fastify.log.error("ERROR", err);
         });
-        googleUser.googleToken = token;
-        googleUser.googleId = googleUser.sub;
-        // look up in DB by id
-        user = await db.findOne(db.users, { googleId: googleUser.googleId });
-        if (user) {
-          await db.users.update(
-            { googleId: googleUser.googleId },
-            {
-              $set: {
-                exp: googleUser.exp,
-                googleToken: googleUser.googleToken,
-              },
-            },
-            (err, numReplaced) => {
-              fastify.log.info(
-                "Updated expiry and token for user in db",
-                numReplaced
-              );
-              if (err) {
-                fastify.log.error("Failed updating user in db", err);
-              }
-            }
-          );
-        } else {
-          fastify.log.info("Adding user to db");
-          user = await db.insert(db.users, googleUser);
-        }
-        return user;
+        const googleId = googleUser.sub;
+        // look up in DB by id and either update or insert
+        user = await db.upsert(
+          db.users,
+          { googleId },
+          {
+            googleId,
+            googleToken: token,
+            exp: googleUser.exp,
+            name: googleUser.name,
+            given_name: googleUser.given_name,
+            family_name: googleUser.family_name,
+            picture: googleUser.picture,
+          }
+        );
       }
-    } else {
-      fastify.log.error("No user token");
+      return user;
     }
   } catch (err) {
     fastify.log.error("123 Error", err);

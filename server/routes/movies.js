@@ -51,7 +51,7 @@ async function routes(fastify, options) {
         .header("Content-Type", "application/json; charset=utf-8")
         .send({ error: "User not authenticated" });
     }
-    let success = await db.update(
+    let success = await db.upsert(
       db.likes,
       { imdbID, googleId: user.googleId },
       {

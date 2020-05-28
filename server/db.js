@@ -52,7 +52,7 @@ const db = {
     });
   },
 
-  update: (collection, query, update) => {
+  upsert: (collection, query, update) => {
     return new Promise((resolve, reject) => {
       collection.update(
         query,
