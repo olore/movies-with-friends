@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="dialog" width="500">
+  <v-dialog v-model="dialog" width="500" :persistent="true">
     <template v-slot:activator="{ on }">
       <v-btn v-if="edit" class="mx-2" v-on="on" fab small color="primary">
         <v-icon>{{ iconPencil }}</v-icon>
@@ -37,6 +37,9 @@
 
       <v-card-actions>
         <v-spacer></v-spacer>
+        <v-btn color="secondary" text @click="cancel">
+          Cancel
+        </v-btn>
         <v-btn color="primary" text :loading="isLoading" @click="save">
           Save
         </v-btn>
@@ -53,22 +56,30 @@ export default {
   name: "CircleDialog",
   data: () => ({
     dialog: false,
-    invitees: null,
     name: null,
+    invitees: null,
     error: null,
     isLoading: false,
     iconPlus: mdiPlus,
     iconPencil: mdiPencil,
   }),
-  props: ["onSave", "edit", "circle"],
+  props: ["onSave", "edit", "circle", "circles"],
   mounted: function () {
     if (this.circle) {
-      this.invitees = this.circle.invitees;
       this.name = this.circle.name;
+      this.invitees = this.circle.invitees;
       this._id = this.circle._id;
     }
   },
   methods: {
+    cancel: function () {
+      if (this.circle) {
+        this.name = this.circle.name;
+        this.invitees = this.circle.invitees;
+        this._id = this.circle._id;
+      }
+      this.dialog = false;
+    },
     save: async function () {
       this.isLoading = true;
       try {
