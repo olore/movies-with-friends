@@ -17,13 +17,18 @@
               </tr>
             </thead> -->
             <tbody>
-              <tr v-for="item in circles" :key="item.name">
-                <td>{{ item.name }}</td>
-                <td>{{ item.members || 0 }} members</td>
-                <td align="center">
-                  <v-btn class="mx-2" fab small color="primary">
-                    <v-icon>{{ iconPencil }}</v-icon>
-                  </v-btn>
+              <tr v-for="item in circles" :key="item.name" class="my-4">
+                <td class="pa-2">{{ item.name }}</td>
+                <td class="pa-2 text-center">
+                  {{ item.members || 0 }} members
+                </td>
+                <td class="pa-2" style="min-width: 150px;" align="center">
+                  <CircleDialog
+                    :onSave="reloadCircles"
+                    :circle="item"
+                    :edit="true"
+                  >
+                  </CircleDialog>
                   <v-btn class="mx-2" fab small color="error">
                     <v-icon @click="remove(item._id)">{{ iconDelete }}</v-icon>
                   </v-btn>

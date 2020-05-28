@@ -33,11 +33,10 @@ export default class Circle {
   }
 
   static async save(data) {
-    let results = await fetch(`${this.getHost()}:3000/circles`, {
+    let results = await fetch(`${this.getHost()}:3000/circles/${data._id}`, {
       method: "POST",
       headers: this.getHeaders(),
       body: JSON.stringify({
-        id: data.id,
         name: data.name,
         invitees: data.invitees,
       }),

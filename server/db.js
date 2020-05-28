@@ -86,6 +86,22 @@ const db = {
     });
   },
 
+  find: (collection, query, limit) => {
+    return new Promise((resolve, reject) => {
+      collection
+        .find(query)
+        .sort({ createdAt: 1 })
+        .limit(limit)
+        .exec((err, docs) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(docs);
+          }
+        });
+    });
+  },
+
   remove: (collection, query) => {
     return new Promise((resolve, reject) => {
       collection.remove(query, {}, function (err, numRemoved) {

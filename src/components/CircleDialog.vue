@@ -1,13 +1,17 @@
 <template>
   <v-dialog v-model="dialog" width="500">
     <template v-slot:activator="{ on }">
-      <v-btn class="mx-2" v-on="on" fab small color="green">
+      <v-btn v-if="edit" class="mx-2" v-on="on" fab small color="primary">
+        <v-icon>{{ iconPencil }}</v-icon>
+      </v-btn>
+      <v-btn v-else class="mx-2" v-on="on" fab small color="green">
         <v-icon>{{ iconPlus }}</v-icon>
       </v-btn>
     </template>
 
     <v-card>
-      <v-card-title>
+      <v-card-title v-if="edit">Edit Circle</v-card-title>
+      <v-card-title v-else>
         Let's make a Circle!
       </v-card-title>
       <!-- <v-card-subtitle
@@ -42,7 +46,7 @@
 </template>
 
 <script>
-import { mdiPlus } from "@mdi/js";
+import { mdiPlus, mdiPencil } from "@mdi/js";
 import Circle from "../models/Circle";
 
 export default {
@@ -54,19 +58,22 @@ export default {
     error: null,
     isLoading: false,
     iconPlus: mdiPlus,
+    iconPencil: mdiPencil,
   }),
-  props: ["circles", "onSave"],
+  props: ["onSave", "edit", "circle"],
   mounted: function () {
-    // if (this.myLike) {
-    //   this.rating = this.myLike.rating;
-    //   this.comment = this.myLike.comment;
-    // }
+    if (this.circle) {
+      this.invitees = this.circle.invitees;
+      this.name = this.circle.name;
+      this._id = this.circle._id;
+    }
   },
   methods: {
     save: async function () {
       this.isLoading = true;
       try {
         let res = await Circle.save({
+          _id: this._id,
           invitees: this.invitees,
           name: this.name,
         });
