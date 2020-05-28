@@ -27,7 +27,9 @@ async function routes(fastify, options) {
       const json = await api.search(query);
       json.searchTerm = query;
       fastify.log.debug("Found in API", json.searchTerm);
-      await db.insert(db.searches, json);
+      if (json.Response !== "False") {
+        await db.insert(db.searches, json);
+      }
       return json;
     } else {
       fastify.log.debug("Found in DB", fromDb.searchTerm);
