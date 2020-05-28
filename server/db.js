@@ -22,6 +22,11 @@ const db = {
     autoload: true,
     timestampData: true,
   }),
+  circles: new Datastore({
+    filename: `${process.env.DB_FILE_PATH}/circles.nedb`,
+    autoload: true,
+    timestampData: true,
+  }),
 
   findOne: (collection, query) => {
     return new Promise((resolve, reject) => {
@@ -80,6 +85,18 @@ const db = {
         });
     });
   },
+
+  remove: (collection, query) => {
+    return new Promise((resolve, reject) => {
+      collection.remove(query, {}, function (err, numRemoved) {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(true);
+        }
+      });
+    });
+  },
 };
 
 const createIndex = async (collection, field, isUnique) => {
@@ -105,6 +122,7 @@ const createIndex = async (collection, field, isUnique) => {
     await createIndex(db.users, "googleToken", true);
     await createIndex(db.likes, "googleId", false);
     await createIndex(db.likes, "imdbID", false);
+    await createIndex(db.circles, "googleId", false);
   } catch (err) {
     console.error("Problem generating indexes", err);
   }

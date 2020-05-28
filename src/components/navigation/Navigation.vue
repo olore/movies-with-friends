@@ -29,23 +29,30 @@
           </v-list-item-title>
         </v-list-item-content>
       </v-list-item>
+      <v-list-item link v-on:click="navTo('/circles')">
+        <v-list-item-action>
+          <v-icon>{{ iconStar }}</v-icon>
+        </v-list-item-action>
+        <v-list-item-content>
+          <v-list-item-title>
+            <v-list-item-title>My Circles</v-list-item-title>
+          </v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
     </v-list>
-
-    <v-divider></v-divider>
-
-    <RecommendationNav />
   </v-navigation-drawer>
 </template>
 
 <script>
-import { mdiViewDashboard, mdiCog, mdiAccountMultiplePlus } from "@mdi/js";
-import RecommendationNav from "./RecommendationNav";
+import {
+  mdiViewDashboard,
+  mdiCog,
+  mdiStar,
+  mdiAccountMultiplePlus,
+} from "@mdi/js";
 
 export default {
   name: "Navigation",
-  components: {
-    RecommendationNav,
-  },
   props: ["value"],
 
   computed: {
@@ -63,6 +70,7 @@ export default {
     iconDashboard: mdiViewDashboard,
     iconSettings: mdiCog,
     iconInvite: mdiAccountMultiplePlus,
+    iconStar: mdiStar,
   }),
 
   methods: {
