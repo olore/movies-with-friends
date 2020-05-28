@@ -2,7 +2,7 @@ import VueRouter from "vue-router";
 
 import Home from "./components/pages/Home";
 import Settings from "./components/pages/Settings";
-import Recommendations from "./components/pages/Recommendations";
+import MyCircles from "./components/pages/MyCircles";
 import Title from "./components/pages/Title";
 import Invite from "./components/pages/Invite";
 
@@ -11,9 +11,9 @@ const routes = [
   { path: "/invite", name: "invite", component: Invite },
   { path: "/settings", name: "settings", component: Settings },
   {
-    path: "/recommendations",
-    name: "recommendations",
-    component: Recommendations,
+    path: "/circles",
+    name: "circles",
+    component: MyCircles,
   },
   { path: "/title/:id", name: "title", component: Title },
 ];
