@@ -28,8 +28,8 @@
     </v-app-bar>
 
     <v-content>
-      <router-view v-if="state.user || NO_GOOGLE"></router-view>
-      <div v-else-if="!NO_GOOGLE" v-google-signin-button="clientId">
+      <router-view v-if="state.user"></router-view>
+      <div v-else v-google-signin-button="clientId">
         <v-container :class="{ 'd-none': gaLoading }">
           <span class="headline">Please sign in</span>
           <div id="my-signin2"></div>
@@ -62,7 +62,6 @@ export default {
       state: store.state,
       iconDots: mdiDotsVertical,
       iconStar: mdiStar,
-      NO_GOOGLE: false,
     };
   },
   methods: {

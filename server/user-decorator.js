@@ -1,7 +1,11 @@
 const db = require("./db");
 const google = require("./google");
+require("dotenv").config();
 
 async function userDecorator(fastify, request, reply) {
+  if (process.env.NO_GOOGLE) {
+    return await db.findOne(db.users, { name: "Brian Olore" });
+  }
   try {
     // check if authenticated
     const token = request.headers["googletoken"];

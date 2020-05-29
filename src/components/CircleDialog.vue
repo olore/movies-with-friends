@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="dialog" width="500" :persistent="true">
+  <v-dialog v-model="dialog" width="500" :persistent="true" :fullscreen="edit">
     <template v-slot:activator="{ on }">
       <v-btn v-if="edit" class="mx-2" v-on="on" fab small color="primary">
         <v-icon>{{ iconPencil }}</v-icon>
@@ -29,10 +29,35 @@
 
       <v-card-text class="d-flex flex-column justify-center">
         <v-textarea
-          label="Invite some people to this Circle (or do it later!)"
+          label="Invite more people to this Circle"
+          rows="3"
           name="invitees"
           v-model="invitees"
+          v-on:keyup="parseInvitees"
         ></v-textarea>
+
+        <v-container v-if="parsedEmails.length">
+          <v-row class="" justify="center">
+            <v-col cols="12" sm="8">
+              <v-simple-table>
+                <template v-slot:default>
+                  <tbody>
+                    <tr v-for="email in parsedEmails" :key="email" class="my-4">
+                      <td class="pa-2">{{ email }}</td>
+                      <td class="pa-2" align="center">
+                        <v-btn class="mx-2" fab small color="error">
+                          <v-icon @click="remove(email)">{{
+                            iconDelete
+                          }}</v-icon>
+                        </v-btn>
+                      </td>
+                    </tr>
+                  </tbody>
+                </template>
+              </v-simple-table>
+            </v-col>
+          </v-row>
+        </v-container>
       </v-card-text>
 
       <v-card-actions>
@@ -49,7 +74,7 @@
 </template>
 
 <script>
-import { mdiPlus, mdiPencil } from "@mdi/js";
+import { mdiPlus, mdiPencil, mdiDelete } from "@mdi/js";
 import Circle from "../models/Circle";
 
 export default {
@@ -62,6 +87,8 @@ export default {
     isLoading: false,
     iconPlus: mdiPlus,
     iconPencil: mdiPencil,
+    iconDelete: mdiDelete,
+    parsedEmails: [],
   }),
   props: ["onSave", "edit", "circle", "circles"],
   mounted: function () {
@@ -72,6 +99,18 @@ export default {
     }
   },
   methods: {
+    remove: function (emailToRemove) {
+      this.parsedEmails = this.parsedEmails.filter((email) => {
+        return email !== emailToRemove;
+      });
+      console.log(this.parsedEmails);
+    },
+    parseInvitees: function () {
+      const bySpaces = this.invitees.replace(/\n/g, " ").split(" ");
+      this.parsedEmails = bySpaces.filter((email) => {
+        return /^.+@.+\..+$/.test(email);
+      });
+    },
     cancel: function () {
       if (this.circle) {
         this.name = this.circle.name;
