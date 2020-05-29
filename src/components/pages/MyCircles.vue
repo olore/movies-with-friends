@@ -20,7 +20,7 @@
               <tr v-for="item in circles" :key="item.name" class="my-4">
                 <td class="pa-2">{{ item.name }}</td>
                 <td class="pa-2 text-center">
-                  {{ item.members || 0 }} members
+                  {{ (item.members && item.members.length) || 0 }} members
                 </td>
                 <td class="pa-2" style="min-width: 150px;" align="center">
                   <CircleDialog
@@ -56,7 +56,7 @@ export default {
   name: "MyCircles",
   components: { CircleDialog },
   mounted: async function () {
-    this.circles = await Circle.all();
+    this.circles = (await Circle.all()) || [];
   },
   data: () => ({
     iconPencil: mdiPencil,
@@ -69,7 +69,7 @@ export default {
       this.reloadCircles();
     },
     reloadCircles: async function () {
-      this.circles = await Circle.all();
+      this.circles = (await Circle.all()) || [];
     },
   },
 };

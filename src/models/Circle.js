@@ -38,7 +38,7 @@ export default class Circle {
       headers: this.getHeaders(),
       body: JSON.stringify({
         name: data.name,
-        invitees: data.invitees,
+        members: data.members,
       }),
     });
     return results.json();

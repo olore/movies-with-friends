@@ -34,7 +34,7 @@ async function routes(fastify, options) {
       {
         owner: user.googleId,
         name: body.name,
-        invitees: body.invitees,
+        members: body.members,
       }
     );
     return success;
