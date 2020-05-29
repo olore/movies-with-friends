@@ -27,26 +27,33 @@
         ></v-text-field>
       </v-card-text>
 
-      <v-card-text class="d-flex flex-column justify-center">
+      <v-card-text
+        v-if="circle && circle._id"
+        class="d-flex flex-column justify-center"
+      >
         <v-textarea
-          label="Invite more people to this Circle"
+          label="Send to your Friends"
           rows="3"
-          name="invitees"
-          v-model="invitees"
-          v-on:keyup="parseInvitees"
+          :value="getInviteText()"
         ></v-textarea>
+      </v-card-text>
 
-        <v-container v-if="parsedEmails.length">
+      <v-card-text>
+        <v-container v-if="circle && circle.members && circle.members.length">
           <v-row class="" justify="center">
             <v-col cols="12" sm="8">
               <v-simple-table>
                 <template v-slot:default>
                   <tbody>
-                    <tr v-for="email in parsedEmails" :key="email" class="my-4">
-                      <td class="pa-2">{{ email }}</td>
+                    <tr
+                      v-for="member in circle.members"
+                      :key="member._id"
+                      class="my-4"
+                    >
+                      <td class="pa-2">{{ member.name }}</td>
                       <td class="pa-2" align="center">
                         <v-btn class="mx-2" fab small color="error">
-                          <v-icon @click="remove(email)">{{
+                          <v-icon @click="remove(member)">{{
                             iconDelete
                           }}</v-icon>
                         </v-btn>
@@ -59,7 +66,6 @@
           </v-row>
         </v-container>
       </v-card-text>
-
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn color="secondary" text @click="cancel">
@@ -82,13 +88,11 @@ export default {
   data: () => ({
     dialog: false,
     name: null,
-    invitees: null,
     error: null,
     isLoading: false,
     iconPlus: mdiPlus,
     iconPencil: mdiPencil,
     iconDelete: mdiDelete,
-    parsedEmails: [],
   }),
   props: ["onSave", "edit", "circle", "circles"],
   mounted: function () {
@@ -99,34 +103,32 @@ export default {
     }
   },
   methods: {
-    remove: function (emailToRemove) {
-      this.parsedEmails = this.parsedEmails.filter((email) => {
-        return email !== emailToRemove;
-      });
-      console.log(this.parsedEmails);
+    getInviteText: function () {
+      return `Come and join my Movie Circle: ${this.getInviteLink()}`;
     },
-    parseInvitees: function () {
-      const bySpaces = this.invitees.replace(/\n/g, " ").split(" ");
-      this.parsedEmails = bySpaces.filter((email) => {
-        return /^.+@.+\..+$/.test(email);
+    getInviteLink: function () {
+      return `${document.location.protocol}//${document.location.hostname}:${document.location.port}/#/circles/${this.circle._id}/join`;
+    },
+    remove: function (memberToRemove) {
+      this.circle.members = this.circle.members.filter((member) => {
+        return member._id !== memberToRemove._id;
       });
     },
     cancel: function () {
-      if (this.circle) {
-        this.name = this.circle.name;
-        this.invitees = this.circle.invitees;
-        this._id = this.circle._id;
-      }
+      // if (this.circle) {
+      //   this.name = this.circle.name;
+      //   this.invitees = this.circle.invitees;
+      //   this._id = this.circle._id;
+      // }
       this.dialog = false;
     },
     save: async function () {
       this.isLoading = true;
       try {
-        let res = await Circle.save({
-          _id: this._id,
-          invitees: this.invitees,
-          name: this.name,
-        });
+        let res = this.circle
+          ? await Circle.save(this.circle)
+          : await Circle.create(this.name);
+
         if (res) {
           this.dialog = false; // close dialog
           this.onSave();

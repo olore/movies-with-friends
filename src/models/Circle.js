@@ -17,6 +17,13 @@ export default class Circle {
     return `${document.location.protocol}//${document.location.hostname}`;
   }
 
+  static async getById(id) {
+    let results = await fetch(`${this.getHost()}:3000/circles/show/${id}`, {
+      headers: this.getHeaders(),
+    });
+    return await results.json();
+  }
+
   static async remove(id) {
     let results = await fetch(`${this.getHost()}:3000/circles/${id}`, {
       method: "DELETE",
@@ -32,6 +39,17 @@ export default class Circle {
     return await results.json();
   }
 
+  static async create(name) {
+    let results = await fetch(`${this.getHost()}:3000/circles`, {
+      method: "POST",
+      headers: this.getHeaders(),
+      body: JSON.stringify({
+        name,
+      }),
+    });
+    return results.json();
+  }
+
   static async save(data) {
     let results = await fetch(`${this.getHost()}:3000/circles/${data._id}`, {
       method: "POST",
@@ -40,6 +58,14 @@ export default class Circle {
         name: data.name,
         members: data.members,
       }),
+    });
+    return results.json();
+  }
+
+  static async join(id) {
+    let results = await fetch(`${this.getHost()}:3000/circles/${id}/join`, {
+      method: "POST",
+      headers: this.getHeaders(),
     });
     return results.json();
   }
