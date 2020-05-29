@@ -24,9 +24,11 @@ async function routes(fastify, options) {
         .header("Content-Type", "application/json; charset=utf-8")
         .send({ error: "User not authenticated" });
     }
-    return await db.remove(db.circles, {
-      members: { googleId: user.googleId },
-    });
+    return await db.update(
+      db.circles,
+      { _id: id },
+      { $pull: { members: { googleId: user.googleId } } }
+    );
   });
 
   fastify.delete("/circles/:id", async (request, reply) => {
@@ -39,8 +41,7 @@ async function routes(fastify, options) {
         .send({ error: "User not authenticated" });
     }
     return await db.remove(db.circles, {
-      owner: { googleId: user.googleId },
-      _id: id,
+      $and: [{ "owner.googleId": user.googleId }, { _id: id }],
     });
   });
 
@@ -67,7 +68,7 @@ async function routes(fastify, options) {
     }
     let success = await db.upsert(
       db.circles,
-      { owner: { googleId: user.googleId }, name: body.name },
+      { $and: [{ "owner.googleId": user.googleId }, { name: body.name }] },
       {
         owner: { name: user.name, googleId: user.googleId },
         name: body.name,
@@ -89,7 +90,7 @@ async function routes(fastify, options) {
     }
     let success = await db.upsert(
       db.circles,
-      { owner: { name: user.name, googleId: user.googleId }, _id: id },
+      { $and: [{ "owner.googleId": user.googleId }, { _id: id }] },
       {
         owner: { name: user.name, googleId: user.googleId },
         name: body.name,
