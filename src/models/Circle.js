@@ -24,6 +24,14 @@ export default class Circle {
     return await results.json();
   }
 
+  static async removeMe(id) {
+    let results = await fetch(`${this.getHost()}:3000/circles/${id}/me`, {
+      method: "DELETE",
+      headers: this.getHeaders(),
+    });
+    return await results.json();
+  }
+
   static async remove(id) {
     let results = await fetch(`${this.getHost()}:3000/circles/${id}`, {
       method: "DELETE",

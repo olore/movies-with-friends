@@ -1,5 +1,10 @@
 <template>
-  <v-dialog v-model="dialog" width="500" :persistent="true" :fullscreen="edit">
+  <v-dialog
+    v-model="dialog"
+    width="500"
+    :persistent="true"
+    :fullscreen="this.$vuetify.breakpoint.xsOnly"
+  >
     <template v-slot:activator="{ on }">
       <v-btn v-if="edit" class="mx-2" v-on="on" fab small color="primary">
         <v-icon>{{ iconPencil }}</v-icon>
@@ -39,7 +44,7 @@
       </v-card-text>
 
       <v-card-text>
-        <v-container v-if="circle && circle.members && circle.members.length">
+        <v-container v-if="circle">
           <v-row class="" justify="center">
             <v-col cols="12" sm="8">
               <v-simple-table>
@@ -50,9 +55,18 @@
                       :key="member._id"
                       class="my-4"
                     >
-                      <td class="pa-2">{{ member.name }}</td>
+                      <td class="pa-2">
+                        {{ member.name }} {{ member._id }}
+                        <span v-if="isOwner(member)"> (Owner)</span>
+                      </td>
                       <td class="pa-2" align="center">
-                        <v-btn class="mx-2" fab small color="error">
+                        <v-btn
+                          class="mx-2"
+                          fab
+                          small
+                          color="error"
+                          v-if="!isOwner(member)"
+                        >
                           <v-icon @click="remove(member)">{{
                             iconDelete
                           }}</v-icon>
@@ -102,6 +116,10 @@ export default {
     }
   },
   methods: {
+    isOwner: function (member) {
+      console.log(member.googleId, this.circle.owner);
+      return member.googleId === this.circle.owner.googleId;
+    },
     getInviteText: function () {
       return `Come and join my Movie Circle: ${this.getInviteLink()}`;
     },

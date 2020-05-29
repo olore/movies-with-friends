@@ -71,19 +71,18 @@ export default {
     OnGoogleAuthInit() {
       this.gaLoading = false;
     },
-    OnGoogleAuthSuccess(googleUser) {
+    async OnGoogleAuthSuccess(googleUser) {
       let profile = googleUser.getBasicProfile();
       if (profile) {
-        store.set(
-          "user",
-          new User({
-            googleToken: googleUser.getAuthResponse().id_token,
-            givenName: profile.getGivenName(),
-            image: profile.getImageUrl(),
-            name: profile.getName(),
-            email: profile.getEmail(),
-          })
-        );
+        let user = new User({
+          googleToken: googleUser.getAuthResponse().id_token,
+          givenName: profile.getGivenName(),
+          image: profile.getImageUrl(),
+          name: profile.getName(),
+          email: profile.getEmail(),
+        });
+        user = await user.populate();
+        store.set("user", user);
       } else {
         console.log("Not sure why there is no profile");
       }

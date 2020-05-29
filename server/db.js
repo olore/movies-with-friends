@@ -102,12 +102,25 @@ const db = {
     });
   },
 
+  update: (collection, query, updateCmd) => {
+    return new Promise((resolve, reject) => {
+      collection.update(query, updateCmd, function (err, numRemoved) {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(true);
+        }
+      });
+    });
+  },
+
   remove: (collection, query) => {
     return new Promise((resolve, reject) => {
       collection.remove(query, {}, function (err, numRemoved) {
         if (err) {
           reject(err);
         } else {
+          console.log({ numRemoved });
           resolve(true);
         }
       });

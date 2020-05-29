@@ -1,21 +1,22 @@
+import { store } from "../store";
+
 export default class User {
   constructor(data) {
     Object.assign(this, data);
   }
 
-  static get(name) {
-    return this.all().find((user) => {
-      return user.name === name;
+  async populate() {
+    let results = await fetch(`${this.getHost()}:3000/users/self`, {
+      headers: {
+        googleToken: this.googleToken,
+      },
     });
+    let user = await results.json();
+    this.googleId = user.googleId;
+    return this;
   }
 
-  static all() {
-    return [
-      new User({ name: "Brian Olore" }),
-      new User({ name: "Dana Olore" }),
-      new User({ name: "Grace Olore" }),
-      new User({ name: "Joseph Olore" }),
-      new User({ name: "APrettyLong FirstAndLastName" }),
-    ];
+  getHost() {
+    return `${document.location.protocol}//${document.location.hostname}`;
   }
 }
