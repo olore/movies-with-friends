@@ -98,7 +98,6 @@ export default {
   mounted: function () {
     if (this.circle) {
       this.name = this.circle.name;
-      this.invitees = this.circle.invitees;
       this._id = this.circle._id;
     }
   },
@@ -107,7 +106,12 @@ export default {
       return `Come and join my Movie Circle: ${this.getInviteLink()}`;
     },
     getInviteLink: function () {
-      return `${document.location.protocol}//${document.location.hostname}:${document.location.port}/#/circles/${this.circle._id}/join`;
+      // I hate you
+      if (document.location.port) {
+        return `${document.location.protocol}//${document.location.hostname}:${document.location.port}/#/circles/${this.circle._id}/join`;
+      } else {
+        return `${document.location.protocol}//${document.location.hostname}/#/circles/${this.circle._id}/join`;
+      }
     },
     remove: function (memberToRemove) {
       this.circle.members = this.circle.members.filter((member) => {
@@ -117,7 +121,6 @@ export default {
     cancel: function () {
       // if (this.circle) {
       //   this.name = this.circle.name;
-      //   this.invitees = this.circle.invitees;
       //   this._id = this.circle._id;
       // }
       this.dialog = false;
@@ -125,9 +128,13 @@ export default {
     save: async function () {
       this.isLoading = true;
       try {
-        let res = this.circle
-          ? await Circle.save(this.circle)
-          : await Circle.create(this.name);
+        let res;
+        if (this.circle) {
+          this.circle.name = this.name;
+          res = await Circle.save(this.circle);
+        } else {
+          res = await Circle.create(this.name);
+        }
 
         if (res) {
           this.dialog = false; // close dialog
@@ -136,7 +143,6 @@ export default {
           console.error(err);
         }
         this.name = null;
-        this.invitees = null;
       } catch (err) {
         console.error(err);
       } finally {
