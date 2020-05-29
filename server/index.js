@@ -17,6 +17,7 @@ fastify.addHook("onRequest", async (request, reply) => {
 
 fastify.register(require("./routes/movies"));
 fastify.register(require("./routes/circles"));
+fastify.register(require("./routes/users"));
 
 fastify.get("/oauth-callback", async (request, reply) => {
   console.log("query", request.query);

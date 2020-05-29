@@ -3,11 +3,30 @@ const db = require("../db");
 async function routes(fastify, options) {
   fastify.get("/circles", async (request, reply) => {
     const user = request.user;
-    return await db.find(db.circles, { owner: user.googleId }, 25);
-    // TODO: also find ones I am a member of, not just owner
-    // db.find({ completeData: { planets: { $elemMatch: { name: 'Earth', number: 3 } } } }, function (err, docs) {
-    //   // docs contains documents with id 5 (completeData)
-    // });
+    return await db.find(
+      db.circles,
+      {
+        $or: [
+          { owner: { googleId: user.googleId } },
+          { members: { $elemMatch: { googleId: user.googleId } } },
+        ],
+      },
+      25
+    );
+  });
+
+  fastify.delete("/circles/:id/me", async (request, reply) => {
+    const user = request.user;
+    const id = request.params.id;
+    if (!user) {
+      reply
+        .code(401)
+        .header("Content-Type", "application/json; charset=utf-8")
+        .send({ error: "User not authenticated" });
+    }
+    return await db.remove(db.circles, {
+      members: { googleId: user.googleId },
+    });
   });
 
   fastify.delete("/circles/:id", async (request, reply) => {
@@ -19,7 +38,10 @@ async function routes(fastify, options) {
         .header("Content-Type", "application/json; charset=utf-8")
         .send({ error: "User not authenticated" });
     }
-    return await db.remove(db.circles, { owner: user.googleId, _id: id });
+    return await db.remove(db.circles, {
+      owner: { googleId: user.googleId },
+      _id: id,
+    });
   });
 
   fastify.get("/circles/show/:id", async (request, reply) => {
@@ -45,10 +67,11 @@ async function routes(fastify, options) {
     }
     let success = await db.upsert(
       db.circles,
-      { owner: user.googleId, name: body.name },
+      { owner: { googleId: user.googleId }, name: body.name },
       {
-        owner: user.googleId,
+        owner: { name: user.name, googleId: user.googleId },
         name: body.name,
+        members: [{ name: user.name, googleId: user.googleId }],
       }
     );
     return success;
@@ -66,9 +89,9 @@ async function routes(fastify, options) {
     }
     let success = await db.upsert(
       db.circles,
-      { owner: user.googleId, _id: id },
+      { owner: { name: user.name, googleId: user.googleId }, _id: id },
       {
-        owner: user.googleId,
+        owner: { name: user.name, googleId: user.googleId },
         name: body.name,
         members: body.members,
       }
@@ -78,7 +101,7 @@ async function routes(fastify, options) {
 
   fastify.post("/circles/:id/join", async (request, reply) => {
     const user = request.user;
-    const id = request.params.id;
+    const circleId = request.params.id;
     if (!user) {
       reply
         .code(401)
@@ -87,7 +110,7 @@ async function routes(fastify, options) {
     }
     let success = await db.upsert(
       db.circles,
-      { _id: id },
+      { _id: circleId },
       {
         $push: { members: { name: user.name, googleId: user.googleId } },
       }
