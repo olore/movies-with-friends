@@ -69,7 +69,12 @@ export default {
       console.error("ga init error", googleUser);
     },
     OnGoogleAuthInit() {
-      this.gaLoading = false;
+      // Give auth time to settle to avoid flashing Login button
+      setTimeout(async () => {
+        if (!store.state.user) {
+          this.gaLoading = false;
+        }
+      }, 100);
     },
     async OnGoogleAuthSuccess(googleUser) {
       let profile = googleUser.getBasicProfile();
