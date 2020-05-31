@@ -49,14 +49,14 @@ export default class Movie {
   }
 
   static async search(val) {
-    let results = await fetch(`${this.getHost()}:3000/movie/search/${val}`, {
+    let results = await fetch(`${this.getHost()}:3000/movies/search/${val}`, {
       headers: this.getHeaders(),
     });
     return await results.json();
   }
 
   static async getById(id) {
-    let results = await fetch(`${this.getHost()}:3000/movie/show/${id}`, {
+    let results = await fetch(`${this.getHost()}:3000/movies/show/${id}`, {
       headers: this.getHeaders(),
     });
     let data = await results.json();
@@ -69,7 +69,7 @@ export default class Movie {
   }
 
   static async getRecentlyViewed() {
-    let results = await fetch(`${this.getHost()}:3000/movie/recent`, {
+    let results = await fetch(`${this.getHost()}:3000/movies/recent`, {
       headers: this.getHeaders(),
     });
     let data = await results.json();
@@ -80,7 +80,7 @@ export default class Movie {
 
   static async like(data) {
     let results = await fetch(
-      `${this.getHost()}:3000/movie/like/${data.imdbID}`,
+      `${this.getHost()}:3000/movies/${data.imdbID}/like`,
       {
         method: "POST",
         headers: this.getHeaders(),

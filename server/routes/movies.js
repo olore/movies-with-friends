@@ -2,7 +2,7 @@ const api = require("../omdb-api");
 const db = require("../db");
 
 async function routes(fastify, options) {
-  fastify.get("/movie/show/:id", async (request, reply) => {
+  fastify.get("/movies/show/:id", async (request, reply) => {
     const id = request.params.id;
     let movie = await db.findOne(db.movies, { imdbID: id });
     if (!movie) {
@@ -18,7 +18,7 @@ async function routes(fastify, options) {
     return movie;
   });
 
-  fastify.get("/movie/search/:query", async (request, reply) => {
+  fastify.get("/movies/search/:query", async (request, reply) => {
     const query = request.params.query;
     fastify.log.info(`${request.user.name} - search for ${query}`);
 
@@ -37,13 +37,13 @@ async function routes(fastify, options) {
     }
   });
 
-  fastify.get("/movie/recent", async (request, reply) => {
+  fastify.get("/movies/recent", async (request, reply) => {
     const limit = request.query.limit || 12;
     const query = { Plot: { $ne: "N/A" } };
     return await db.recent(db.movies, query, limit);
   });
 
-  fastify.post("/movie/like/:id", async (request, reply) => {
+  fastify.post("/movies/:id/like", async (request, reply) => {
     const body = JSON.parse(request.body); // TODO limit size of what is going in SPAM
     const imdbID = request.params.id;
     const user = request.user;
