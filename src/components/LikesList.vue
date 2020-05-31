@@ -12,6 +12,16 @@
         <span v-else class="font-italic">
           No comment
         </span>
+
+        <v-chip
+          v-for="circle in groupsFor(like.googleId)"
+          v-bind:key="circle._id"
+          class="ma-2"
+          color="accent"
+          x-small
+        >
+          {{ circle.name }}
+        </v-chip>
         <span class="overline vmiddle grey--text">{{ like.smallDate() }}</span>
       </v-col>
     </v-row>
@@ -20,7 +30,17 @@
 <script>
 export default {
   name: "LikesList",
-  props: ["likes"],
+  props: ["likes", "likers"],
+  methods: {
+    groupsFor: function (gid) {
+      if (this.likers[gid]) {
+        return this.likers[gid].map((g) => {
+          return { name: g.name, _id: g._id };
+        });
+      }
+      return [];
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>

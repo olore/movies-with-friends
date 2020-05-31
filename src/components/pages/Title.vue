@@ -56,12 +56,20 @@
             />
           </v-row>
 
-          <LikesList :likes="movie.likes" v-if="$vuetify.breakpoint.smAndUp" />
+          <LikesList
+            :likes="movie.likes"
+            :likers="movie.likers"
+            v-if="$vuetify.breakpoint.smAndUp"
+          />
         </v-container>
       </v-col>
     </v-row>
 
-    <LikesList v-if="$vuetify.breakpoint.xsOnly" :likes="movie.likes" />
+    <LikesList
+      v-if="$vuetify.breakpoint.xsOnly"
+      :likes="movie.likes"
+      :likers="movie.likers"
+    />
 
     <v-row class="d-flex">
       <v-col cols="12" class="px-5">
