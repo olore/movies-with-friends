@@ -20,6 +20,7 @@ async function routes(fastify, options) {
     // 1) what circles the user is in (ownner or member)
     // 2) what circles each liker is in (owner or member)
     // 3) where they overlap: include circle name/id in like
+    movie.likers = {};
     let userCircles = await db.find(db.circles, {
       $or: [
         { members: { $elemMatch: { googleId: user.googleId } } },
@@ -55,7 +56,6 @@ async function routes(fastify, options) {
           if (likerCircles && likerCircles.length) {
             for (let i = 0; i < likerCircles.length; i++) {
               let circle = likerCircles[i];
-              if (movie.likers === undefined) movie.likers = {};
               if (movie.likers[gid] === undefined) movie.likers[gid] = [];
               movie.likers[gid].push(circle);
             }
