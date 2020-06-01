@@ -1,16 +1,19 @@
 import VueRouter from "vue-router";
 
 const Home = () => import("./components/pages/Home");
-const Settings = () => import("./components/pages/Settings");
-const MyCircles = () => import("./components/pages/MyCircles");
-const JoinCircle = () => import("./components/pages/JoinCircle");
-const Title = () => import("./components/pages/Title");
+// Lazy loading the rest causes lots of smaller js/css files to be generated
+// which seems to make things more laggy than anything when testing on server
+//
+// const Settings = () => import("./components/pages/Settings");
+// const MyCircles = () => import("./components/pages/MyCircles");
+// const JoinCircle = () => import("./components/pages/JoinCircle");
+// const Title = () => import("./components/pages/Title");
 
 // import Home from "./components/pages/Home";
-// import Settings from "./components/pages/Settings";
-// import MyCircles from "./components/pages/MyCircles";
-// import JoinCircle from "./components/pages/JoinCircle";
-// import Title from "./components/pages/Title";
+import Settings from "./components/pages/Settings";
+import MyCircles from "./components/pages/MyCircles";
+import JoinCircle from "./components/pages/JoinCircle";
+import Title from "./components/pages/Title";
 
 import { store } from "./store";
 
