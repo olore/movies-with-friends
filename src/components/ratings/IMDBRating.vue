@@ -3,6 +3,7 @@
     color="transparent"
     target="_blank"
     :href="`https://www.imdb.com/title/${this.imdbid}`"
+    rel="noreferrer"
     title="Open on imdb.com"
     :depressed="true"
     class="pa-1 align-center d-inline-flex"

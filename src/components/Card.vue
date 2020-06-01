@@ -50,6 +50,7 @@
         text
         target="_blank"
         :href="movie.getReelGoodLink()"
+        rel="noopener"
       >
         Where to watch?
       </v-btn>

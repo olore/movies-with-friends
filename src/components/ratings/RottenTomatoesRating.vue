@@ -3,6 +3,7 @@
     color="transparent"
     target="_blank"
     :href="`https://www.rottentomatoes.com/search?search=${this.title}`"
+    rel="noreferrer"
     title="Open on rottentomatoes.com"
     :depressed="true"
     class="pa-1 align-center d-inline-flex"
