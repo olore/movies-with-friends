@@ -29,8 +29,9 @@
                     small
                     color="error"
                     aria-label="Remove circle"
+                    @click="remove(item._id)"
                   >
-                    <v-icon @click="remove(item._id)">{{ iconDelete }}</v-icon>
+                    <v-icon>{{ iconDelete }}</v-icon>
                   </v-btn>
                 </td>
               </tr>
@@ -62,8 +63,9 @@
                     small
                     color="error"
                     aria-label="Remove me"
+                    @click="removeMe(circle)"
                   >
-                    <v-icon @click="removeMe(circle)">{{ iconMinus }}</v-icon>
+                    <v-icon>{{ iconMinus }}</v-icon>
                   </v-btn>
                 </td>
               </tr>

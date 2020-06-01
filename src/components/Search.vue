@@ -15,7 +15,7 @@
         hide-selected
         item-text="Title"
         item-value="Title"
-        placeholder="Search..."
+        label="Search"
         class="pa-0 mr-5"
       >
         <template v-slot:item="{ item }">
