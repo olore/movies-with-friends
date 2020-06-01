@@ -35,21 +35,9 @@ export default {
     error: null,
   }),
   async beforeRouteEnter(to, from, next) {
-    if (store.state === undefined || store.state.user == undefined) {
-      let waitForUserInterval = setInterval(async function () {
-        if (store.state && store.state.user) {
-          const circle = await Circle.getById(to.params.id);
-          next((vm) => {
-            vm.circle = circle;
-            clearInterval(waitForUserInterval);
-          });
-        }
-      }, 200);
-    } else {
-      next(async (vm) => {
-        vm.circle = await Circle.getById(to.params.id);
-      });
-    }
+    const circle = await Circle.getById(to.params.id);
+    vm.circle = circle;
+    next();
   },
   methods: {
     joinCircle: async function () {
