@@ -19,16 +19,6 @@
           </v-list-item-title>
         </v-list-item-content>
       </v-list-item>
-      <v-list-item link v-on:click="navTo('/invite')">
-        <v-list-item-action>
-          <v-icon>{{ iconInvite }}</v-icon>
-        </v-list-item-action>
-        <v-list-item-content>
-          <v-list-item-title>
-            <v-list-item-title>Invite</v-list-item-title>
-          </v-list-item-title>
-        </v-list-item-content>
-      </v-list-item>
       <v-list-item link v-on:click="navTo('/circles')">
         <v-list-item-action>
           <v-icon>{{ iconStar }}</v-icon>
