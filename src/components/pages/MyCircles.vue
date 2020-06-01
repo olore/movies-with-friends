@@ -23,16 +23,13 @@
                     :edit="true"
                   >
                   </CircleDialog>
-                  <v-btn
-                    class="mx-2"
-                    fab
-                    small
-                    color="error"
+                  <ConfirmDialog
+                    :icon="iconDelete"
                     aria-label="Remove circle"
-                    @click="remove(item._id)"
-                  >
-                    <v-icon>{{ iconDelete }}</v-icon>
-                  </v-btn>
+                    color="error"
+                    :question="`Are you sure you want to remove ${item.name} ?`"
+                    :approve="() => remove(item._id)"
+                  />
                 </td>
               </tr>
               <tr>
@@ -82,10 +79,11 @@ import CircleDialog from "../CircleDialog";
 import Circle from "../../models/Circle";
 import { mdiDelete, mdiMinus, mdiPencil } from "@mdi/js";
 import { store } from "../../store";
+import ConfirmDialog from "../ConfirmDialog";
 
 export default {
   name: "MyCircles",
-  components: { CircleDialog },
+  components: { CircleDialog, ConfirmDialog },
   mounted: async function () {
     this.circles = (await Circle.all()) || [];
   },

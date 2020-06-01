@@ -76,18 +76,14 @@
                         <span v-if="isOwner(member)"> (Owner)</span>
                       </td>
                       <td class="pa-2" align="center">
-                        <v-btn
-                          class="mx-2"
-                          fab
-                          small
-                          color="error"
+                        <ConfirmDialog
+                          :icon="iconDelete"
                           v-if="!isOwner(member)"
                           aria-label="Remove member"
-                        >
-                          <v-icon @click="remove(member)">{{
-                            iconDelete
-                          }}</v-icon>
-                        </v-btn>
+                          color="error"
+                          :question="`Are you sure you want to remove ${member.name} from this Circle?`"
+                          :approve="() => remove(member)"
+                        />
                       </td>
                     </tr>
                   </tbody>
@@ -113,9 +109,11 @@
 <script>
 import { mdiPlus, mdiPencil, mdiDelete } from "@mdi/js";
 import Circle from "../models/Circle";
+import ConfirmDialog from "./ConfirmDialog";
 
 export default {
   name: "CircleDialog",
+  components: { ConfirmDialog },
   data: () => ({
     dialog: false,
     name: null,
@@ -134,7 +132,6 @@ export default {
   },
   methods: {
     isOwner: function (member) {
-      console.log(member.googleId, this.circle.owner);
       return member.googleId === this.circle.owner.googleId;
     },
     getInviteText: function () {
@@ -154,10 +151,9 @@ export default {
       });
     },
     cancel: function () {
-      // if (this.circle) {
-      //   this.name = this.circle.name;
-      //   this._id = this.circle._id;
-      // }
+      if (this.circle) {
+        this.name = this.circle.name;
+      }
       this.dialog = false;
     },
     save: async function () {
