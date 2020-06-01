@@ -3,7 +3,10 @@
     <Navigation v-model="drawer" />
 
     <v-app-bar app clipped-left>
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon
+        aria-label="Navigation"
+        @click.stop="drawer = !drawer"
+      ></v-app-bar-nav-icon>
       <v-toolbar-title>Movies with Friends</v-toolbar-title>
 
       <v-spacer></v-spacer>
@@ -14,7 +17,7 @@
 
       <v-menu left bottom>
         <template v-slot:activator="{ on }">
-          <v-btn icon v-on="on">
+          <v-btn icon v-on="on" aria-label="Sub-Menu">
             <v-icon>{{ iconDots }}</v-icon>
           </v-btn>
         </template>

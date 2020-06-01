@@ -23,7 +23,13 @@
                     :edit="true"
                   >
                   </CircleDialog>
-                  <v-btn class="mx-2" fab small color="error">
+                  <v-btn
+                    class="mx-2"
+                    fab
+                    small
+                    color="error"
+                    aria-label="Remove circle"
+                  >
                     <v-icon @click="remove(item._id)">{{ iconDelete }}</v-icon>
                   </v-btn>
                 </td>
@@ -50,7 +56,13 @@
                   {{ (circle.members && circle.members.length) || 0 }} members
                 </td>
                 <td class="pa-2" style="min-width: 150px;" align="center">
-                  <v-btn class="mx-2" fab small color="error">
+                  <v-btn
+                    class="mx-2"
+                    fab
+                    small
+                    color="error"
+                    aria-label="Remove me"
+                  >
                     <v-icon @click="removeMe(circle)">{{ iconMinus }}</v-icon>
                   </v-btn>
                 </td>

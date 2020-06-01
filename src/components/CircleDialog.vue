@@ -6,10 +6,26 @@
     :fullscreen="this.$vuetify.breakpoint.xsOnly"
   >
     <template v-slot:activator="{ on }">
-      <v-btn v-if="edit" class="mx-2" v-on="on" fab small color="primary">
+      <v-btn
+        v-if="edit"
+        class="mx-2"
+        v-on="on"
+        fab
+        small
+        color="primary"
+        aria-label="Edit Circle"
+      >
         <v-icon>{{ iconPencil }}</v-icon>
       </v-btn>
-      <v-btn v-else class="mx-2" v-on="on" fab small color="green">
+      <v-btn
+        v-else
+        class="mx-2"
+        v-on="on"
+        fab
+        small
+        color="green"
+        aria-label="Add Circle"
+      >
         <v-icon>{{ iconPlus }}</v-icon>
       </v-btn>
     </template>
@@ -66,6 +82,7 @@
                           small
                           color="error"
                           v-if="!isOwner(member)"
+                          aria-label="Remove member"
                         >
                           <v-icon @click="remove(member)">{{
                             iconDelete

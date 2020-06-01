@@ -27,7 +27,7 @@
           </v-list-item-content>
         </template>
       </v-autocomplete>
-      <v-btn color="primary" dense>
+      <v-btn color="primary" dense aria-label="Search">
         <template v-slot:default>
           <v-icon>{{ iconSearch }}</v-icon>
         </template>
