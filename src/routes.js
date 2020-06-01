@@ -1,16 +1,21 @@
 import VueRouter from "vue-router";
 
-import Home from "./components/pages/Home";
-import Settings from "./components/pages/Settings";
-import MyCircles from "./components/pages/MyCircles";
-import JoinCircle from "./components/pages/JoinCircle";
-import Title from "./components/pages/Title";
-import Invite from "./components/pages/Invite";
+const Home = () => import("./components/pages/Home");
+const Settings = () => import("./components/pages/Settings");
+const MyCircles = () => import("./components/pages/MyCircles");
+const JoinCircle = () => import("./components/pages/JoinCircle");
+const Title = () => import("./components/pages/Title");
+
+// import Home from "./components/pages/Home";
+// import Settings from "./components/pages/Settings";
+// import MyCircles from "./components/pages/MyCircles";
+// import JoinCircle from "./components/pages/JoinCircle";
+// import Title from "./components/pages/Title";
+
 import { store } from "./store";
 
 const routes = [
   { path: "/", name: "home", component: Home },
-  { path: "/invite", name: "invite", component: Invite },
   { path: "/settings", name: "settings", component: Settings },
   {
     path: "/circles/:id/join",
