@@ -16,49 +16,49 @@ async function routes(fastify, options) {
 
     //get likes
     movie.likes = await db.recent(db.likes, { imdbID: id }, 100);
-    // get like details
-    // 1) what circles the user is in (ownner or member)
-    // 2) what circles each liker is in (owner or member)
-    // 3) where they overlap: include circle name/id in like
     movie.likers = {};
-    let userCircles = await db.find(db.circles, {
-      $or: [
-        { members: { $elemMatch: { googleId: user.googleId } } },
-        { "owner.googleId": user.googleId },
-      ],
-    });
 
-    if (userCircles.length > 0) {
-      // all the likers of this movie, not including user
-      let likerGoogleIds = new Set(
-        movie.likes
-          .filter((like) => {
-            return like.googleId !== user.googleId;
-          })
-          .map((like) => {
-            return like.googleId;
-          })
-      );
+    // all the likers of this movie, not including user
+    let likerGoogleIds = new Set(
+      movie.likes
+        .filter((like) => {
+          return like.googleId !== user.googleId;
+        })
+        .map((like) => {
+          return like.googleId;
+        })
+    );
 
-      likerGoogleIds = Array.from(likerGoogleIds);
-      if (likerGoogleIds.length > 0) {
-        for (let j = 0; j < likerGoogleIds.length; j++) {
-          let gid = likerGoogleIds[j];
-          let likerCircles = await db.find(db.circles, {
-            $or: [
-              {
-                members: { $elemMatch: { googleId: gid } },
-              },
-              { "owner.googleId": gid },
-            ],
-          });
+    likerGoogleIds = Array.from(likerGoogleIds);
+    if (likerGoogleIds.length > 0) {
+      for (let j = 0; j < likerGoogleIds.length; j++) {
+        let gid = likerGoogleIds[j];
+        let likerCircles = await db.find(db.circles, {
+          $and: [
+            {
+              $or: [
+                {
+                  members: { $elemMatch: { googleId: user.googleId } },
+                },
+                { "owner.googleId": user.googleId },
+              ],
+            },
+            {
+              $or: [
+                {
+                  members: { $elemMatch: { googleId: gid } },
+                },
+                { "owner.googleId": gid },
+              ],
+            },
+          ],
+        });
 
-          if (likerCircles && likerCircles.length) {
-            for (let i = 0; i < likerCircles.length; i++) {
-              let circle = likerCircles[i];
-              if (movie.likers[gid] === undefined) movie.likers[gid] = [];
-              movie.likers[gid].push(circle);
-            }
+        if (likerCircles && likerCircles.length) {
+          for (let i = 0; i < likerCircles.length; i++) {
+            let circle = likerCircles[i];
+            if (movie.likers[gid] === undefined) movie.likers[gid] = [];
+            movie.likers[gid].push(circle);
           }
         }
       }

@@ -36,8 +36,9 @@ export default {
   }),
   async beforeRouteEnter(to, from, next) {
     const circle = await Circle.getById(to.params.id);
-    vm.circle = circle;
-    next();
+    next((vm) => {
+      vm.circle = circle;
+    });
   },
   methods: {
     joinCircle: async function () {
