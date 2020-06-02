@@ -19,7 +19,7 @@ export default class Movie {
       );
     } catch (err) {
       console.log("error parsing ratings for ", this.Title);
-      return -1;
+      return "??%";
     }
   }
 

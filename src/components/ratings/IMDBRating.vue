@@ -14,7 +14,7 @@
       :src="require('../../assets/imdb.svg')"
     ></v-img>
     <div class="ml-2">
-      <span class="body-1">{{ rating }}</span
+      <span class="body-1">{{ filteredRating }}</span
       >/<span class="caption">10</span>
     </div>
   </v-btn>
@@ -23,6 +23,14 @@
 export default {
   name: "IMDBRating",
   props: ["rating", "imdbid"],
+  computed: {
+    filteredRating: function () {
+      if (this.rating === "N/A") {
+        return "??";
+      }
+      return this.rating;
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>

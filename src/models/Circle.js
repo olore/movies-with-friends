@@ -1,4 +1,3 @@
-import jaycue from "jaycue";
 import Like from "./Like";
 import { store } from "../store";
 
