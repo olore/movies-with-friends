@@ -92,13 +92,11 @@ async function routes(fastify, options) {
 
   fastify.get("/movies/recentlyRated", async (request, reply) => {
     const limit = request.query.limit || 12;
-    const dontSort = {};
-
-    let likedMovies = await db.recent(db.likes, {}, 20);
+    let likedMovies = await db.recent(db.likes, {}, 20); // get 20 in case some are the same
     let query = {
       imdbID: { $in: likedMovies.map((m) => m.imdbID) },
     };
-    let docs = await db.find(db.movies, query, dontSort, limit);
+    let docs = await db.findWithoutSort(db.movies, query, limit);
     return docs;
   });
 

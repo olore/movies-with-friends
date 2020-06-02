@@ -86,6 +86,21 @@ const db = {
     });
   },
 
+  findWithoutSort: (collection, query, limit) => {
+    return new Promise((resolve, reject) => {
+      collection
+        .find(query)
+        .limit(limit)
+        .exec((err, docs) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(docs);
+          }
+        });
+    });
+  },
+
   find: (collection, query, sort = { createdAt: 1 }, limit) => {
     return new Promise((resolve, reject) => {
       collection
