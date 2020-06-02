@@ -87,8 +87,14 @@ async function routes(fastify, options) {
 
   fastify.get("/movies/recent", async (request, reply) => {
     const limit = request.query.limit || 12;
-    const query = { Plot: { $ne: "N/A" } };
-    return await db.recent(db.movies, query, limit);
+    const dontSort = {};
+
+    let likedMovies = await db.recent(db.likes, {}, 20);
+    let query = {
+      imdbID: { $in: likedMovies.map((m) => m.imdbID) },
+    };
+    let docs = await db.find(db.movies, query, dontSort, limit);
+    return docs;
   });
 
   fastify.post("/movies/:id/like", async (request, reply) => {

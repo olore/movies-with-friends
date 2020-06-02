@@ -86,11 +86,11 @@ const db = {
     });
   },
 
-  find: (collection, query, limit) => {
+  find: (collection, query, sort = { createdAt: 1 }, limit) => {
     return new Promise((resolve, reject) => {
       collection
         .find(query)
-        .sort({ createdAt: 1 })
+        .sort(sort)
         .limit(limit)
         .exec((err, docs) => {
           if (err) {
