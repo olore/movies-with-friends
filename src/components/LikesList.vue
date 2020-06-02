@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex flex-column pt-3">
-    <v-row v-for="like in likes" :key="like.name">
+    <v-row v-for="like in sortedLikes" :key="like.name">
       <v-col cols="4">
         <v-rating v-model="like.rating" readonly dense size="20"></v-rating>
         <span class="body-2 font-weight-bold ml-1">{{ like.name }}</span>
@@ -28,9 +28,35 @@
   </div>
 </template>
 <script>
+import { store } from "../store";
+
 export default {
   name: "LikesList",
   props: ["likes", "likers"],
+  computed: {
+    sortedLikes: function () {
+      // Order: 1) User like, 2) Circle likes, 3) Others
+      const gid = store.state.user.googleId;
+      let likes = this.likes;
+      let sorted = [];
+      let userLike = likes.find((like) => {
+        return like.googleId === gid;
+      });
+      if (userLike) {
+        sorted.push(userLike);
+        likes = this.likes.filter((like) => {
+          return like.googleId !== gid;
+        });
+      }
+      for (let i = 0; i < likes.length; i++) {
+        if (this.groupsFor(likes[i]) !== []) {
+          sorted.push(likes.pop());
+        }
+      }
+      sorted.push(...likes);
+      return sorted;
+    },
+  },
   methods: {
     groupsFor: function (gid) {
       if (this.likers[gid]) {

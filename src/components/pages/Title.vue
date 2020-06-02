@@ -59,14 +59,14 @@
           <LikesList
             :likes="movie.likes"
             :likers="movie.likers"
-            v-if="$vuetify.breakpoint.smAndUp"
+            v-if="$vuetify.breakpoint.smAndUp && movie.likes.length"
           />
         </v-container>
       </v-col>
     </v-row>
 
     <LikesList
-      v-if="$vuetify.breakpoint.xsOnly"
+      v-if="$vuetify.breakpoint.xsOnly && movie.likes.length"
       :likes="movie.likes"
       :likers="movie.likers"
     />
@@ -102,8 +102,7 @@ export default {
   watch: {
     movie: function (val, oldVal) {
       this.myLike = this.movie.likes.find((like) => {
-        // return like.googleId === store.state.user.googleId;
-        return like.name === store.state.user.name; // FIXME this shouldb't be based on name, but store doesn't have googleId
+        return like.googleId === store.state.user.googleId;
       });
     },
   },

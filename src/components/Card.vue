@@ -20,7 +20,7 @@
       >{{ movie.Title }}</v-card-subtitle
     >
 
-    <v-card-text class="text--primary d-none d-md-block pb-1">
+    <v-card-text class="text--primary d-none d-sm-block pb-1">
       <div
         class="d-inline-flex align-self-stretch justify-center"
         style="width: 100%;"
@@ -37,13 +37,15 @@
           :imdbid="movie.imdbID"
         ></RottenTomatoesRating>
       </div>
+    </v-card-text>
 
+    <v-card-text class="d-none d-md-flex">
       <div>
         {{ `${movie.Plot.substring(0, 100)}...` }}
       </div>
     </v-card-text>
 
-    <v-card-actions class="d-none d-sm-flex">
+    <v-card-actions class="d-none d-md-flex">
       <v-btn
         color="orange"
         class="subtitle-2"
