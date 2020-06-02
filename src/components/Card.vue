@@ -20,7 +20,10 @@
       >{{ movie.Title }}</v-card-subtitle
     >
 
-    <v-card-text class="text--primary d-none d-sm-block pb-1">
+    <v-card-text
+      class="text--primary d-none d-sm-block pb-1"
+      style="min-height: 80px;"
+    >
       <div
         class="d-inline-flex align-self-stretch justify-center"
         style="width: 100%;"
@@ -37,26 +40,16 @@
           :imdbid="movie.imdbID"
         ></RottenTomatoesRating>
       </div>
-    </v-card-text>
-
-    <v-card-text class="d-none d-md-flex">
-      <div>
-        {{ `${movie.Plot.substring(0, 100)}...` }}
-      </div>
-    </v-card-text>
-
-    <v-card-actions class="d-none d-md-flex">
-      <v-btn
-        color="orange"
-        class="subtitle-2"
-        text
-        target="_blank"
-        :href="movie.getReelGoodLink()"
-        rel="noopener"
+      <v-chip
+        v-for="circleName in movie.likerCircles"
+        v-bind:key="circleName"
+        class="ma-2"
+        color="accent darken-4"
+        small
       >
-        Where to watch?
-      </v-btn>
-    </v-card-actions>
+        {{ circleName }}
+      </v-chip>
+    </v-card-text>
   </v-card>
 </template>
 <script>

@@ -50,8 +50,15 @@ async function routes(fastify, options) {
     let query = {
       imdbID: { $in: likedMovies.map((m) => m.imdbID) },
     };
-    let docs = await db.findWithoutSort(db.movies, query, limit);
-    return docs;
+    let movies = await db.findWithoutSort(db.movies, query, limit);
+
+    for (let i = 0; i < movies.length; i++) {
+      movie = movies[i];
+      movie.likes = await db.recent(db.likes, { imdbID: movie.imdbID }, 100);
+      movie.likerCircles = await getLikerCircles(request.user, movie.likes);
+    }
+
+    return movies;
   });
 
   fastify.post("/movies/:id/like", async (request, reply) => {
@@ -77,6 +84,52 @@ async function routes(fastify, options) {
     );
     return success;
   });
+}
+
+async function getLikerCircles(user, likes) {
+  let toReturn = [];
+
+  // all the likers of this movie, not including user
+  let likerGoogleIds = new Set(
+    likes
+      .filter((like) => {
+        return like.googleId !== user.googleId;
+      })
+      .map((like) => {
+        return like.googleId;
+      })
+  );
+
+  likerGoogleIds = Array.from(likerGoogleIds);
+  if (likerGoogleIds.length > 0) {
+    for (let j = 0; j < likerGoogleIds.length; j++) {
+      let gid = likerGoogleIds[j];
+      let likerCircles = await db.find(db.circles, {
+        $and: [
+          {
+            $or: [
+              {
+                members: { $elemMatch: { googleId: user.googleId } },
+              },
+              { "owner.googleId": user.googleId },
+            ],
+          },
+          {
+            $or: [
+              {
+                members: { $elemMatch: { googleId: gid } },
+              },
+              { "owner.googleId": gid },
+            ],
+          },
+        ],
+      });
+      if (likerCircles && likerCircles.length > 0) {
+        toReturn.push(...likerCircles.map((circle) => circle.name));
+      }
+    }
+  }
+  return toReturn;
 }
 
 async function getLikers(user, likes) {
