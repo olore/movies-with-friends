@@ -69,7 +69,20 @@ export default class Movie {
   }
 
   static async getRecentlyViewed() {
-    let results = await fetch(`${this.getHost()}:3000/movies/recent`, {
+    let results = await fetch(
+      `${this.getHost()}:3000/movies/recentlySearched`,
+      {
+        headers: this.getHeaders(),
+      }
+    );
+    let data = await results.json();
+    return data.map((movieData) => {
+      return new Movie(movieData);
+    });
+  }
+
+  static async getRecentlyRated() {
+    let results = await fetch(`${this.getHost()}:3000/movies/recentlyRated`, {
       headers: this.getHeaders(),
     });
     let data = await results.json();

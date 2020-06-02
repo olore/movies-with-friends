@@ -14,7 +14,7 @@
         </span>
 
         <v-chip
-          v-for="circle in groupsFor(like.googleId)"
+          v-for="circle in circlesFor(like.googleId)"
           v-bind:key="circle._id"
           class="ma-2"
           color="accent"
@@ -48,23 +48,21 @@ export default {
           return like.googleId !== gid;
         });
       }
+      let noCircles = [];
       for (let i = 0; i < likes.length; i++) {
-        if (this.groupsFor(likes[i]) !== []) {
-          sorted.push(likes.pop());
+        if (this.circlesFor(likes[i].googleId).length > 0) {
+          sorted.push(likes[i]);
+        } else {
+          noCircles.push(likes[i]);
         }
       }
-      sorted.push(...likes);
+      sorted.push(...noCircles);
       return sorted;
     },
   },
   methods: {
-    groupsFor: function (gid) {
-      if (this.likers[gid]) {
-        return this.likers[gid].map((g) => {
-          return { name: g.name, _id: g._id };
-        });
-      }
-      return [];
+    circlesFor: function (gid) {
+      return this.likers[gid] || [];
     },
   },
 };

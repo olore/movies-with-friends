@@ -9,6 +9,14 @@
           <v-list-item-title>Home</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
+      <v-list-item link v-on:click="navTo('/recently-viewed')">
+        <v-list-item-action>
+          <v-icon>{{ iconMovie }}</v-icon>
+        </v-list-item-action>
+        <v-list-item-content>
+          <v-list-item-title>Recently Viewed</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
       <v-list-item link v-on:click="navTo('/settings')">
         <v-list-item-action>
           <v-icon>{{ iconSettings }}</v-icon>
@@ -36,9 +44,11 @@
 <script>
 import {
   mdiViewDashboard,
+  mdiHome,
   mdiCog,
   mdiStar,
   mdiAccountMultiplePlus,
+  mdiMovieOpen,
 } from "@mdi/js";
 
 export default {
@@ -57,10 +67,11 @@ export default {
   },
 
   data: () => ({
-    iconDashboard: mdiViewDashboard,
+    iconDashboard: mdiHome,
     iconSettings: mdiCog,
     iconInvite: mdiAccountMultiplePlus,
     iconStar: mdiStar,
+    iconMovie: mdiMovieOpen,
   }),
 
   methods: {

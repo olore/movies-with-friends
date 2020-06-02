@@ -85,7 +85,12 @@ async function routes(fastify, options) {
     }
   });
 
-  fastify.get("/movies/recent", async (request, reply) => {
+  fastify.get("/movies/recentlySearched", async (request, reply) => {
+    const limit = request.query.limit || 12;
+    return await db.recent(db.movies, {}, limit);
+  });
+
+  fastify.get("/movies/recentlyRated", async (request, reply) => {
     const limit = request.query.limit || 12;
     const dontSort = {};
 

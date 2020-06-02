@@ -7,7 +7,7 @@
     </v-row>
     <v-row>
       <v-col cols="12">
-        <span class="headline">Home</span>
+        <span class="headline">Recently Viewed</span>
       </v-col>
     </v-row>
     <v-row>
@@ -24,7 +24,7 @@ import Movie from "../../models/Movie";
 import Search from "../Search";
 
 export default {
-  name: "Home",
+  name: "RecentlyViewed",
   components: {
     Card,
     Search,

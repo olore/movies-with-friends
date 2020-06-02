@@ -10,6 +10,8 @@ const Home = () => import("./components/pages/Home");
 // const Title = () => import("./components/pages/Title");
 
 // import Home from "./components/pages/Home";
+import RecentlyRated from "./components/pages/RecentlyRated";
+import RecentlyViewed from "./components/pages/RecentlyViewed";
 import Settings from "./components/pages/Settings";
 import MyCircles from "./components/pages/MyCircles";
 import JoinCircle from "./components/pages/JoinCircle";
@@ -18,7 +20,13 @@ import Title from "./components/pages/Title";
 import { store } from "./store";
 
 const routes = [
-  { path: "/", name: "home", component: Home },
+  { path: "/", name: "home", component: RecentlyRated },
+  {
+    path: "/recently-viewed",
+    name: "recentlyViewed",
+    component: RecentlyViewed,
+  },
+  { path: "/recently-rated", name: "recentlyRated", component: RecentlyRated },
   { path: "/settings", name: "settings", component: Settings },
   {
     path: "/circles/:id/join",
