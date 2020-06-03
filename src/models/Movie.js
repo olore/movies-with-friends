@@ -81,6 +81,19 @@ export default class Movie {
     });
   }
 
+  static async getMyRated(sortBy = "date") {
+    let results = await fetch(
+      `${this.getHost()}:3000/movies/myRated?sort=${sortBy}`,
+      {
+        headers: this.getHeaders(),
+      }
+    );
+    let data = await results.json();
+    return data.map((movieData) => {
+      return new Movie(movieData);
+    });
+  }
+
   static async getRecentlyRated() {
     let results = await fetch(`${this.getHost()}:3000/movies/recentlyRated`, {
       headers: this.getHeaders(),

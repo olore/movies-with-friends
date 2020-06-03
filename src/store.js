@@ -1,5 +1,5 @@
 const store = {
-  debug: true,
+  debug: false,
   state: {
     user: null,
   },

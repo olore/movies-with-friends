@@ -44,6 +44,38 @@ async function routes(fastify, options) {
     return await db.recent(db.movies, {}, limit);
   });
 
+  fastify.get("/movies/myRated", async (request, reply) => {
+    const sortBy = request.query.sort || "date"; // date || rating
+    let sort = { updatedAt: -1 };
+    if (sortBy === "rating") {
+      sort = {
+        rating: -1,
+      };
+    }
+    console.log({ sort });
+    let likedMovies = await db.find(
+      db.likes,
+      {
+        googleId: request.user.googleId,
+      },
+      sort,
+      100
+    );
+    console.log(likedMovies);
+    let query = {
+      imdbID: { $in: likedMovies.map((m) => m.imdbID) },
+    };
+    let movies = await db.findWithoutSort(db.movies, query, 100);
+
+    for (let i = 0; i < movies.length; i++) {
+      movie = movies[i];
+      movie.likes = await db.recent(db.likes, { imdbID: movie.imdbID }, 100);
+      movie.likerCircles = await getLikerCircles(request.user, movie.likes);
+    }
+
+    return movies;
+  });
+
   fastify.get("/movies/recentlyRated", async (request, reply) => {
     const limit = request.query.limit || 12;
     let likedMovies = await db.recent(db.likes, {}, 20); // get 20 in case some are the same

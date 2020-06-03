@@ -27,9 +27,19 @@
           </v-list-item-title>
         </v-list-item-content>
       </v-list-item>
-      <v-list-item link v-on:click="navTo('/circles')">
+      <v-list-item link v-on:click="navTo('/my-rated')">
         <v-list-item-action>
           <v-icon>{{ iconStar }}</v-icon>
+        </v-list-item-action>
+        <v-list-item-content>
+          <v-list-item-title>
+            <v-list-item-title>My Rated</v-list-item-title>
+          </v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+      <v-list-item link v-on:click="navTo('/circles')">
+        <v-list-item-action>
+          <v-icon>{{ iconCircles }}</v-icon>
         </v-list-item-action>
         <v-list-item-content>
           <v-list-item-title>
@@ -47,6 +57,8 @@ import {
   mdiHome,
   mdiCog,
   mdiStar,
+  mdiCircleDouble,
+  mdiGoogleCirclesExtended,
   mdiAccountMultiplePlus,
   mdiMovieOpen,
 } from "@mdi/js";
@@ -72,6 +84,7 @@ export default {
     iconInvite: mdiAccountMultiplePlus,
     iconStar: mdiStar,
     iconMovie: mdiMovieOpen,
+    iconCircles: mdiGoogleCirclesExtended,
   }),
 
   methods: {
