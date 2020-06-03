@@ -44,7 +44,7 @@
         v-for="circleName in movie.likerCircles"
         v-bind:key="circleName"
         class="ma-2"
-        color="accent darken-4"
+        color="secondary"
         small
       >
         {{ circleName }}

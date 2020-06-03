@@ -6,15 +6,26 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-col cols="12">
-        <span class="headline">My Rated</span>
-        <v-btn @click="sort('date')" small :color="color('date')" class="ml-4">
+      <v-col cols="6" class="py-0">
+        <span class="title">My Rated</span>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col cols="6" class="py-0">
+        <v-btn
+          @click="sort('date')"
+          x-small
+          color="primary"
+          :disabled="sortOrder === 'date'"
+          class="ml-4"
+        >
           By Date
         </v-btn>
         <v-btn
           @click="sort('rating')"
-          small
-          :color="color('rating')"
+          x-small
+          color="primary"
+          :disabled="sortOrder === 'rating'"
           class="ml-4"
         >
           By Rating
@@ -51,9 +62,6 @@ export default {
     sort: async function (sortBy) {
       this.movies = await Movie.getMyRated(sortBy);
       this.sortOrder = sortBy;
-    },
-    color: function (sortBy) {
-      return this.sortOrder === sortBy ? "secondary" : "primary";
     },
   },
 };
