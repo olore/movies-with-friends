@@ -141,6 +141,18 @@ const db = {
       });
     });
   },
+
+  count: (collection, query) => {
+    return new Promise((resolve, reject) => {
+      collection.count(query, (err, count) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(count);
+        }
+      });
+    });
+  },
 };
 
 const createIndex = async (collection, field, isUnique) => {

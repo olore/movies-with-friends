@@ -22,6 +22,7 @@
 import Card from "../Card";
 import Movie from "../../models/Movie";
 import Search from "../Search";
+import InfiniteScroller from "../../InfiniteScroller";
 
 export default {
   name: "RecentlyRated",
@@ -29,11 +30,27 @@ export default {
     Card,
     Search,
   },
-  created: async function () {
-    this.movies = await Movie.getRecentlyRated();
+  mounted: async function () {
+    const PAGE_SIZE = 6;
+    let { movies, totalCount } = await Movie.getRecentlyRated(this.PAGE_SIZE);
+    this.movies = movies;
+
+    this.setupInfiniteScroll(PAGE_SIZE, totalCount);
   },
   data: () => ({
     movies: [],
   }),
+  methods: {
+    setupInfiniteScroll: function (pageSize, totalCount) {
+      new InfiniteScroller({
+        pageSize,
+        totalCount,
+      }).onScrollBottom(async (pageSize, offset) => {
+        this.movies.push(
+          ...(await Movie.getRecentlyRated(pageSize, offset)).movies
+        );
+      });
+    },
+  },
 };
 </script>
