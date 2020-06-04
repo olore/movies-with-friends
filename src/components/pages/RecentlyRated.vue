@@ -15,6 +15,9 @@
         <Card :movie="movie" tile class="ma-1 pa-1" />
       </v-col>
     </v-row>
+    <infinite-loading @infinite="infiniteHandler" spinner="waveDots">
+      <div slot="no-more">That's all folks!</div>
+    </infinite-loading>
   </v-container>
 </template>
 
@@ -22,34 +25,35 @@
 import Card from "../Card";
 import Movie from "../../models/Movie";
 import Search from "../Search";
-import InfiniteScroller from "../../InfiniteScroller";
+import InfiniteLoading from "vue-infinite-loading";
 
 export default {
   name: "RecentlyRated",
   components: {
     Card,
     Search,
+    InfiniteLoading,
   },
   mounted: async function () {
-    const PAGE_SIZE = 6;
-    let { movies, totalCount } = await Movie.getRecentlyRated(this.PAGE_SIZE);
-    this.movies = movies;
-
-    this.setupInfiniteScroll(PAGE_SIZE, totalCount);
+    this.PAGE_SIZE = 6;
+    this.offset = 0;
   },
   data: () => ({
     movies: [],
   }),
   methods: {
-    setupInfiniteScroll: function (pageSize, totalCount) {
-      new InfiniteScroller({
-        pageSize,
-        totalCount,
-      }).onScrollBottom(async (pageSize, offset) => {
-        this.movies.push(
-          ...(await Movie.getRecentlyRated(pageSize, offset)).movies
-        );
-      });
+    infiniteHandler: async function ($state) {
+      let { movies } = await Movie.getRecentlyRated(
+        this.PAGE_SIZE,
+        this.offset
+      );
+      if (movies.length > 0) {
+        this.offset += this.PAGE_SIZE;
+        this.movies.push(...movies);
+        $state.loaded();
+      } else {
+        $state.complete();
+      }
     },
   },
 };
