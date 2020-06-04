@@ -14,7 +14,7 @@ async function routes(fastify, options) {
       fastify.log.debug("Found in DB", id);
     }
 
-    movie.likes = await db.recent(db.likes, { imdbID: id }, 100);
+    movie.likes = await db.recent(db.likes, { imdbID: id }, db.NO_LIMIT);
     movie.likers = await getLikers(user, movie.likes);
 
     return movie;
@@ -41,69 +41,60 @@ async function routes(fastify, options) {
 
   fastify.get("/movies/recentlySearched", async (request, reply) => {
     const limit = request.query.limit || 12;
-    return await db.recent(db.movies, {}, limit);
+    return await db.recent(db.movies, db.NO_SORT, limit);
   });
 
   fastify.get("/movies/myRated", async (request, reply) => {
-    const sortBy = request.query.sort || "date"; // date || rating
-    let sort = { updatedAt: -1 };
-    if (sortBy === "rating") {
-      sort = {
-        rating: -1,
-      };
-    }
-    console.log({ sort });
-    let likedMovies = await db.find(
+    let { sortBy, offset, limit } = getBasicParams(request.query);
+    let myLikes = await db.find(
       db.likes,
       {
         googleId: request.user.googleId,
       },
-      sort,
-      100
+      sortBy,
+      db.NO_LIMIT
     );
-    console.log(likedMovies);
+
     let query = {
-      imdbID: { $in: likedMovies.map((m) => m.imdbID) },
+      imdbID: { $in: myLikes.map((m) => m.imdbID) },
     };
-    let movies = await db.findWithoutSort(db.movies, query, 100);
 
-    for (let i = 0; i < movies.length; i++) {
-      movie = movies[i];
-      movie.likes = await db.recent(db.likes, { imdbID: movie.imdbID }, 100);
-      movie.likerCircles = await getLikerCircles(request.user, movie.likes);
-    }
+    let movies = await db.findWithOffset(
+      db.movies,
+      query,
+      db.NO_SORT,
+      offset,
+      limit
+    );
 
-    return movies;
+    movies = await addLikes(request.user, movies);
+
+    return {
+      count: movies.length,
+      movies,
+    };
   });
 
   fastify.get("/movies/recentlyRated", async (request, reply) => {
-    const limit = request.query.limit || 12;
-    const offset = request.query.offset || 0;
+    const { offset, limit } = getBasicParams(request.query);
 
-    let likedMovies = await db.recent(db.likes, {}, -1);
+    let likedMovies = await db.recent(db.likes, db.NO_SORT, db.NO_LIMIT);
     let uniqueLikedMovieIds = Array.from(
-      new Set(likedMovies.map((movie) => movie.imdbID))
+      new Set(likedMovies.map((movie) => movie.imdbID)) // unique
     );
     let query = {
       imdbID: { $in: uniqueLikedMovieIds },
     };
 
-    let cursor = db.movies.find(query).skip(offset).limit(limit); // move to db.js
-    let movies = await new Promise((resolve, reject) => {
-      cursor.exec(function (err, docs) {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(docs);
-        }
-      });
-    });
+    let movies = await db.findWithOffset(
+      db.movies,
+      query,
+      db.NO_SORT,
+      offset,
+      limit
+    );
 
-    for (let i = 0; i < movies.length; i++) {
-      movie = movies[i];
-      movie.likes = await db.recent(db.likes, { imdbID: movie.imdbID }, 100);
-      movie.likerCircles = await getLikerCircles(request.user, movie.likes);
-    }
+    movies = await addLikes(request.user, movies);
 
     return {
       count: movies.length,
@@ -182,6 +173,32 @@ async function getLikerCircles(user, likes) {
   }
   return toReturn;
 }
+
+const addLikes = async (user, movies) => {
+  for (let i = 0; i < movies.length; i++) {
+    movie = movies[i];
+    movie.likes = await db.recent(
+      db.likes,
+      { imdbID: movie.imdbID },
+      db.NO_LIMIT
+    );
+    movie.likerCircles = await getLikerCircles(user, movie.likes);
+    movie.likers = await getLikers(user, movie.likes);
+  }
+  return movies;
+};
+
+const getBasicParams = (query) => {
+  let opts = {
+    limit: Math.min(25, Number.parseInt(query.limit) || 12),
+    offset: Number.parseInt(query.offset, 10) || 0,
+    sortBy: { updatedAt: -1 },
+  };
+  if (query.sort && query.sort !== "date") {
+    opts.sortBy = { rating: -1 };
+  }
+  return opts;
+};
 
 async function getLikers(user, likes) {
   let likers = {};

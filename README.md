@@ -33,3 +33,4 @@ Run it with
 * https://www.omdbapi.com/
 * https://github.com/louischatriot/nedb
 * https://github.com/mejiamanuel57/vue-google-signin-button-directive
+* https://peachscript.github.io/vue-infinite-loading/

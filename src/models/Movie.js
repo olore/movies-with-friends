@@ -81,15 +81,15 @@ export default class Movie {
     });
   }
 
-  static async getMyRated(sortBy = "date") {
+  static async getMyRated(limit = 6, offset = 0, sortBy = "date") {
     let results = await fetch(
-      `${this.getHost()}:3000/movies/myRated?sort=${sortBy}`,
+      `${this.getHost()}:3000/movies/myRated?limit=${limit}&offset=${offset}&sort=${sortBy}`,
       {
         headers: this.getHeaders(),
       }
     );
     let data = await results.json();
-    return data.map((movieData) => {
+    return data.movies.map((movieData) => {
       return new Movie(movieData);
     });
   }

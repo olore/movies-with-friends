@@ -2,6 +2,8 @@ const Datastore = require("nedb");
 require("dotenv").config();
 
 const db = {
+  NO_LIMIT: 0,
+  NO_SORT: {},
   movies: new Datastore({
     filename: `${process.env.DB_FILE_PATH}/movies.nedb`,
     autoload: true,
@@ -117,6 +119,23 @@ const db = {
     });
   },
 
+  findWithOffset: (collection, query, sort, offset, limit) => {
+    return new Promise((resolve, reject) => {
+      collection
+        .find(query)
+        .sort(sort)
+        .skip(offset)
+        .limit(limit)
+        .exec((err, docs) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(docs);
+          }
+        });
+    });
+  },
+
   update: (collection, query, updateCmd) => {
     return new Promise((resolve, reject) => {
       collection.update(query, updateCmd, function (err, numRemoved) {
@@ -135,7 +154,6 @@ const db = {
         if (err) {
           reject(err);
         } else {
-          console.log({ numRemoved });
           resolve(true);
         }
       });

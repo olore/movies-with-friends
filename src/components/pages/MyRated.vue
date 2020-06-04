@@ -37,6 +37,18 @@
         <Card :movie="movie" tile class="ma-1 pa-1" />
       </v-col>
     </v-row>
+    <infinite-loading
+      @infinite="infiniteHandler"
+      spinner="waveDots"
+      :forceUseInfiniteWrapper="true"
+      :identifier="reset"
+    >
+      <div slot="no-more">
+        <v-chip class="ma-2 pa-4">
+          That's all folks!
+        </v-chip>
+      </div>
+    </infinite-loading>
   </v-container>
 </template>
 
@@ -44,24 +56,44 @@
 import Card from "../Card";
 import Movie from "../../models/Movie";
 import Search from "../Search";
+import InfiniteLoading from "vue-infinite-loading";
 
 export default {
   name: "RecentlyRated",
   components: {
     Card,
     Search,
+    InfiniteLoading,
   },
-  created: async function () {
-    this.movies = await Movie.getMyRated();
+  mounted: async function () {
+    this.PAGE_SIZE = 6;
+    this.offset = 0;
   },
   data: () => ({
     sortOrder: "date",
     movies: [],
+    reset: new Date(),
   }),
   methods: {
     sort: async function (sortBy) {
-      this.movies = await Movie.getMyRated(sortBy);
       this.sortOrder = sortBy;
+      this.reset = new Date();
+      this.movies = [];
+      this.offset = 0;
+    },
+    infiniteHandler: async function ($state) {
+      let movies = await Movie.getMyRated(
+        this.PAGE_SIZE,
+        this.offset,
+        this.sortOrder
+      );
+      if (movies.length > 0) {
+        this.offset += this.PAGE_SIZE;
+        this.movies.push(...movies);
+        $state.loaded();
+      } else {
+        $state.complete();
+      }
     },
   },
 };
