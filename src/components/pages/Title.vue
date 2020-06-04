@@ -2,9 +2,13 @@
   <v-container v-if="movie">
     <v-row>
       <v-col cols="12" class="d-flex justify-space-between">
-        <button @click="goBack()" class="mr-2">Back</button>
+        <v-btn @click="goBack()" class="mr-2" icon color="primary">
+          <v-icon> {{ iconBack }} </v-icon>
+        </v-btn>
         <h2 class="headline">{{ movie.Title }}</h2>
-        <button @click="goBack()" class="mr-2">Back</button>
+        <v-btn @click="goBack()" class="ml-2" icon color="primary">
+          <v-icon> {{ iconBack }} </v-icon>
+        </v-btn>
       </v-col>
     </v-row>
 
@@ -86,12 +90,14 @@ import RottenTomatoesRating from "../ratings/RottenTomatoesRating";
 import RatingDialog from "../RatingDialog";
 import LikesList from "../LikesList";
 import { store } from "../../store";
+import { mdiArrowLeftCircle } from "@mdi/js";
 
 export default {
   name: "Title",
   components: { IMDBRating, RottenTomatoesRating, RatingDialog, LikesList },
   data: () => ({
     movie: null,
+    iconBack: mdiArrowLeftCircle,
   }),
   async beforeRouteEnter(to, from, next) {
     const movie = await Movie.getById(to.params.id);
