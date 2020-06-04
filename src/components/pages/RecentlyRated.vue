@@ -15,7 +15,11 @@
         <Card :movie="movie" tile class="ma-1 pa-1" />
       </v-col>
     </v-row>
-    <infinite-loading @infinite="infiniteHandler" spinner="waveDots">
+    <infinite-loading
+      @infinite="infiniteHandler"
+      spinner="waveDots"
+      :forceUseInfiniteWrapper="true"
+    >
       <div slot="no-more">That's all folks!</div>
     </infinite-loading>
   </v-container>
