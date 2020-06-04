@@ -94,14 +94,23 @@ export default class Movie {
     });
   }
 
-  static async getRecentlyRated() {
-    let results = await fetch(`${this.getHost()}:3000/movies/recentlyRated`, {
-      headers: this.getHeaders(),
-    });
+  static async getRecentlyRated(limit = 6, offset = 0) {
+    let results = await fetch(
+      `${this.getHost()}:3000/movies/recentlyRated?limit=${limit}&offset=${offset}`,
+      {
+        headers: this.getHeaders(),
+      }
+    );
     let data = await results.json();
-    return data.map((movieData) => {
+
+    let movies = data.movies.map((movieData) => {
       return new Movie(movieData);
     });
+
+    return {
+      totalCount: data.totalCount,
+      movies,
+    };
   }
 
   static async like(data) {

@@ -78,11 +78,26 @@ async function routes(fastify, options) {
 
   fastify.get("/movies/recentlyRated", async (request, reply) => {
     const limit = request.query.limit || 12;
-    let likedMovies = await db.recent(db.likes, {}, 20); // get 20 in case some are the same
+    const offset = request.query.offset || 0;
+
+    let likedMovies = await db.recent(db.likes, {}, -1);
+    let uniqueLikedMovieIds = Array.from(
+      new Set(likedMovies.map((movie) => movie.imdbID))
+    );
     let query = {
-      imdbID: { $in: likedMovies.map((m) => m.imdbID) },
+      imdbID: { $in: uniqueLikedMovieIds },
     };
-    let movies = await db.findWithoutSort(db.movies, query, limit);
+
+    let cursor = db.movies.find(query).skip(offset).limit(limit); // move to db.js
+    let movies = await new Promise((resolve, reject) => {
+      cursor.exec(function (err, docs) {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(docs);
+        }
+      });
+    });
 
     for (let i = 0; i < movies.length; i++) {
       movie = movies[i];
@@ -90,7 +105,11 @@ async function routes(fastify, options) {
       movie.likerCircles = await getLikerCircles(request.user, movie.likes);
     }
 
-    return movies;
+    return {
+      count: movies.length,
+      totalCount: uniqueLikedMovieIds.length,
+      movies,
+    };
   });
 
   fastify.post("/movies/:id/like", async (request, reply) => {
