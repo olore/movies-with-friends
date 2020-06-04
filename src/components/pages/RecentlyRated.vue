@@ -20,7 +20,11 @@
       spinner="waveDots"
       :forceUseInfiniteWrapper="true"
     >
-      <div slot="no-more">That's all folks!</div>
+      <div slot="no-more">
+        <v-chip class="ma-2 pa-4">
+          That's all folks!
+        </v-chip>
+      </div>
     </infinite-loading>
   </v-container>
 </template>
