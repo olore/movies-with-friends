@@ -14,8 +14,16 @@ async function routes(fastify, options) {
       fastify.log.debug("Found in DB", id);
     }
 
-    movie.likes = await db.recent(db.likes, { imdbID: id }, db.LIMIT_NONE);
-    movie.likers = await getLikers(user, movie.likes);
+    movie.likes = await db.find(
+      db.likes,
+      { imdbID: id },
+      db.SORT_NONE,
+      db.LIMIT_NONE
+    );
+    if (movie.likes && movie.likes.length > 0) {
+      movie.likerCircles = await getLikerCircles(user, movie.likes);
+      movie.likers = await getLikers(user, movie.likes);
+    }
 
     return movie;
   });

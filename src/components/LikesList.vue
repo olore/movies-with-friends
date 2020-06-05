@@ -13,15 +13,18 @@
           No comment
         </span>
 
-        <v-chip
+        <v-btn
+          :to="{ name: 'circle-movies', params: { id: circle._id } }"
           v-for="circle in circlesFor(like.googleId)"
           v-bind:key="circle._id"
-          class="ma-2"
-          color="accent"
+          class="ma-2 green darken-4"
+          text
+          :rounded="true"
           x-small
         >
           {{ circle.name }}
-        </v-chip>
+        </v-btn>
+
         <span class="overline vmiddle grey--text">{{ like.smallDate() }}</span>
       </v-col>
     </v-row>
