@@ -85,6 +85,43 @@ async function routes(fastify, options) {
     };
   });
 
+  fastify.get("/movies/forCircle", async (request, reply) => {
+    let { sortBy, offset, limit } = getBasicParams(request.query);
+    const circleId = request.query.circleId;
+
+    let circle = await db.findOne(db.circles, { _id: circleId });
+    let circleMembers = [circle.owner, ...circle.members];
+
+    let circleLikes = await db.find(
+      db.likes,
+      { googleId: { $in: circleMembers.map((m) => m.googleId) } },
+      sortBy,
+      db.LIMIT_NONE
+    );
+
+    let uniqueLikedMovieIds = Array.from(
+      new Set(circleLikes.map((movie) => movie.imdbID)) // unique
+    );
+    let query = {
+      imdbID: { $in: uniqueLikedMovieIds },
+    };
+
+    let movies = await db.findWithOffset(
+      db.movies,
+      query,
+      db.SORT_NONE,
+      offset,
+      limit
+    );
+
+    movies = await addLikes(request.user, movies);
+
+    return {
+      count: movies.length,
+      totalCount: uniqueLikedMovieIds.length,
+      movies,
+    };
+  });
   fastify.get("/movies/recentlyRated", async (request, reply) => {
     let { sortBy, offset, limit } = getBasicParams(request.query);
 
@@ -182,7 +219,7 @@ async function getLikerCircles(user, likes) {
         ],
       });
       if (likerCircles && likerCircles.length > 0) {
-        toReturn.push(...likerCircles.map((circle) => circle.name));
+        toReturn.push(...likerCircles);
       }
     }
   }
@@ -192,13 +229,16 @@ async function getLikerCircles(user, likes) {
 const addLikes = async (user, movies) => {
   for (let i = 0; i < movies.length; i++) {
     movie = movies[i];
-    movie.likes = await db.recent(
+    movie.likes = await db.find(
       db.likes,
       { imdbID: movie.imdbID },
+      db.SORT_NONE,
       db.LIMIT_NONE
     );
-    movie.likerCircles = await getLikerCircles(user, movie.likes);
-    movie.likers = await getLikers(user, movie.likes);
+    if (movie.likes && movie.likes.length > 0) {
+      movie.likerCircles = await getLikerCircles(user, movie.likes);
+      movie.likers = await getLikers(user, movie.likes);
+    }
   }
   return movies;
 };

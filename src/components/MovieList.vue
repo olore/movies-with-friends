@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row v-if="!disableSort">
-      <v-col cols="6" class="py-0">
+      <v-col cols="12" class="py-0">
         <v-btn
           @click="sort('date')"
           x-small
@@ -53,9 +53,8 @@ export default {
     Card,
     InfiniteLoading,
   },
-  props: { movieFnName: String, disableSort: Boolean },
+  props: { movieFnName: String, disableSort: Boolean, circle: Object },
   mounted: async function () {
-    console.log(0);
     this.PAGE_SIZE = 6;
     this.offset = 0;
   },
@@ -72,11 +71,23 @@ export default {
       this.offset = 0;
     },
     infiniteHandler: async function ($state) {
-      let { movies } = await Movie[this.movieFnName](
-        this.PAGE_SIZE,
-        this.offset,
-        this.sortOrder
-      );
+      let result;
+      if (!this.circle) {
+        result = await Movie[this.movieFnName](
+          this.PAGE_SIZE,
+          this.offset,
+          this.sortOrder
+        );
+      } else {
+        result = await Movie[this.movieFnName](
+          this.PAGE_SIZE,
+          this.offset,
+          this.sortOrder,
+          this.circle._id
+        );
+      }
+      let movies = result.movies;
+
       if (movies.length > 0) {
         this.offset += this.PAGE_SIZE;
         this.movies.push(...movies);

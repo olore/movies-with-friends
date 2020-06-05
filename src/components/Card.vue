@@ -40,15 +40,17 @@
           :imdbid="movie.imdbID"
         ></RottenTomatoesRating>
       </div>
-      <v-chip
-        v-for="circleName in movie.likerCircles"
-        v-bind:key="circleName"
-        class="ma-2"
-        color="secondary"
-        small
+      <v-btn
+        :to="{ name: 'circle-movies', params: { id: circle._id } }"
+        v-for="circle in movie.likerCircles"
+        v-bind:key="circle._id"
+        class="ma-2 green darken-4"
+        text
+        :rounded="true"
+        x-small
       >
-        {{ circleName }}
-      </v-chip>
+        {{ circle.name }}
+      </v-btn>
     </v-card-text>
   </v-card>
 </template>

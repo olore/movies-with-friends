@@ -68,6 +68,24 @@ export default class Movie {
     return movie;
   }
 
+  static async getForCircle(limit = 6, offset = 0, sortBy = "date", circleId) {
+    let results = await fetch(
+      `${this.getHost()}:3000/movies/forCircle?limit=${limit}&offset=${offset}&sort=${sortBy}&circleId=${circleId}`,
+      {
+        headers: this.getHeaders(),
+      }
+    );
+    let data = await results.json();
+    let movies = data.movies.map((movieData) => {
+      return new Movie(movieData);
+    });
+
+    return {
+      totalCount: data.totalCount,
+      movies,
+    };
+  }
+
   static async getRecentlyViewed(limit = 6, offset = 0, sortBy = "date") {
     let results = await fetch(
       `${this.getHost()}:3000/movies/recentlySearched?limit=${limit}&offset=${offset}&sort=${sortBy}`,
