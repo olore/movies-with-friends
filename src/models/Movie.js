@@ -68,17 +68,22 @@ export default class Movie {
     return movie;
   }
 
-  static async getRecentlyViewed() {
+  static async getRecentlyViewed(limit = 6, offset = 0, sortBy = "date") {
     let results = await fetch(
-      `${this.getHost()}:3000/movies/recentlySearched`,
+      `${this.getHost()}:3000/movies/recentlySearched?limit=${limit}&offset=${offset}&sort=${sortBy}`,
       {
         headers: this.getHeaders(),
       }
     );
     let data = await results.json();
-    return data.map((movieData) => {
+    let movies = data.movies.map((movieData) => {
       return new Movie(movieData);
     });
+
+    return {
+      totalCount: data.totalCount,
+      movies,
+    };
   }
 
   static async getMyRated(limit = 6, offset = 0, sortBy = "date") {
@@ -89,14 +94,19 @@ export default class Movie {
       }
     );
     let data = await results.json();
-    return data.movies.map((movieData) => {
+    let movies = data.movies.map((movieData) => {
       return new Movie(movieData);
     });
+
+    return {
+      totalCount: data.totalCount,
+      movies,
+    };
   }
 
-  static async getRecentlyRated(limit = 6, offset = 0) {
+  static async getRecentlyRated(limit = 6, offset = 0, sortBy = "date") {
     let results = await fetch(
-      `${this.getHost()}:3000/movies/recentlyRated?limit=${limit}&offset=${offset}`,
+      `${this.getHost()}:3000/movies/recentlyRated?limit=${limit}&offset=${offset}&sort=${sortBy}`,
       {
         headers: this.getHeaders(),
       }

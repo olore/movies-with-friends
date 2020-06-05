@@ -2,8 +2,9 @@ const Datastore = require("nedb");
 require("dotenv").config();
 
 const db = {
-  NO_LIMIT: 0,
-  NO_SORT: {},
+  LIMIT_NONE: 0,
+  SORT_NONE: undefined,
+  QUERY_ALL: {},
   movies: new Datastore({
     filename: `${process.env.DB_FILE_PATH}/movies.nedb`,
     autoload: true,

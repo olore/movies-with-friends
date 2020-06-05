@@ -14,7 +14,7 @@ async function routes(fastify, options) {
       fastify.log.debug("Found in DB", id);
     }
 
-    movie.likes = await db.recent(db.likes, { imdbID: id }, db.NO_LIMIT);
+    movie.likes = await db.recent(db.likes, { imdbID: id }, db.LIMIT_NONE);
     movie.likers = await getLikers(user, movie.likes);
 
     return movie;
@@ -40,8 +40,18 @@ async function routes(fastify, options) {
   });
 
   fastify.get("/movies/recentlySearched", async (request, reply) => {
-    const limit = request.query.limit || 12;
-    return await db.recent(db.movies, db.NO_SORT, limit);
+    let { offset, limit } = getBasicParams(request.query);
+    let movies = await db.findWithOffset(
+      db.movies,
+      db.QUERY_ALL,
+      { updatedAt: -1 },
+      offset,
+      limit
+    );
+    return {
+      count: movies.length,
+      movies,
+    };
   });
 
   fastify.get("/movies/myRated", async (request, reply) => {
@@ -52,7 +62,7 @@ async function routes(fastify, options) {
         googleId: request.user.googleId,
       },
       sortBy,
-      db.NO_LIMIT
+      db.LIMIT_NONE
     );
 
     let query = {
@@ -62,7 +72,7 @@ async function routes(fastify, options) {
     let movies = await db.findWithOffset(
       db.movies,
       query,
-      db.NO_SORT,
+      db.SORT_NONE,
       offset,
       limit
     );
@@ -76,9 +86,14 @@ async function routes(fastify, options) {
   });
 
   fastify.get("/movies/recentlyRated", async (request, reply) => {
-    const { offset, limit } = getBasicParams(request.query);
+    let { sortBy, offset, limit } = getBasicParams(request.query);
 
-    let likedMovies = await db.recent(db.likes, db.NO_SORT, db.NO_LIMIT);
+    let likedMovies = await db.find(
+      db.likes,
+      db.QUERY_ALL,
+      sortBy,
+      db.LIMIT_NONE
+    );
     let uniqueLikedMovieIds = Array.from(
       new Set(likedMovies.map((movie) => movie.imdbID)) // unique
     );
@@ -89,7 +104,7 @@ async function routes(fastify, options) {
     let movies = await db.findWithOffset(
       db.movies,
       query,
-      db.NO_SORT,
+      db.SORT_NONE,
       offset,
       limit
     );
@@ -180,7 +195,7 @@ const addLikes = async (user, movies) => {
     movie.likes = await db.recent(
       db.likes,
       { imdbID: movie.imdbID },
-      db.NO_LIMIT
+      db.LIMIT_NONE
     );
     movie.likerCircles = await getLikerCircles(user, movie.likes);
     movie.likers = await getLikers(user, movie.likes);
