@@ -26,7 +26,7 @@
     "vue": "^2.6.11",
     "vue-infinite-loading": "^2.4.5",
     "vue-router": "^3.2.0",
-    "vuetify": "^2.2.11"
+    "vuetify": "^2.2.32"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
