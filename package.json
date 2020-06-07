@@ -34,7 +34,7 @@
     "@babel/preset-env": "^7.10.2",
     "@mdi/js": "^5.2.45",
     "@vue/cli-plugin-babel": "~4.3.0",
-    "@vue/cli-plugin-eslint": "~4.3.0",
+    "@vue/cli-plugin-eslint": "~4.4.1",
     "@vue/cli-service": "~4.3.0",
     "babel-eslint": "^10.1.0",
     "concurrently": "^5.2.0",
