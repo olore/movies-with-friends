@@ -55,6 +55,18 @@ const db = {
     });
   },
 
+  updateViewedAt: (collection, query) => {
+    return new Promise((resolve, reject) => {
+      collection.update(query, { $set: { viewedAt: new Date() } }, (err) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(true);
+        }
+      });
+    });
+  },
+
   upsert: (collection, query, update) => {
     return new Promise((resolve, reject) => {
       collection.update(

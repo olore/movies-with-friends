@@ -5,6 +5,7 @@ async function routes(fastify, options) {
   fastify.get("/movies/show/:id", async (request, reply) => {
     const user = request.user;
     const id = request.params.id;
+
     let movie = await db.findOne(db.movies, { imdbID: id });
     if (!movie) {
       const json = await api.getById(id);
@@ -13,6 +14,8 @@ async function routes(fastify, options) {
     } else {
       fastify.log.debug("Found in DB", id);
     }
+
+    await db.updateViewedAt(db.movies, { _id: movie._id });
 
     movie.likes = await db.find(
       db.likes,
@@ -52,7 +55,7 @@ async function routes(fastify, options) {
     let movies = await db.findWithOffset(
       db.movies,
       db.QUERY_ALL,
-      { updatedAt: -1 },
+      { viewedAt: -1, updatedAt: -1 },
       offset,
       limit
     );
