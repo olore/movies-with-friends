@@ -13,7 +13,7 @@
     </v-row>
 
     <v-row class="d-flex justify-md-center">
-      <v-col sm="4" xs="6">
+      <v-col sm="4" col="6">
         <v-img
           class="float-right"
           alt="movie poster"
@@ -23,7 +23,7 @@
         />
       </v-col>
 
-      <v-col sm="6" xs="6" class="d-flex flex-column">
+      <v-col col="6" class="d-flex flex-column">
         <v-container class="pa-0 pl-3">
           <v-row>
             <IMDBRating

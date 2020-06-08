@@ -1,6 +1,6 @@
 import VueRouter from "vue-router";
 
-const Home = () => import("./components/pages/Home");
+// const Home = () => import("./components/pages/Home");
 // Lazy loading the rest causes lots of smaller js/css files to be generated
 // which seems to make things more laggy than anything when testing on server
 //
