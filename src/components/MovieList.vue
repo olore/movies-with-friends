@@ -20,6 +20,7 @@
           By Rating
         </v-btn>
         <v-switch
+          v-if="!hideIncludeMe"
           class="d-inline ml-4"
           v-model="includeMe"
           label="include Me"
@@ -65,7 +66,12 @@ export default {
     Card,
     InfiniteLoading,
   },
-  props: { movieFnName: String, disableSort: Boolean, circle: Object },
+  props: {
+    movieFnName: String,
+    disableSort: Boolean,
+    circle: Object,
+    hideIncludeMe: Boolean,
+  },
   mounted: async function () {
     this.PAGE_SIZE = 6;
     this.offset = 0;
@@ -74,7 +80,7 @@ export default {
     movies: [],
     reset: new Date(),
     sortOrder: "date",
-    includeMe: true,
+    includeMe: false,
   }),
   watch: {
     includeMe: function () {

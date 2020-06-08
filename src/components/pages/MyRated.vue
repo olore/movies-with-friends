@@ -10,7 +10,7 @@
         <span class="headline">My Rated</span>
       </v-col>
     </v-row>
-    <MovieList movie-fn-name="getMyRated" />
+    <MovieList movie-fn-name="getMyRated" :hide-include-me="true" />
   </v-container>
 </template>
 

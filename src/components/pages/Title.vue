@@ -16,7 +16,7 @@
       <v-col sm="4" col="6">
         <v-img
           class="float-right"
-          alt="movie poster"
+          :alt="`Poster for {{ movie.Title }}`"
           :contain="false"
           :src="movie.Poster"
           :max-width="imageWidth"
