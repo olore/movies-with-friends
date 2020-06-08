@@ -1,6 +1,6 @@
 const api = require("../omdb-api");
 const db = require("../db");
-const uniqBy = require("lodash.uniqBy");
+const uniqBy = require("lodash.uniqby");
 
 async function routes(fastify, options) {
   fastify.get("/movies/show/:id", async (request, reply) => {
