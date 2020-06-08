@@ -1,5 +1,6 @@
 const api = require("../omdb-api");
 const db = require("../db");
+const uniqBy = require("lodash.uniqBy");
 
 async function routes(fastify, options) {
   fastify.get("/movies/show/:id", async (request, reply) => {
@@ -245,6 +246,8 @@ async function getLikerCircles(user, likes) {
         toReturn.push(...likerCircles);
       }
     }
+    // filter out duplicate circles
+    toReturn = uniqBy(toReturn, "_id");
   }
   return toReturn;
 }
@@ -276,7 +279,6 @@ const getBasicParams = (query) => {
   if (query.sort && query.sort !== "date") {
     opts.sortBy = { rating: -1 };
   }
-  console.log({ opts });
   return opts;
 };
 
@@ -284,7 +286,6 @@ async function getLikers(user, likes, filter) {
   let likers = {};
   let likerGoogleIds;
 
-  console.log(">>>>", filter);
   if (filter && filter === "!me") {
     // all the likers of this movie, not including user
     likerGoogleIds = new Set(
