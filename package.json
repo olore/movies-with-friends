@@ -20,6 +20,7 @@
     "fastify-cors": "^3.0.3",
     "google-auth-library": "^6.0.1",
     "jaycue": "^1.2.6",
+    "lodash.uniqby": "^4.7.0",
     "nedb": "^1.8.0",
     "node-fetch": "^2.6.0",
     "nodemon": "^2.0.4",
