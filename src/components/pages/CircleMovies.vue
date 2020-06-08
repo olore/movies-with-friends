@@ -8,7 +8,7 @@
     <v-row>
       <v-col cols="12" md="4" class="py-0">
         <v-overflow-btn
-          class="green darken-4"
+          class="my-dropdown green darken-4 mt-0"
           :items="myCircles"
           item-value="_id"
           item-text="name"
@@ -58,3 +58,10 @@ export default {
   },
 };
 </script>
+<style lang="scss">
+.my-dropdown {
+  .v-text-field__details {
+    display: none;
+  }
+}
+</style>

@@ -1,13 +1,12 @@
 <template>
-  <v-container>
+  <div>
     <v-row v-if="!disableSort">
-      <v-col cols="12" class="py-0">
+      <v-col cols="12">
         <v-btn
           @click="sort('date')"
           x-small
           color="primary"
           :disabled="sortOrder === 'date'"
-          class="ml-4"
         >
           By Date
         </v-btn>
@@ -24,6 +23,7 @@
           class="d-inline ml-4"
           v-model="includeMe"
           label="include Me"
+          style="vertical-align: top;"
         />
       </v-col>
     </v-row>
@@ -45,7 +45,7 @@
         </v-chip>
       </div>
     </infinite-loading>
-  </v-container>
+  </div>
 </template>
 <script>
 import Card from "./Card";
@@ -119,5 +119,8 @@ export default {
 .v-input__control,
 .v-input__slot {
   display: inline !important;
+  label {
+    bottom: 3px;
+  }
 }
 </style>
