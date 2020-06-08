@@ -8,30 +8,43 @@
     <v-row class="" justify="center">
       <v-col cols="12" sm="8">
         Owner
+        <v-expansion-panels>
+          <v-expansion-panel
+            v-for="item in ownedCircles"
+            :key="item.name"
+            class="my-0"
+          >
+            <v-expansion-panel-header class="d-flex py-4 px-4">
+              <div style="min-width: 100px;">{{ item.name }}</div>
+              <div class="text-center">
+                {{ (item.members && item.members.length) || 0 }} members
+              </div>
+              <div style="min-width: 150px;" class="text-center">
+                <CircleDialog
+                  :onSave="reloadCircles"
+                  :circle="item"
+                  :edit="true"
+                >
+                </CircleDialog>
+                <ConfirmDialog
+                  :icon="iconDelete"
+                  aria-label="Remove circle"
+                  color="error"
+                  :question="`Are you sure you want to remove ${item.name} ?`"
+                  :approve="() => remove(item._id)"
+                />
+              </div>
+            </v-expansion-panel-header>
+            <v-expansion-panel-content class="ma-0 pa-0">
+              <div v-for="member in item.members" :key="member.googleId">
+                {{ member.name }} {{ member.email }}
+              </div>
+            </v-expansion-panel-content>
+          </v-expansion-panel>
+        </v-expansion-panels>
         <v-simple-table>
           <template v-slot:default>
             <tbody>
-              <tr v-for="item in ownedCircles" :key="item.name" class="my-4">
-                <td class="pa-2">{{ item.name }}</td>
-                <td class="pa-2 text-center">
-                  {{ (item.members && item.members.length) || 0 }} members
-                </td>
-                <td class="pa-2" style="min-width: 150px;" align="center">
-                  <CircleDialog
-                    :onSave="reloadCircles"
-                    :circle="item"
-                    :edit="true"
-                  >
-                  </CircleDialog>
-                  <ConfirmDialog
-                    :icon="iconDelete"
-                    aria-label="Remove circle"
-                    color="error"
-                    :question="`Are you sure you want to remove ${item.name} ?`"
-                    :approve="() => remove(item._id)"
-                  />
-                </td>
-              </tr>
               <tr>
                 <td align="center" colspan="3">
                   <CircleDialog :onSave="reloadCircles" :circles="circles" />
@@ -40,35 +53,39 @@
             </tbody>
           </template>
         </v-simple-table>
+
         Member
-        <v-simple-table>
-          <template v-slot:default>
-            <tbody>
-              <tr
-                v-for="circle in memberCircles"
-                :key="circle.name"
-                class="my-4"
-              >
-                <td class="pa-2">{{ circle.name }}</td>
-                <td class="pa-2 text-center">
-                  {{ (circle.members && circle.members.length) || 0 }} members
-                </td>
-                <td class="pa-2" style="min-width: 150px;" align="center">
-                  <v-btn
-                    class="mx-2"
-                    fab
-                    small
-                    color="error"
-                    aria-label="Remove me"
-                    @click="removeMe(circle)"
-                  >
-                    <v-icon>{{ iconMinus }}</v-icon>
-                  </v-btn>
-                </td>
-              </tr>
-            </tbody>
-          </template>
-        </v-simple-table>
+        <v-expansion-panels>
+          <v-expansion-panel
+            v-for="circle in memberCircles"
+            :key="circle.name"
+            class="my-0"
+          >
+            <v-expansion-panel-header class="d-flex py-4 px-4">
+              <div style="min-width: 100px;">{{ circle.name }}</div>
+              <div class="text-center">
+                {{ (item.members && item.members.length) || 0 }} members
+              </div>
+            </v-expansion-panel-header>
+            <v-expansion-panel-content class="ma-0 pa-0">
+              <div v-for="member in item.members" :key="member.googleId">
+                {{ member.name }} {{ member.email }}
+              </div>
+              <div class="pa-2" style="min-width: 150px;" align="center">
+                <v-btn
+                  class="mx-2"
+                  fab
+                  small
+                  color="error"
+                  aria-label="Remove me"
+                  @click="removeMe(circle)"
+                >
+                  <v-icon>{{ iconMinus }}</v-icon>
+                </v-btn>
+              </div>
+            </v-expansion-panel-content>
+          </v-expansion-panel>
+        </v-expansion-panels>
       </v-col>
     </v-row>
   </v-container>
