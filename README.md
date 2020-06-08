@@ -35,3 +35,4 @@ Run it with
 * https://github.com/louischatriot/nedb
 * https://github.com/mejiamanuel57/vue-google-signin-button-directive
 * https://peachscript.github.io/vue-infinite-loading/
+* http://www.iconarchive.com/show/captiva-icons-by-bokehlicia/movie-icon.html
