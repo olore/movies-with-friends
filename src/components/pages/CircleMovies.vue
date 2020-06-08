@@ -1,15 +1,21 @@
 <template>
-  <v-container class="" v-if="circle">
+  <v-container v-if="circle">
     <v-row class="justify-center">
       <v-col cols="12" md="6">
         <Search />
       </v-col>
     </v-row>
     <v-row>
-      <v-col cols="6" class="py-0">
-        <v-chip class="ma-2 green darken-4" x-large>
-          {{ circle.name }}
-        </v-chip>
+      <v-col cols="12" md="4" class="py-0">
+        <v-overflow-btn
+          class="green darken-4"
+          :items="myCircles"
+          item-value="_id"
+          item-text="name"
+          :label="circle.name"
+          :value="circle._id"
+          @change="changeGroup"
+        ></v-overflow-btn>
       </v-col>
     </v-row>
     <MovieList movie-fn-name="getForCircle" :circle="circle" />
@@ -29,10 +35,24 @@ export default {
   },
   data: () => ({
     circle: null,
+    myCircles: [],
   }),
+  methods: {
+    changeGroup: function (circleId) {
+      this.$router.push({ name: "circle-movies", params: { id: circleId } });
+    },
+  },
+  async beforeRouteUpdate(to, from, next) {
+    this.circle = null; // this is hacky. Should MovieList 'watch' circle?
+    this.myCircles = await Circle.all();
+    this.circle = this.myCircles.find((c) => c._id === to.params.id);
+    next();
+  },
   async beforeRouteEnter(to, from, next) {
-    const circle = await Circle.getById(to.params.id);
+    const myCircles = await Circle.all();
+    const circle = myCircles.find((c) => c._id === to.params.id);
     next((vm) => {
+      vm.myCircles = myCircles;
       vm.circle = circle;
     });
   },
