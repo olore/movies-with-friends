@@ -9,11 +9,7 @@
       <v-col cols="12" sm="8">
         <span class="title">Owner</span>
         <v-expansion-panels>
-          <v-expansion-panel
-            v-for="circle in ownedCircles"
-            :key="circle.name"
-            class="my-0"
-          >
+          <v-expansion-panel v-for="circle in ownedCircles" :key="circle.name">
             <v-expansion-panel-header class="d-flex py-2 px-4">
               <v-row>
                 <v-col cols="6">
@@ -26,7 +22,7 @@
                 </v-col>
               </v-row>
             </v-expansion-panel-header>
-            <v-expansion-panel-content class="ma-0 pa-0">
+            <v-expansion-panel-content>
               <v-row>
                 <v-col col="6">
                   <div v-for="member in circle.members" :key="member.googleId">
@@ -59,11 +55,7 @@
         </v-expansion-panels>
         <div class="title pt-4">Member</div>
         <v-expansion-panels>
-          <v-expansion-panel
-            v-for="circle in memberCircles"
-            :key="circle.name"
-            class="my-0"
-          >
+          <v-expansion-panel v-for="circle in memberCircles" :key="circle.name">
             <v-expansion-panel-header class="d-flex py-2 px-4">
               <v-row>
                 <v-col cols="6">
@@ -76,7 +68,7 @@
                 </v-col>
               </v-row>
             </v-expansion-panel-header>
-            <v-expansion-panel-content class="ma-0 pa-0">
+            <v-expansion-panel-content>
               <v-row>
                 <v-col col="6">
                   <div v-for="member in circle.members" :key="member.googleId">
