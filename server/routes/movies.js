@@ -66,7 +66,7 @@ async function routes(fastify, options) {
   });
 
   fastify.get("/movies/myRated", async (request, reply) => {
-    let { sortBy, offset, limit } = getBasicParams(request.query);
+    let { sortBy, offset, limit, filter } = getBasicParams(request.query);
     let myLikes = await db.find(
       db.likes,
       {
@@ -88,7 +88,7 @@ async function routes(fastify, options) {
       limit
     );
 
-    movies = await addLikes(request.user, movies);
+    movies = await addLikes(request.user, movies, filter);
 
     return {
       count: movies.length,
@@ -97,15 +97,25 @@ async function routes(fastify, options) {
   });
 
   fastify.get("/movies/forCircle", async (request, reply) => {
-    let { sortBy, offset, limit } = getBasicParams(request.query);
+    let { sortBy, offset, limit, filter } = getBasicParams(request.query);
     const circleId = request.query.circleId;
 
     let circle = await db.findOne(db.circles, { _id: circleId });
     let circleMembers = [circle.owner, ...circle.members];
 
+    let likeFilter =
+      filter === "!me"
+        ? {
+            $and: [
+              { $not: { googleId: request.user.googleId } },
+              { googleId: { $in: circleMembers.map((m) => m.googleId) } },
+            ],
+          }
+        : { googleId: { $in: circleMembers.map((m) => m.googleId) } };
+
     let circleLikes = await db.find(
       db.likes,
-      { googleId: { $in: circleMembers.map((m) => m.googleId) } },
+      likeFilter,
       sortBy,
       db.LIMIT_NONE
     );
@@ -133,15 +143,17 @@ async function routes(fastify, options) {
       movies,
     };
   });
-  fastify.get("/movies/recentlyRated", async (request, reply) => {
-    let { sortBy, offset, limit } = getBasicParams(request.query);
 
-    let likedMovies = await db.find(
-      db.likes,
-      db.QUERY_ALL,
-      sortBy,
-      db.LIMIT_NONE
-    );
+  fastify.get("/movies/recentlyRated", async (request, reply) => {
+    let { sortBy, offset, limit, filter } = getBasicParams(request.query);
+
+    let likeQuery =
+      filter === "!me"
+        ? { $not: { googleId: request.user.googleId } }
+        : db.QUERY_ALL;
+
+    let likedMovies = await db.find(db.likes, likeQuery, sortBy, db.LIMIT_NONE);
+
     let uniqueLikedMovieIds = Array.from(
       new Set(likedMovies.map((movie) => movie.imdbID)) // unique
     );
@@ -157,7 +169,7 @@ async function routes(fastify, options) {
       limit
     );
 
-    movies = await addLikes(request.user, movies);
+    movies = await addLikes(request.user, movies, filter);
 
     return {
       count: movies.length,
@@ -237,7 +249,7 @@ async function getLikerCircles(user, likes) {
   return toReturn;
 }
 
-const addLikes = async (user, movies) => {
+const addLikes = async (user, movies, filter) => {
   for (let i = 0; i < movies.length; i++) {
     movie = movies[i];
     movie.likes = await db.find(
@@ -248,7 +260,7 @@ const addLikes = async (user, movies) => {
     );
     if (movie.likes && movie.likes.length > 0) {
       movie.likerCircles = await getLikerCircles(user, movie.likes);
-      movie.likers = await getLikers(user, movie.likes);
+      movie.likers = await getLikers(user, movie.likes, filter);
     }
   }
   return movies;
@@ -259,26 +271,32 @@ const getBasicParams = (query) => {
     limit: Math.min(25, Number.parseInt(query.limit) || 12),
     offset: Number.parseInt(query.offset, 10) || 0,
     sortBy: { updatedAt: -1 },
+    filter: query.filter,
   };
   if (query.sort && query.sort !== "date") {
     opts.sortBy = { rating: -1 };
   }
+  console.log({ opts });
   return opts;
 };
 
-async function getLikers(user, likes) {
+async function getLikers(user, likes, filter) {
   let likers = {};
+  let likerGoogleIds;
 
-  // all the likers of this movie, not including user
-  let likerGoogleIds = new Set(
-    likes
-      .filter((like) => {
-        return like.googleId !== user.googleId;
-      })
-      .map((like) => {
-        return like.googleId;
-      })
-  );
+  console.log(">>>>", filter);
+  if (filter && filter === "!me") {
+    // all the likers of this movie, not including user
+    likerGoogleIds = new Set(
+      likes
+        .filter((like) => {
+          return like.googleId !== user.googleId;
+        })
+        .map((like) => like.googleId)
+    );
+  } else {
+    likerGoogleIds = new Set(likes.map((like) => like.googleId));
+  }
 
   likerGoogleIds = Array.from(likerGoogleIds);
   if (likerGoogleIds.length > 0) {
@@ -316,4 +334,5 @@ async function getLikers(user, likes) {
   }
   return likers;
 }
+
 module.exports = routes;

@@ -20,6 +20,11 @@
         >
           By Rating
         </v-btn>
+        <v-switch
+          class="d-inline ml-4"
+          v-model="includeMe"
+          label="include Me"
+        />
       </v-col>
     </v-row>
 
@@ -62,7 +67,16 @@ export default {
     movies: [],
     reset: new Date(),
     sortOrder: "date",
+    includeMe: true,
   }),
+  watch: {
+    includeMe: function () {
+      this.sortOrder = "date";
+      this.reset = new Date();
+      this.movies = [];
+      this.offset = 0;
+    },
+  },
   methods: {
     sort: async function (sortBy) {
       this.sortOrder = sortBy;
@@ -76,14 +90,16 @@ export default {
         result = await Movie[this.movieFnName](
           this.PAGE_SIZE,
           this.offset,
-          this.sortOrder
+          this.sortOrder,
+          this.includeMe ? "" : "!me"
         );
       } else {
         result = await Movie[this.movieFnName](
           this.PAGE_SIZE,
           this.offset,
           this.sortOrder,
-          this.circle._id
+          this.circle._id,
+          this.includeMe ? "" : "!me"
         );
       }
       let movies = result.movies;
@@ -99,3 +115,9 @@ export default {
   },
 };
 </script>
+<style lang="scss">
+.v-input__control,
+.v-input__slot {
+  display: inline !important;
+}
+</style>

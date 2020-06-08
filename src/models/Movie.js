@@ -68,9 +68,15 @@ export default class Movie {
     return movie;
   }
 
-  static async getForCircle(limit = 6, offset = 0, sortBy = "date", circleId) {
+  static async getForCircle(
+    limit = 6,
+    offset = 0,
+    sortBy = "date",
+    circleId,
+    filter
+  ) {
     let results = await fetch(
-      `${this.getHost()}:3000/movies/forCircle?limit=${limit}&offset=${offset}&sort=${sortBy}&circleId=${circleId}`,
+      `${this.getHost()}:3000/movies/forCircle?limit=${limit}&offset=${offset}&sort=${sortBy}&circleId=${circleId}&filter=${filter}`,
       {
         headers: this.getHeaders(),
       }
@@ -122,9 +128,14 @@ export default class Movie {
     };
   }
 
-  static async getRecentlyRated(limit = 6, offset = 0, sortBy = "date") {
+  static async getRecentlyRated(
+    limit = 6,
+    offset = 0,
+    sortBy = "date",
+    filter
+  ) {
     let results = await fetch(
-      `${this.getHost()}:3000/movies/recentlyRated?limit=${limit}&offset=${offset}&sort=${sortBy}`,
+      `${this.getHost()}:3000/movies/recentlyRated?limit=${limit}&offset=${offset}&sort=${sortBy}&filter=${filter}`,
       {
         headers: this.getHeaders(),
       }

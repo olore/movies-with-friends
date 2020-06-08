@@ -27,6 +27,7 @@ Run it with
 ## Future?
 * https://www.imdb.com/interfaces/
 * https://magic.link/home
+* https://www.guidebox.com/register
 
 ## Thanks
 * https://vuetifyjs.com/
