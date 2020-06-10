@@ -30,14 +30,7 @@
     </v-row>
 
     <v-row>
-      <v-col
-        col="6"
-        sm="4"
-        md="3"
-        lg="2"
-        v-for="movie in movies"
-        :key="movie.imdbID"
-      >
+      <v-col col="6" sm="4" md="3" v-for="movie in movies" :key="movie.imdbID">
         <Card :movie="movie" tile class="ma-1 pa-1" />
       </v-col>
     </v-row>
