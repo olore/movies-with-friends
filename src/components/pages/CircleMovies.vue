@@ -8,12 +8,13 @@
     <v-row>
       <v-col cols="12" md="4" class="py-0">
         <v-overflow-btn
-          class="my-dropdown green darken-4 mt-0"
+          class="my-dropdown mt-0"
           :items="myCircles"
           item-value="_id"
           item-text="name"
           :label="circle.name"
           :value="circle._id"
+          :filled="true"
           @change="changeGroup"
         ></v-overflow-btn>
       </v-col>
@@ -62,6 +63,9 @@ export default {
 .my-dropdown {
   .v-text-field__details {
     display: none;
+  }
+  .v-input__slot {
+    margin-bottom: 0;
   }
 }
 </style>

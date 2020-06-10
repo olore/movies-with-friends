@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-row v-if="!disableSort">
-      <v-col cols="12">
+      <v-col cols="12" class="pb-0">
         <v-btn
           @click="sort('date')"
           x-small
@@ -21,7 +21,7 @@
         </v-btn>
         <v-switch
           v-if="!hideIncludeMe"
-          class="d-inline ml-4"
+          class="includeMe d-inline ml-4"
           v-model="includeMe"
           label="include Me"
           style="vertical-align: top;"
@@ -129,11 +129,16 @@ export default {
 };
 </script>
 <style lang="scss">
-.v-input__control,
-.v-input__slot {
-  display: inline !important;
-  label {
-    bottom: 3px;
+.includeMe {
+  .v-messages {
+    display: none;
+  }
+  .v-input__control,
+  .v-input__slot {
+    display: inline !important;
+    label {
+      bottom: 3px;
+    }
   }
 }
 </style>
