@@ -66,7 +66,7 @@ export default {
     hideIncludeMe: Boolean,
   },
   mounted: async function () {
-    this.PAGE_SIZE = 6;
+    this.PAGE_SIZE = 8;
     this.offset = 0;
   },
   data: () => ({

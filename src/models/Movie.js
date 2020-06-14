@@ -69,7 +69,7 @@ export default class Movie {
   }
 
   static async getForCircle(
-    limit = 6,
+    limit = 8,
     offset = 0,
     sortBy = "date",
     circleId,
@@ -92,7 +92,7 @@ export default class Movie {
     };
   }
 
-  static async getRecentlyViewed(limit = 6, offset = 0, sortBy = "date") {
+  static async getRecentlyViewed(limit = 8, offset = 0, sortBy = "date") {
     let results = await fetch(
       `${this.getHost()}:3000/movies/recentlySearched?limit=${limit}&offset=${offset}&sort=${sortBy}`,
       {
@@ -110,7 +110,7 @@ export default class Movie {
     };
   }
 
-  static async getMyRated(limit = 6, offset = 0, sortBy = "date") {
+  static async getMyRated(limit = 8, offset = 0, sortBy = "date") {
     let results = await fetch(
       `${this.getHost()}:3000/movies/myRated?limit=${limit}&offset=${offset}&sort=${sortBy}`,
       {
@@ -129,7 +129,7 @@ export default class Movie {
   }
 
   static async getRecentlyRated(
-    limit = 6,
+    limit = 8,
     offset = 0,
     sortBy = "date",
     filter
