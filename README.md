@@ -1,6 +1,6 @@
 # Movies with Friends
 
-Use it live: http://play.olore.net
+Use it live: https://movierex.olore.net
 
 ## Project setup
 ```
