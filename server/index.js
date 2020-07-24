@@ -1,4 +1,13 @@
+const fs = require("fs");
+
 const fastify = require("fastify")({
+  https: {
+    allowHTTP1: true,
+    key: fs.readFileSync(
+      "/etc/letsencrypt/live/movierex.olore.net/privkey.pem"
+    ),
+    cert: fs.readFileSync("/etc/letsencrypt/live/movierex.olore.net/cert.pem"),
+  },
   logger: {
     level: "debug",
   },
@@ -6,7 +15,7 @@ const fastify = require("fastify")({
 const userDecorator = require("./user-decorator");
 
 fastify.register(require("fastify-cors"), {
-  origin: ["http://localhost:8080", "http://play.olore.net"],
+  origin: ["http://localhost:8080", "https://movierex.olore.net"],
 });
 
 fastify.decorateRequest("user", null);
