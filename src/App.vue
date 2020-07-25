@@ -7,7 +7,7 @@
         aria-label="Navigation"
         @click.stop="drawer = !drawer"
       ></v-app-bar-nav-icon>
-      <v-toolbar-title>Movies with Friends</v-toolbar-title>
+      <v-toolbar-title>MovieRex</v-toolbar-title>
 
       <v-spacer></v-spacer>
 
