@@ -1,17 +1,31 @@
 const fs = require("fs");
+require("dotenv").config();
 
-const fastify = require("fastify")({
-  https: {
-    allowHTTP1: true,
-    key: fs.readFileSync(
-      "/etc/letsencrypt/live/movierex.olore.net/privkey.pem"
-    ),
-    cert: fs.readFileSync("/etc/letsencrypt/live/movierex.olore.net/cert.pem"),
-  },
-  logger: {
-    level: "debug",
-  },
-});
+const getConfig = () => {
+  let config = {
+    logger: {
+      level: "debug",
+    },
+  };
+
+  if (process.env.NODE_ENV !== "development") {
+    config = {
+      https: {
+        allowHTTP1: true,
+        key: fs.readFileSync(
+          "/etc/letsencrypt/live/movierex.olore.net/privkey.pem"
+        ),
+        cert: fs.readFileSync(
+          "/etc/letsencrypt/live/movierex.olore.net/cert.pem"
+        ),
+      },
+      ...config,
+    };
+  }
+  return config;
+};
+
+const fastify = require("fastify")(getConfig());
 const userDecorator = require("./user-decorator");
 
 fastify.register(require("fastify-cors"), {

@@ -1,5 +1,4 @@
 const fetch = require("node-fetch");
-require("dotenv").config();
 
 const API_KEY = process.env.API_KEY;
 const URL = `https://www.omdbapi.com/?apikey=${API_KEY}`;

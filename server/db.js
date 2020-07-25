@@ -1,5 +1,4 @@
 const Datastore = require("nedb");
-require("dotenv").config();
 
 const db = {
   LIMIT_NONE: 0,
