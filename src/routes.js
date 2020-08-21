@@ -18,11 +18,18 @@ import JoinCircle from "./components/pages/JoinCircle";
 import Title from "./components/pages/Title";
 import MyRated from "./components/pages/MyRated";
 import CircleMovies from "./components/pages/CircleMovies";
+import SplashPage from "./components/pages/SplashPage";
+import Login from "./components/pages/Login";
 
 import { store } from "./store";
 
 const routes = [
-  { path: "/", name: "home", component: RecentlyRated },
+  { path: "/", name: "home", component: SplashPage },
+  {
+    path: "/login",
+    name: "Login",
+    component: Login,
+  },
   {
     path: "/recently-viewed",
     name: "recentlyViewed",
@@ -61,18 +68,23 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  // user is put into state by App.vue
-  // wait for it to be there before allowing navigcation
-  // to any other route
-  if (store.state === undefined || store.state.user == undefined) {
-    let waitForUserInterval = setInterval(async function () {
-      if (store.state && store.state.user) {
-        clearInterval(waitForUserInterval);
+  if (to.path === "/") {
+    // don't need auth on landing page
+    next();
+  } else {
+    if (
+      to.name !== "Login" &&
+      (store.state === undefined || store.state.user === null)
+    ) {
+      next({ name: "Login" });
+    } else {
+      if (to.name === "Login" && store.state.user !== null) {
+        // go home instead of login
+        next({ name: "recentlyViewed" });
+      } else {
         next();
       }
-    }, 200);
-  } else {
-    next();
+    }
   }
 });
 

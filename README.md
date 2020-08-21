@@ -1,6 +1,7 @@
-# Movies with Friends
+# MovieRex
+*Get it? like Movie Recs... like Movie Recommendations*
 
-Use it live: https://movierex.olore.net
+Try it out: https://movierex.olore.net
 
 ## Project setup
 ```

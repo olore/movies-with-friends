@@ -1,12 +1,12 @@
 <template>
   <v-navigation-drawer v-model="drawer" app clipped>
     <v-list dense>
-      <v-list-item link v-on:click="navTo('/')">
+      <v-list-item link v-on:click="navTo('/recently-rated')">
         <v-list-item-action>
           <v-icon>{{ iconDashboard }}</v-icon>
         </v-list-item-action>
         <v-list-item-content>
-          <v-list-item-title>Home</v-list-item-title>
+          <v-list-item-title>Recently Rated</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
       <v-list-item link v-on:click="navTo('/recently-viewed')">
@@ -44,6 +44,13 @@
         <v-list-item-content>
           <v-list-item-title>
             <v-list-item-title>My Circles</v-list-item-title>
+          </v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+      <v-list-item link v-on:click="navTo('/')">
+        <v-list-item-content>
+          <v-list-item-title>
+            <v-list-item-title>Home Page</v-list-item-title>
           </v-list-item-title>
         </v-list-item-content>
       </v-list-item>
