@@ -14,12 +14,12 @@
   },
   "dependencies": {
     "core-js": "^3.6.4",
-    "date-fns": "^2.14.0",
+    "date-fns": "^2.16.0",
     "dotenv": "^8.2.0",
     "fastify": "^2.15.1",
     "fastify-cors": "^3.0.3",
-    "google-auth-library": "^6.0.2",
-    "jaycue": "^1.2.6",
+    "google-auth-library": "^6.0.6",
+    "jaycue": "^1.2.9",
     "lodash.uniqby": "^4.7.0",
     "nedb": "^1.8.0",
     "node-fetch": "^2.6.0",
@@ -27,11 +27,11 @@
     "vue": "^2.6.11",
     "vue-infinite-loading": "^2.4.5",
     "vue-router": "^3.3.4",
-    "vuetify": "^2.3.3"
+    "vuetify": "^2.3.9"
   },
   "devDependencies": {
-    "@babel/cli": "^7.10.4",
-    "@babel/node": "^7.10.4",
+    "@babel/cli": "^7.10.5",
+    "@babel/node": "^7.10.5",
     "@babel/preset-env": "^7.10.4",
     "@mdi/js": "^5.2.45",
     "@vue/cli-plugin-babel": "~4.4.6",
@@ -47,11 +47,11 @@
     "lint-staged": "^10.2.11",
     "minify-css-string": "^1.0.0",
     "prettier": "2.0.5",
-    "sass": "^1.26.9",
+    "sass": "^1.26.10",
     "sass-loader": "^9.0.2",
     "vue-cli-plugin-vuetify": "~2.0.6",
     "vue-template-compiler": "^2.6.11",
-    "vuetify-loader": "^1.5.0",
+    "vuetify-loader": "^1.6.0",
     "webpack-bundle-analyzer": "^3.8.0"
   },
   "eslintConfig": {
