@@ -15,6 +15,9 @@ import User from "../../models/User";
 export default {
   name: "Login",
   components: {},
+  mounted: function () {
+    this.redirectTo = this.$route.query;
+  },
   data: function () {
     return {
       clientId: "363023621937-9pdn9513cpmopcbtv7ebmhe8kokpo6s4",
@@ -46,7 +49,11 @@ export default {
         });
         user = await user.populate();
         store.set("user", user);
-        this.$router.push({ name: "recentlyViewed" });
+        if (this.redirectTo) {
+          this.$router.push({ path: this.redirectTo });
+        } else {
+          this.$router.push({ name: "recentlyViewed" });
+        }
       } else {
         console.log("Not sure why there is no profile");
       }

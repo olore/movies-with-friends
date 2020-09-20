@@ -67,7 +67,7 @@ const router = new VueRouter({
   },
 });
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(function (to, from, next) {
   if (to.path === "/") {
     // don't need auth on landing page
     next();
@@ -76,7 +76,7 @@ router.beforeEach((to, from, next) => {
       to.name !== "Login" &&
       (store.state === undefined || store.state.user === null)
     ) {
-      next({ name: "Login" });
+      next({ name: "Login", query: to.path });
     } else {
       if (to.name === "Login" && store.state.user !== null) {
         // go home instead of login
