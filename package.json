@@ -46,7 +46,7 @@
     "husky": "^4.2.5",
     "lint-staged": "^10.2.11",
     "minify-css-string": "^1.0.0",
-    "prettier": "2.0.5",
+    "prettier": "2.2.0",
     "sass": "^1.26.10",
     "sass-loader": "^9.0.2",
     "vue-cli-plugin-vuetify": "~2.0.6",
