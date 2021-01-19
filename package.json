@@ -18,7 +18,7 @@
     "dotenv": "^8.2.0",
     "fastify": "^3.3.0",
     "fastify-cors": "^4.1.0",
-    "google-auth-library": "^6.0.6",
+    "google-auth-library": "^6.1.4",
     "jaycue": "^1.2.9",
     "lodash.uniqby": "^4.7.0",
     "nedb": "^1.8.0",
