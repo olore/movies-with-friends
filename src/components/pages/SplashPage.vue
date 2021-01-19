@@ -1,11 +1,11 @@
 <template>
   <v-container>
-    <v-row>
+    <v-row class="my-0">
       <v-col cols="12">
         <span class="text-subtitle-1 font-weight-light">MovieRex</span>
       </v-col>
     </v-row>
-    <v-row>
+    <v-row class="my-0">
       <v-col cols="12">
         <div class="text-center">
           <h1 class="text-h5 text-md-h4 pb-2">Find something new to watch</h1>
@@ -18,7 +18,7 @@
         </div>
       </v-col>
     </v-row>
-    <v-row>
+    <v-row class="my-0">
       <v-col cols="12" class="d-flex justify-start">
         <div class="mt-6">
           <div class="font-weight-black">
@@ -38,7 +38,7 @@
         </div>
       </v-col>
     </v-row>
-    <v-row>
+    <v-row class="my-0">
       <v-col cols="12" class="d-flex justify-end">
         <div class="mt-6">
           <div class="font-weight-black">
@@ -57,7 +57,7 @@
         </div>
       </v-col>
     </v-row>
-    <v-row>
+    <v-row class="my-0">
       <v-col cols="12" class="">
         <div class="mt-16">
           <div class="font-weight-thin">

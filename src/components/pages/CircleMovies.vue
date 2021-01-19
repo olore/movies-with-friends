@@ -1,11 +1,11 @@
 <template>
   <v-container v-if="circle">
-    <v-row class="justify-center">
+    <v-row class="justify-center my-0">
       <v-col cols="12" md="6">
         <Search />
       </v-col>
     </v-row>
-    <v-row>
+    <v-row class="my-0">
       <v-col cols="12" md="4" class="py-0">
         <v-overflow-btn
           class="my-dropdown mt-0"

@@ -1,12 +1,12 @@
 <template>
   <v-container>
-    <v-row>
+    <v-row class="my-0">
       <v-col cols="12">
         <span class="headline">Circle Invite</span>
       </v-col>
     </v-row>
 
-    <v-row justify="center" v-if="circle">
+    <v-row justify="center" v-if="circle" class="my-0">
       <v-col cols="12" sm="8">
         {{ circle.name }}
         <v-btn @click="joinCircle()" v-if="!success && !error">Join</v-btn>

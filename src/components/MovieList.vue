@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-row v-if="!disableSort">
+    <v-row v-if="!disableSort" class="my-0">
       <v-col cols="12" class="pb-0">
         <v-btn
           @click="sort('date')"
@@ -29,7 +29,7 @@
       </v-col>
     </v-row>
 
-    <v-row>
+    <v-row class="my-0">
       <v-col col="6" sm="4" md="3" v-for="movie in movies" :key="movie.imdbID">
         <Card :movie="movie" tile class="ma-1 pa-1" />
       </v-col>

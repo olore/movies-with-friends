@@ -61,7 +61,7 @@
 
       <v-card-text>
         <v-container v-if="circle">
-          <v-row class="" justify="center">
+          <v-row class="my-0" justify="center">
             <v-col cols="12" sm="8">
               <v-simple-table>
                 <template v-slot:default>
