@@ -16,7 +16,7 @@
     "core-js": "^3.6.4",
     "date-fns": "^2.16.0",
     "dotenv": "^8.2.0",
-    "fastify": "^3.3.0",
+    "fastify": "^3.10.1",
     "fastify-cors": "^4.1.0",
     "google-auth-library": "^6.0.6",
     "jaycue": "^1.2.9",
@@ -27,15 +27,15 @@
     "vue": "^2.6.12",
     "vue-infinite-loading": "^2.4.5",
     "vue-router": "^3.3.4",
-    "vuetify": "^2.3.9"
+    "vuetify": "^2.4.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.5",
     "@babel/node": "^7.10.5",
     "@babel/preset-env": "^7.12.11",
-    "@mdi/js": "^5.2.45",
+    "@mdi/js": "^5.9.55",
     "@vue/cli-plugin-babel": "~4.4.6",
-    "@vue/cli-plugin-eslint": "~4.4.6",
+    "@vue/cli-plugin-eslint": "~4.5.10",
     "@vue/cli-service": "~4.4.6",
     "babel-eslint": "^10.1.0",
     "concurrently": "^5.3.0",
