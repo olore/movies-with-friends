@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "core-js": "^3.6.4",
-    "date-fns": "^2.16.0",
+    "date-fns": "^2.16.1",
     "dotenv": "^8.2.0",
     "fastify": "^3.10.1",
     "fastify-cors": "^4.1.0",
