@@ -1,6 +1,6 @@
 <template>
   <v-container v-if="movie">
-    <v-row>
+    <v-row class="my-0">
       <v-col cols="12" class="d-flex justify-space-between">
         <v-btn @click="goBack()" class="mr-2" icon color="primary">
           <v-icon> {{ iconBack }} </v-icon>
@@ -12,7 +12,7 @@
       </v-col>
     </v-row>
 
-    <v-row class="d-flex justify-md-center">
+    <v-row class="d-flex justify-md-center my-0">
       <v-col sm="4" col="6">
         <v-img
           class="float-right"
@@ -25,21 +25,21 @@
 
       <v-col col="6" class="d-flex flex-column">
         <v-container class="pa-0 pl-3">
-          <v-row>
+          <v-row class="my-0">
             <IMDBRating
               :rating="movie.imdbRating"
               :imdbid="movie.imdbID"
               class="mr-3"
             ></IMDBRating>
           </v-row>
-          <v-row v-if="movie.hasRottenTomatoesRating()">
+          <v-row v-if="movie.hasRottenTomatoesRating()" class="my-0">
             <RottenTomatoesRating
               :rating="movie.getRottenTomatoesRating()"
               :title="movie.Title"
               :imdbid="movie.imdbID"
             ></RottenTomatoesRating>
           </v-row>
-          <v-row>
+          <v-row class="my-0">
             <v-btn
               class="pa-0 d-inline-flex"
               color="orange"
@@ -51,7 +51,7 @@
             </v-btn>
           </v-row>
 
-          <v-row>
+          <v-row class="my-0">
             <RatingDialog
               :imdbID="movie.imdbID"
               :onSave="reload"
@@ -75,7 +75,7 @@
       :likers="movie.likers"
     />
 
-    <v-row class="d-flex">
+    <v-row class="d-flex my-0">
       <v-col cols="12" class="px-5">
         {{ movie.Plot }}
       </v-col>

@@ -1,17 +1,17 @@
 <template>
   <v-container>
-    <v-row>
+    <v-row class="my-0">
       <v-col cols="12">
         <span class="headline">My Circles</span>
       </v-col>
     </v-row>
-    <v-row class="" justify="center">
+    <v-row class="my-0" justify="center">
       <v-col cols="12" sm="8">
         <span class="title">Owner</span>
         <v-expansion-panels>
           <v-expansion-panel v-for="circle in ownedCircles" :key="circle.name">
             <v-expansion-panel-header class="d-flex py-2 px-4">
-              <v-row>
+              <v-row class="my-0">
                 <v-col cols="6">
                   <div style="min-width: 100px;">{{ circle.name }}</div>
                 </v-col>
@@ -23,7 +23,7 @@
               </v-row>
             </v-expansion-panel-header>
             <v-expansion-panel-content>
-              <v-row>
+              <v-row class="my-0">
                 <v-col col="6">
                   <div v-for="member in circle.members" :key="member.googleId">
                     {{ member.name }} {{ member.email }}
@@ -57,7 +57,7 @@
         <v-expansion-panels>
           <v-expansion-panel v-for="circle in memberCircles" :key="circle.name">
             <v-expansion-panel-header class="d-flex py-2 px-4">
-              <v-row>
+              <v-row class="my-0">
                 <v-col cols="6">
                   <div>{{ circle.name }}</div>
                 </v-col>
@@ -69,7 +69,7 @@
               </v-row>
             </v-expansion-panel-header>
             <v-expansion-panel-content>
-              <v-row>
+              <v-row class="my-0">
                 <v-col col="6">
                   <div v-for="member in circle.members" :key="member.googleId">
                     {{ member.name }} {{ member.email }}

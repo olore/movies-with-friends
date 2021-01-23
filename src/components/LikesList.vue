@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex flex-column pt-3">
-    <v-row v-for="like in sortedLikes" :key="like.name">
+    <v-row v-for="like in sortedLikes" :key="like.name" class="my-0">
       <v-col cols="4">
         <v-rating v-model="like.rating" readonly dense size="20"></v-rating>
         <span class="body-2 font-weight-bold ml-1">{{ like.name }}</span>

@@ -1,11 +1,11 @@
 <template>
   <v-container>
-    <v-row>
+    <v-row class="my-0">
       <v-col cols="12">
         <span class="headline">Settings</span>
       </v-col>
     </v-row>
-    <v-row>
+    <v-row class="my-0">
       <v-col cols="12">
         <v-btn v-on:click="switchTheme">Switch theme</v-btn>
       </v-col>
