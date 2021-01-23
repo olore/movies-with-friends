@@ -146,6 +146,7 @@ export default {
       }
     },
     remove: function (memberToRemove) {
+      // eslint-disable-next-line
       this.circle.members = this.circle.members.filter((member) => {
         return member._id !== memberToRemove._id;
       });
@@ -161,6 +162,7 @@ export default {
       try {
         let res;
         if (this.circle) {
+          // eslint-disable-next-line
           this.circle.name = this.name;
           res = await Circle.save(this.circle);
         } else {
