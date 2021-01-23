@@ -52,7 +52,7 @@
     "vue-cli-plugin-vuetify": "~2.0.9",
     "vue-template-compiler": "^2.6.12",
     "vuetify-loader": "^1.6.0",
-    "webpack-bundle-analyzer": "^3.8.0"
+    "webpack-bundle-analyzer": "^4.4.0"
   },
   "eslintConfig": {
     "root": true,
