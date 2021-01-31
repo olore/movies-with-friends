@@ -10,10 +10,13 @@
     "start": "nodemon --watch build-server build-server/index.js",
     "start:dev": "concurrently -k -n 'server,client' 'npm run start:dev:server' 'npm run start:dev:client'",
     "start:dev:server": "nodemon --exec babel-node server/index.js --watch server",
-    "start:dev:client": "vue-cli-service serve"
+    "start:dev:client": "vue-cli-service serve",
+    "test:cypress": "concurrently -k -n 'server,client,cypress' -s first 'NO_GOOGLE=true npm run start:dev:server' 'VUE_APP_NO_GOOGLE=true vue-cli-service serve' 'cypress run'",
+    "cypress:open": "concurrently -k -n 'server,client,cypress' 'NO_GOOGLE=true npm run start:dev:server' 'VUE_APP_NO_GOOGLE=true vue-cli-service serve' 'cypress open'"
   },
   "dependencies": {
     "core-js": "^3.6.4",
+    "cypress": "^6.3.0",
     "date-fns": "^2.16.1",
     "dotenv": "^8.2.0",
     "fastify": "^3.10.1",
