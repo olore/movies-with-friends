@@ -1,7 +1,12 @@
 <template>
   <v-dialog v-model="dialog" width="500">
     <template v-slot:activator="{ on }">
-      <v-btn color="primary" class="text-align-left" v-on="on">
+      <v-btn
+        color="primary"
+        class="text-align-left"
+        v-on="on"
+        data-cy="rating-btn"
+      >
         {{ myLike ? "Edit my Rating" : "I've seen this" }}
       </v-btn>
     </template>
@@ -26,7 +31,13 @@
 
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="primary" text :loading="isLoading" @click="save">
+        <v-btn
+          color="primary"
+          text
+          :loading="isLoading"
+          @click="save"
+          data-cy="save-rating"
+        >
           Save
         </v-btn>
       </v-card-actions>
