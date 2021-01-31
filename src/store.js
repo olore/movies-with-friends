@@ -6,12 +6,12 @@ const store = {
         ? null
         : {
             email: "brian@olore.net",
-            givenName: "Brian",
-            googleId: "115421541579403932091",
-            googleToken: "",
+            givenName: "Cinco",
+            googleId: "100000000000000000005",
+            googleToken: "ABC5",
             image:
-              "https://lh3.googleusercontent.com/a-/AOh14Ggo6byH6db24lzXv5lb3ZRPkJi2mSFv7gW6_8WK=s96-c",
-            name: "Brian Olore",
+              "https://www.inliterature.net/wp-content/uploads/2013/11/mickey_silhouette.jpg",
+            name: "Cinco Olore",
           },
   },
   set(key, newValue) {

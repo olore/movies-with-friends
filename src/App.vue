@@ -9,7 +9,7 @@
     </v-content>
 
     <v-footer app class="justify-end">
-      <span>&copy; 2020 - Brian Olore - brian@olore.net</span>
+      <span>&copy; 2020 - Cinco - brian@olore.net</span>
     </v-footer>
   </v-app>
 </template>
