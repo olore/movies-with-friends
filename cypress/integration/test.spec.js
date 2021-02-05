@@ -5,8 +5,8 @@
 const takeSnap = (str) => {
   cy.wait(1000);
   cy.compareSnapshot(str, {
-    errorThreshold: 0.2
-  );
+    errorThreshold: 0.2,
+  });
 };
 
 describe("First", () => {
