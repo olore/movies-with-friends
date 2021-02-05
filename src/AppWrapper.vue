@@ -46,7 +46,6 @@ export default {
     source: String,
   },
   data: function () {
-    console.log(store.state);
     return {
       drawer: null,
       clientId: "363023621937-9pdn9513cpmopcbtv7ebmhe8kokpo6s4",

@@ -1,12 +1,4 @@
 /// <reference types="cypress" />
-const shell = require("child_process").execSync;
-const src = `${__dirname}/../db-seed`;
-const dist = `${__dirname}/../db`;
-
-// better place to put this?
-shell(`rm -rf ${dist}`);
-shell(`mkdir -p ${dist}`);
-shell(`cp -r ${src}/*.nedb ${dist}`);
 
 // ***********************************************************
 // This example plugins/index.js can be used to load plugins
