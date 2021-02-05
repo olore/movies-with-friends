@@ -1,5 +1,12 @@
 /// <reference types="Cypress" />
 
+// bummer have to wait for images to load
+// must be a better way!
+const takeSnap = (str) => {
+  cy.wait(550);
+  cy.compareSnapshot(str);
+};
+
 describe("First", () => {
   beforeEach(() => {
     cy.visit("/");
@@ -9,6 +16,8 @@ describe("First", () => {
     const movieTitleSel = "[data-cy=movie-card] > .v-card__subtitle";
 
     it("launches Recently Rated with 9 movies", () => {
+      takeSnap("home");
+
       cy.dataCy("launch").click();
       cy.get(".headline").should("have.text", "Recently Rated");
 
@@ -22,6 +31,8 @@ describe("First", () => {
         .then(($div) => {
           title = $div.text();
         });
+      takeSnap("recently-rated");
+
       cy.log("Make sure movie title matches");
       cy.get(movieTitleSel)
         .first()
@@ -30,6 +41,7 @@ describe("First", () => {
         .should(($div) => {
           expect($div.text()).to.equal(title);
         });
+      takeSnap("movie-details");
     });
 
     it("Can edit a rating", () => {
@@ -37,6 +49,7 @@ describe("First", () => {
       cy.get(movieTitleSel).first().click();
       cy.dataCy("rating-btn").click();
       cy.get(".headline").eq(1).should("contain.text", "What did you think");
+      takeSnap("rating-dialog");
 
       cy.get("textarea[name='ratingText'").clear().type("This is my fave");
       cy.dataCy("save-rating").click();

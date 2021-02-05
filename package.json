@@ -12,11 +12,14 @@
     "start:dev:server": "nodemon --exec babel-node server/index.js --watch server",
     "start:dev:client": "vue-cli-service serve",
     "test:cypress": "concurrently -k -n 'server,client,cypress' -s first 'DB_FILE_PATH=./cypress/db NO_GOOGLE=true npm run start:dev:server' 'VUE_APP_NO_GOOGLE=true vue-cli-service serve' 'cypress run'",
-    "cypress:open": "concurrently -k -n 'server,client,cypress' 'DB_FILE_PATH=./cypress/db NO_GOOGLE=true npm run start:dev:server' 'VUE_APP_NO_GOOGLE=true vue-cli-service serve' 'cypress open'"
+    "cypress:open": "concurrently -k -n 'server,client,cypress' 'DB_FILE_PATH=./cypress/db NO_GOOGLE=true npm run start:dev:server' 'VUE_APP_NO_GOOGLE=true vue-cli-service serve' 'cypress open'",
+    "regression:setup": "concurrently -k -n 'server,client,regression' -s first 'DB_FILE_PATH=./cypress/db NO_GOOGLE=true npm run start:dev:server' 'VUE_APP_NO_GOOGLE=true vue-cli-service serve' './scripts/cy-base.sh'",
+    "regression:run": "concurrently -k -n 'server,client,regression' -s first 'DB_FILE_PATH=./cypress/db NO_GOOGLE=true npm run start:dev:server' 'VUE_APP_NO_GOOGLE=true vue-cli-service serve' './scripts/cy-regression.sh'"
   },
   "dependencies": {
     "core-js": "^3.6.4",
     "cypress": "^6.3.0",
+    "cypress-visual-regression": "^1.5.6",
     "date-fns": "^2.16.1",
     "dotenv": "^8.2.0",
     "fastify": "^3.10.1",

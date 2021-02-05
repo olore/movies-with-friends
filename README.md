@@ -27,6 +27,11 @@ Run it with
 * Frontend: Host `dist/` somewhere (like `python -m SimpleHTTPServer 3000`)
 * Backend: `npm run start`
 
+### Testing
+Visual Regression
+ - `npm run regression:setup` - initial setup of base snapshots
+ - `npm run regression:run` - run visual regression tests 
+   - right now these are the same as the regular cypress tests!
 ## Future?
 * More data - https://www.imdb.com/interfaces/
 * Magic Login - https://magic.link/home
