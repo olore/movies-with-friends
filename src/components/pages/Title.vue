@@ -64,6 +64,7 @@
             :likes="movie.likes"
             :likers="movie.likers"
             v-if="$vuetify.breakpoint.smAndUp && movie.likes.length"
+            data-cy="likes-list"
           />
         </v-container>
       </v-col>

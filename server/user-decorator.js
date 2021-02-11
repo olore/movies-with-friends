@@ -4,7 +4,7 @@ require("dotenv").config();
 
 async function userDecorator(fastify, request, reply) {
   if (process.env.NO_GOOGLE === "true") {
-    return await db.findOne(db.users, { name: "Brian Olore" });
+    return await db.findOne(db.users, { name: "Cinco Olore" });
   }
   try {
     // check if authenticated

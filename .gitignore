@@ -23,3 +23,8 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw?
+
+cypress/db
+cypress/screenshots
+cypress/snapshots/actual
+cypress/snapshots/diff

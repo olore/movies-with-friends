@@ -31,7 +31,7 @@
 
     <v-row class="my-0">
       <v-col col="6" sm="4" md="3" v-for="movie in movies" :key="movie.imdbID">
-        <Card :movie="movie" tile class="ma-1 pa-1" />
+        <Card :movie="movie" tile class="ma-1 pa-1" data-cy="movie-card" />
       </v-col>
     </v-row>
     <infinite-loading
