@@ -6,7 +6,7 @@
     "build": "npm run build:client && npm run build:server",
     "build:server": "babel server --out-dir build-server",
     "build:client": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
+    "lint": "vue-cli-service lint && eslint ./server/** --fix",
     "start": "nodemon --watch build-server build-server/index.js",
     "start:dev": "concurrently -k -n 'server,client' 'npm run start:dev:server' 'npm run start:dev:client'",
     "start:dev:server": "nodemon --exec babel-node server/index.js --watch server",
