@@ -9,9 +9,7 @@
         <span class="" v-if="like.comment">
           &quot;{{ like.comment }}&quot;</span
         >
-        <span v-else class="font-italic">
-          No comment
-        </span>
+        <span v-else class="font-italic"> No comment </span>
 
         <v-btn
           :to="{ name: 'circle-movies', params: { id: circle._id } }"
