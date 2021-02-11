@@ -11,9 +11,7 @@
         {{ circle.name }}
         <v-btn @click="joinCircle()" v-if="!success && !error">Join</v-btn>
 
-        <div v-if="success">
-          Joined!
-        </div>
+        <div v-if="success">Joined!</div>
         <div v-if="error">
           {{ error }}
         </div>

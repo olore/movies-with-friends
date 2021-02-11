@@ -22,11 +22,11 @@
 
     <v-card-text
       class="text--primary d-none d-sm-block pb-1"
-      style="min-height: 80px;"
+      style="min-height: 80px"
     >
       <div
         class="d-inline-flex align-self-stretch justify-center"
-        style="width: 100%;"
+        style="width: 100%"
       >
         <IMDBRating
           :rating="movie.imdbRating"

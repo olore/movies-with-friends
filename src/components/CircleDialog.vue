@@ -32,9 +32,7 @@
 
     <v-card>
       <v-card-title v-if="edit">Edit Circle</v-card-title>
-      <v-card-title v-else>
-        Let's make a Circle!
-      </v-card-title>
+      <v-card-title v-else> Let's make a Circle! </v-card-title>
       <!-- <v-card-subtitle
         >A Circle is a group of people that share movie recommendations. People
         in the circle will only be able to see recommendations from others
@@ -95,9 +93,7 @@
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="secondary" text @click="cancel">
-          Cancel
-        </v-btn>
+        <v-btn color="secondary" text @click="cancel"> Cancel </v-btn>
         <v-btn color="primary" text :loading="isLoading" @click="save">
           Save
         </v-btn>

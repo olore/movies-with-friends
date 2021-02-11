@@ -13,7 +13,7 @@
             <v-expansion-panel-header class="d-flex py-2 px-4">
               <v-row class="my-0">
                 <v-col cols="6">
-                  <div style="min-width: 100px;">{{ circle.name }}</div>
+                  <div style="min-width: 100px">{{ circle.name }}</div>
                 </v-col>
                 <v-col cols="4">
                   <div class="text-center">

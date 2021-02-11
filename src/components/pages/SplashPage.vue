@@ -60,9 +60,7 @@
     <v-row class="my-0">
       <v-col cols="12" class="">
         <div class="mt-16">
-          <div class="font-weight-thin">
-            Special thanks to
-          </div>
+          <div class="font-weight-thin">Special thanks to</div>
           <ul class="font-weight-light">
             <li><a href="https://vuejs.org/">VueJS</a> JavaScript framework</li>
             <li>

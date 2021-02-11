@@ -24,7 +24,7 @@
           class="includeMe d-inline ml-4"
           v-model="includeMe"
           label="include Me"
-          style="vertical-align: top;"
+          style="vertical-align: top"
         />
       </v-col>
     </v-row>
@@ -41,9 +41,7 @@
       :identifier="reset"
     >
       <div slot="no-more">
-        <v-chip class="ma-2 pa-4">
-          That's all folks!
-        </v-chip>
+        <v-chip class="ma-2 pa-4"> That's all folks! </v-chip>
       </div>
     </infinite-loading>
   </div>
