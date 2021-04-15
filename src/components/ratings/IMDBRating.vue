@@ -2,15 +2,15 @@
   <v-btn
     color="transparent"
     target="_blank"
-    :href="`https://www.imdb.com/title/${this.imdbid}`"
+    :href="`https://www.imdb.com/title/${this.movie.imdbID}`"
     rel="noreferrer"
-    title="Open on imdb.com"
+    :title="`Open ${this.movie.Title} on imdb.com`"
     :depressed="true"
     class="pa-1 align-center d-inline-flex"
   >
     <v-img
       class="icon-imdb"
-      alt="imdb logo"
+      :alt="`imdb logo for ${this.movie.Title}`"
       :src="require('../../assets/imdb.svg')"
     ></v-img>
     <div class="ml-2">
@@ -22,10 +22,10 @@
 <script>
 export default {
   name: "IMDBRating",
-  props: ["rating", "imdbid"],
+  props: ["movie"],
   computed: {
     filteredRating: function () {
-      if (this.rating === "N/A") {
+      if (this.movie.imdbRating === "N/A") {
         return "??";
       }
       return this.rating;

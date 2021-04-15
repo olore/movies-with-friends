@@ -5,7 +5,7 @@
         <v-btn @click="goBack()" class="mr-2" icon color="primary">
           <v-icon> {{ iconBack }} </v-icon>
         </v-btn>
-        <h2 class="headline">{{ movie.Title }}</h2>
+        <h1 class="headline">{{ movie.Title }}</h1>
         <v-btn @click="goBack()" class="ml-2" icon color="primary">
           <v-icon> {{ iconBack }} </v-icon>
         </v-btn>
@@ -26,11 +26,7 @@
       <v-col col="6" class="d-flex flex-column">
         <v-container class="pa-0 pl-3">
           <v-row class="my-0">
-            <IMDBRating
-              :rating="movie.imdbRating"
-              :imdbid="movie.imdbID"
-              class="mr-3"
-            ></IMDBRating>
+            <IMDBRating :movie="movie" class="mr-3"></IMDBRating>
           </v-row>
           <v-row v-if="movie.hasRottenTomatoesRating()" class="my-0">
             <RottenTomatoesRating

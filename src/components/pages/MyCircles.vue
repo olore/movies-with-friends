@@ -2,7 +2,7 @@
   <v-container>
     <v-row class="my-0">
       <v-col cols="12">
-        <span class="headline">My Circles</span>
+        <h1 class="headline">My Circles</h1>
       </v-col>
     </v-row>
     <v-row class="my-0" justify="center">

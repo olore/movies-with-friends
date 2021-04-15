@@ -7,7 +7,7 @@
     </v-row>
     <v-row class="my-0">
       <v-col cols="6" class="py-0">
-        <span class="headline">My Rated</span>
+        <h1>My Rated</h1>
       </v-col>
     </v-row>
     <MovieList movie-fn-name="getMyRated" :hide-include-me="true" />

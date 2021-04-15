@@ -7,7 +7,7 @@
     </v-row>
     <v-row class="my-0">
       <v-col cols="12">
-        <span class="headline">Recently Viewed</span>
+        <h1 class="headline">Recently Viewed</h1>
       </v-col>
     </v-row>
     <MovieList movie-fn-name="getRecentlyViewed" :disable-sort="true" />
