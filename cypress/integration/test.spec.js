@@ -3,7 +3,7 @@
 // bummer have to wait for images to load
 // must be a better way!
 const takeSnap = (str) => {
-  cy.wait(1000);
+  cy.wait(2500);
   cy.compareSnapshot(str, {
     errorThreshold: 0.2,
   });
