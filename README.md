@@ -3,6 +3,19 @@
 
 Try it out: https://movierex.olore.net
 
+<hr />
+
+## Find Movies & TV Shows
+<img src="./public/preview-image.png" height="300" />
+
+## See IMDB & Rotten Tomatoes ratings
+<img src="./public/movie-list-small.png" height="150" width="600">
+
+## What do your friends think?
+<img src="./public/terminator-review-small.png" height="300">
+
+<hr />
+
 ## Project setup
 ```
 npm install

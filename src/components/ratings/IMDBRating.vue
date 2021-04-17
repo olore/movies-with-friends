@@ -2,15 +2,15 @@
   <v-btn
     color="transparent"
     target="_blank"
-    :href="`https://www.imdb.com/title/${this.movie.imdbID}`"
+    :href="`https://www.imdb.com/title/${movie.imdbID}`"
     rel="noreferrer"
-    :title="`Open ${this.movie.Title} on imdb.com`"
+    :title="`Open ${movie.Title} on imdb.com`"
     :depressed="true"
     class="pa-1 align-center d-inline-flex"
   >
     <v-img
       class="icon-imdb"
-      :alt="`imdb logo for ${this.movie.Title}`"
+      :alt="`imdb logo for ${movie.Title}`"
       :src="require('../../assets/imdb.svg')"
     ></v-img>
     <div class="ml-2">
@@ -28,7 +28,7 @@ export default {
       if (this.movie.imdbRating === "N/A") {
         return "??";
       }
-      return this.rating;
+      return this.movie.imdbRating;
     },
   },
 };
