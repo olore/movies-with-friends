@@ -5,7 +5,7 @@
         <v-btn
           @click="sort('date')"
           x-small
-          color="primary"
+          color="primary darken-2"
           :disabled="sortOrder === 'date'"
         >
           By Date
@@ -13,7 +13,7 @@
         <v-btn
           @click="sort('rating')"
           x-small
-          color="primary"
+          color="primary darken-2"
           :disabled="sortOrder === 'rating'"
           class="ml-4"
         >

@@ -37,4 +37,18 @@ module.exports = (on, config) => {
       // launchOptions.args.push('--force-device-scale-factor=2')
     }
   });
+
+  // https://github.com/component-driven/cypress-axe
+  on("task", {
+    log(message) {
+      console.log(message);
+
+      return null;
+    },
+    table(message) {
+      console.table(message);
+
+      return null;
+    },
+  });
 };

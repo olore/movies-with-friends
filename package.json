@@ -19,8 +19,10 @@
     "regression:run": "concurrently -k -n 'server,client,regression' -s first 'DB_FILE_PATH=./cypress/db NO_GOOGLE=true npm run start:dev:server' 'VUE_APP_NO_GOOGLE=true vue-cli-service serve' './scripts/cy-regression.sh'"
   },
   "dependencies": {
+    "axe-core": "^4.1.4",
     "core-js": "^3.10.1",
     "cypress": "^7.1.0",
+    "cypress-axe": "^0.12.2",
     "cypress-visual-regression": "^1.5.7",
     "date-fns": "^2.21.1",
     "dotenv": "^8.2.0",

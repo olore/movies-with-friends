@@ -2,7 +2,7 @@
   <v-container>
     <v-row class="my-0">
       <v-col cols="12">
-        <span class="headline">Settings</span>
+        <h1 class="headline">Settings</h1>
       </v-col>
     </v-row>
     <v-row class="my-0">

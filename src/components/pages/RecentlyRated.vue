@@ -7,7 +7,7 @@
     </v-row>
     <v-row class="my-0">
       <v-col cols="12">
-        <span class="headline">Recently Rated</span>
+        <h1 class="headline">Recently Rated</h1>
       </v-col>
     </v-row>
     <MovieList movie-fn-name="getRecentlyRated" />

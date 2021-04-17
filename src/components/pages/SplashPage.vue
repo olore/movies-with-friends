@@ -9,7 +9,11 @@
       <v-col cols="12">
         <div class="text-center">
           <h1 class="text-h5 text-md-h4 pb-2">Find something new to watch</h1>
-          <v-btn data-cy="launch" class="primary" x-large to="/recently-rated"
+          <v-btn
+            data-cy="launch"
+            class="primary darken-2"
+            x-large
+            to="/recently-rated"
             >Launch MovieRex</v-btn
           >
           <p class="pt-2 text-md-h5">

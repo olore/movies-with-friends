@@ -13,6 +13,9 @@
 // https://on.cypress.io/configuration
 // ***********************************************************
 
+// https://github.com/component-driven/cypress-axe
+import "cypress-axe";
+
 // Import commands.js using ES2015 syntax:
 import "./commands";
 

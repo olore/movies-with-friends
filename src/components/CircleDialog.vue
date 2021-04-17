@@ -12,7 +12,7 @@
         v-on="on"
         fab
         small
-        color="primary"
+        color="primary darken-2"
         aria-label="Edit Circle"
       >
         <v-icon>{{ iconPencil }}</v-icon>
@@ -23,7 +23,7 @@
         v-on="on"
         fab
         small
-        color="green"
+        color="green darken-2"
         aria-label="Add Circle"
       >
         <v-icon>{{ iconPlus }}</v-icon>

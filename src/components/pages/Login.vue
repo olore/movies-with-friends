@@ -2,7 +2,7 @@
   <div>
     <div v-if="!state.user" v-google-signin-button="clientId">
       <v-container :class="{ 'd-none': gaLoading }">
-        <span class="headline">Please sign in</span>
+        <h1 class="headline">Please sign in</h1>
         <div id="my-signin2"></div>
       </v-container>
     </div>

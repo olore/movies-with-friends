@@ -2,7 +2,7 @@
   <v-dialog v-model="dialog" width="500">
     <template v-slot:activator="{ on }">
       <v-btn
-        color="primary"
+        color="primary darken-2"
         class="text-align-left"
         v-on="on"
         data-cy="rating-btn"
@@ -32,7 +32,7 @@
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn
-          color="primary"
+          color="primary darken-2"
           text
           :loading="isLoading"
           @click="save"

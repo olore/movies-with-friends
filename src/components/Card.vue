@@ -28,11 +28,7 @@
         class="d-inline-flex align-self-stretch justify-center"
         style="width: 100%"
       >
-        <IMDBRating
-          :rating="movie.imdbRating"
-          :imdbid="movie.imdbID"
-          class="mr-3"
-        ></IMDBRating>
+        <IMDBRating :movie="movie" class="mr-3"></IMDBRating>
         <RottenTomatoesRating
           v-if="movie.hasRottenTomatoesRating()"
           :rating="movie.getRottenTomatoesRating()"
