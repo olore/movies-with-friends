@@ -36,23 +36,26 @@
           :imdbid="movie.imdbID"
         ></RottenTomatoesRating>
       </div>
-      <v-btn
-        :to="{ name: 'circle-movies', params: { id: circle._id } }"
-        v-for="circle in movie.likerCircles"
-        v-bind:key="circle._id"
-        class="ma-2 green darken-4"
-        text
-        :rounded="true"
-        x-small
-      >
-        {{ circle.name }}
-      </v-btn>
+      <span v-if="state.user">
+        <v-btn
+          :to="{ name: 'circle-movies', params: { id: circle._id } }"
+          v-for="circle in movie.likerCircles"
+          v-bind:key="circle._id"
+          class="ma-2 green darken-4"
+          text
+          :rounded="true"
+          x-small
+        >
+          {{ circle.name }}
+        </v-btn>
+      </span>
     </v-card-text>
   </v-card>
 </template>
 <script>
 import IMDBRating from "./ratings/IMDBRating";
 import RottenTomatoesRating from "./ratings/RottenTomatoesRating";
+import { store } from "../store";
 
 export default {
   name: "Card",
@@ -61,6 +64,9 @@ export default {
     IMDBRating,
     RottenTomatoesRating,
   },
+  data: () => ({
+    state: store.state,
+  }),
   computed: {
     subTitle() {
       if (this.$vuetify.breakpoint.xs) {

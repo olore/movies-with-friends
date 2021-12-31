@@ -49,7 +49,7 @@ export default {
         });
         user = await user.populate();
         store.set("user", user);
-        this.$router.push({ name: "recentlyViewed" });
+        this.$router.push({ name: "recentlyRated" });
       } else {
         console.log("Not sure why there is no profile");
       }
