@@ -8,7 +8,7 @@ export default class Circle {
 
   static getHeaders() {
     return {
-      googleToken: store.state.user.googleToken,
+      googleToken: store?.state?.user?.googleToken,
     };
   }
 

@@ -67,25 +67,4 @@ const router = new VueRouter({
   },
 });
 
-router.beforeEach(function (to, from, next) {
-  if (to.path === "/") {
-    // don't need auth on landing page
-    next();
-  } else {
-    if (
-      to.name !== "Login" &&
-      (store.state === undefined || store.state.user === null)
-    ) {
-      next({ name: "Login", query: to.path });
-    } else {
-      if (to.name === "Login" && store.state.user !== null) {
-        // go home instead of login
-        next({ name: "recentlyViewed" });
-      } else {
-        next();
-      }
-    }
-  }
-});
-
 export { router };

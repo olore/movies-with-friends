@@ -44,7 +44,7 @@ export default class Movie {
 
   static getHeaders() {
     return {
-      googleToken: store.state.user.googleToken,
+      googleToken: store?.state?.user?.googleToken,
     };
   }
 
@@ -141,15 +141,21 @@ export default class Movie {
       }
     );
     let data = await results.json();
+    if (data && data.movies) {
+      let movies = data.movies.map((movieData) => {
+        return new Movie(movieData);
+      });
 
-    let movies = data.movies.map((movieData) => {
-      return new Movie(movieData);
-    });
-
-    return {
-      totalCount: data.totalCount,
-      movies,
-    };
+      return {
+        totalCount: data.totalCount,
+        movies,
+      };
+    } else {
+      return {
+        totalCount: 0,
+        movies: [],
+      };
+    }
   }
 
   static async like(data) {

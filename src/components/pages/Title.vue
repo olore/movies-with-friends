@@ -37,9 +37,8 @@
           </v-row>
           <v-row class="my-0">
             <v-btn
-              class="pa-0 d-inline-flex"
-              color="orange"
-              text
+              class="mb-2 d-inline-flex"
+              color="secondary"
               target="_blank"
               :href="movie.getReelGoodLink()"
             >
@@ -105,7 +104,7 @@ export default {
   watch: {
     movie: function (val, oldVal) {
       this.myLike = this.movie.likes.find((like) => {
-        return like.googleId === store.state.user.googleId;
+        return like.googleId === store?.state?.user?.googleId;
       });
     },
   },

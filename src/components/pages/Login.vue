@@ -32,7 +32,7 @@ export default {
     OnGoogleAuthInit() {
       // Give auth time to settle to avoid flashing Login button
       setTimeout(async () => {
-        if (!store.state.user) {
+        if (!store?.state?.user) {
           this.gaLoading = false;
         }
       }, 100);
@@ -49,11 +49,7 @@ export default {
         });
         user = await user.populate();
         store.set("user", user);
-        if (this.redirectTo) {
-          this.$router.push({ path: this.redirectTo });
-        } else {
-          this.$router.push({ name: "recentlyViewed" });
-        }
+        this.$router.push({ name: "recentlyViewed" });
       } else {
         console.log("Not sure why there is no profile");
       }

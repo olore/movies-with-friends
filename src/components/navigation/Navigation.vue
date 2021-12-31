@@ -27,7 +27,7 @@
           </v-list-item-title>
         </v-list-item-content>
       </v-list-item>
-      <v-list-item link v-on:click="navTo('/my-rated')">
+      <v-list-item link v-on:click="navTo('/my-rated')" v-if="state.user">
         <v-list-item-action>
           <v-icon>{{ iconStar }}</v-icon>
         </v-list-item-action>
@@ -37,7 +37,7 @@
           </v-list-item-title>
         </v-list-item-content>
       </v-list-item>
-      <v-list-item link v-on:click="navTo('/circles')">
+      <v-list-item link v-on:click="navTo('/circles')" v-if="state.user">
         <v-list-item-action>
           <v-icon>{{ iconCircles }}</v-icon>
         </v-list-item-action>
@@ -69,6 +69,7 @@ import {
   mdiAccountMultiplePlus,
   mdiMovieOpen,
 } from "@mdi/js";
+import { store } from "../../store";
 
 export default {
   name: "Navigation",
@@ -92,6 +93,7 @@ export default {
     iconStar: mdiStar,
     iconMovie: mdiMovieOpen,
     iconCircles: mdiGoogleCirclesExtended,
+    state: store.state,
   }),
 
   methods: {

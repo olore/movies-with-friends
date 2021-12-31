@@ -1,6 +1,6 @@
 <template>
   <v-dialog v-model="dialog" width="500">
-    <template v-slot:activator="{ on }">
+    <template v-slot:activator="{ on }" v-if="state.user">
       <v-btn
         color="primary darken-2"
         class="text-align-left"
@@ -47,6 +47,7 @@
 
 <script>
 import Movie from "../models/Movie";
+import { store } from "../store";
 
 export default {
   data() {
@@ -56,6 +57,7 @@ export default {
       comment: "",
       error: null,
       isLoading: false,
+      state: store.state,
     };
   },
   props: ["imdbID", "onSave", "myLike"],
