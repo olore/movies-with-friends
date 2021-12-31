@@ -34,7 +34,9 @@ async function routes(fastify, options) {
 
   fastify.get("/movies/search/:query", async (request, reply) => {
     const query = request.params.query;
-    fastify.log.info(`${request.user.name} - search for ${query}`);
+    fastify.log.info(
+      `${request.user?.name || "anonymous"} - search for ${query}`
+    );
 
     const fromDb = await db.findOne(db.searches, { searchTerm: query });
     if (fromDb) {
