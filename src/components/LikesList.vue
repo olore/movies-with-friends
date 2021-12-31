@@ -37,7 +37,7 @@ export default {
   computed: {
     sortedLikes: function () {
       // Order: 1) User like, 2) Circle likes, 3) Others
-      const gid = store.state.user.googleId;
+      const gid = store?.state?.user?.googleId;
       let likes = this.likes;
       let sorted = [];
       let userLike = likes.find((like) => {

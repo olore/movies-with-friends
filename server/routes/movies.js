@@ -147,11 +147,12 @@ async function routes(fastify, options) {
 
   fastify.get("/movies/recentlyRated", async (request, reply) => {
     let { sortBy, offset, limit, filter } = getBasicParams(request.query);
+    let opt = {};
+    if (request.user) {
+      opt = { $not: { googleId: request.user.googleId } };
+    }
 
-    let likeQuery =
-      filter === "!me"
-        ? { $not: { googleId: request.user.googleId } }
-        : db.QUERY_ALL;
+    let likeQuery = filter === "!me" ? opt : db.QUERY_ALL;
 
     let likedMovies = await db.find(db.likes, likeQuery, sortBy, db.LIMIT_NONE);
 
@@ -211,7 +212,7 @@ async function getLikerCircles(user, likes) {
   let likerGoogleIds = new Set(
     likes
       .filter((like) => {
-        return like.googleId !== user.googleId;
+        return user?.googleId === undefined || like.googleId !== user.googleId;
       })
       .map((like) => {
         return like.googleId;
@@ -220,18 +221,23 @@ async function getLikerCircles(user, likes) {
 
   likerGoogleIds = Array.from(likerGoogleIds);
   if (likerGoogleIds.length > 0) {
+    let userOpt = {};
+    if (user) {
+      userOpt = {
+        $or: [
+          {
+            members: { $elemMatch: { googleId: user.googleId } },
+          },
+          { "owner.googleId": user.googleId },
+        ],
+      };
+    }
+
     for (let j = 0; j < likerGoogleIds.length; j++) {
       let gid = likerGoogleIds[j];
       let likerCircles = await db.find(db.circles, {
         $and: [
-          {
-            $or: [
-              {
-                members: { $elemMatch: { googleId: user.googleId } },
-              },
-              { "owner.googleId": user.googleId },
-            ],
-          },
+          userOpt,
           {
             $or: [
               {
@@ -291,7 +297,7 @@ async function getLikers(user, likes, filter) {
     likerGoogleIds = new Set(
       likes
         .filter((like) => {
-          return like.googleId !== user.googleId;
+          return user !== undefined && like.googleId !== user.googleId;
         })
         .map((like) => like.googleId)
     );
@@ -303,16 +309,20 @@ async function getLikers(user, likes, filter) {
   if (likerGoogleIds.length > 0) {
     for (let j = 0; j < likerGoogleIds.length; j++) {
       let gid = likerGoogleIds[j];
+      let userOpt = {};
+      if (user?.googleId) {
+        userOpt = {
+          $or: [
+            {
+              members: { $elemMatch: { googleId: user.googleId } },
+            },
+            { "owner.googleId": user.googleId },
+          ],
+        };
+      }
       let likerCircles = await db.find(db.circles, {
         $and: [
-          {
-            $or: [
-              {
-                members: { $elemMatch: { googleId: user.googleId } },
-              },
-              { "owner.googleId": user.googleId },
-            ],
-          },
+          userOpt,
           {
             $or: [
               {

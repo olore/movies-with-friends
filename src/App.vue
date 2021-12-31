@@ -4,12 +4,12 @@
       <AppWrapper />
     </div>
 
-    <v-content>
+    <v-main>
       <router-view></router-view>
-    </v-content>
+    </v-main>
 
     <v-footer app class="justify-end">
-      <span>&copy; 2020-2021 - Brian Olore - brian@olore.net</span>
+      <span>&copy; 2020-2099 - Brian Olore - brian@olore.net</span>
     </v-footer>
   </v-app>
 </template>

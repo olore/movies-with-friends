@@ -118,12 +118,12 @@ export default {
   computed: {
     ownedCircles: function () {
       return this.circles.filter((circle) => {
-        return circle.owner.googleId === store.state.user.googleId;
+        return circle.owner.googleId === store?.state?.user?.googleId;
       });
     },
     memberCircles: function () {
       return this.circles.filter((circle) => {
-        return circle.owner.googleId !== store.state.user.googleId;
+        return circle.owner.googleId !== store?.state?.user?.googleId;
       });
     },
   },

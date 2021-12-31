@@ -10,7 +10,7 @@ async function userDecorator(fastify, request, reply) {
     // check if authenticated
     const token = request.headers["googletoken"];
     if (token === "undefined") {
-      throw new Error("Missing googletoken in header");
+      return undefined; // allow anonymous
     }
     // look up in DB by token
     let user = await db.findOne(db.users, { googleToken: token });

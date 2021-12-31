@@ -20,7 +20,7 @@
           By Rating
         </v-btn>
         <v-switch
-          v-if="!hideIncludeMe"
+          v-if="isLoggedIn && !hideIncludeMe"
           class="includeMe d-inline ml-4"
           v-model="includeMe"
           label="include Me"
@@ -50,6 +50,7 @@
 import Card from "./Card";
 import Movie from "../models/Movie";
 import InfiniteLoading from "vue-infinite-loading";
+import { store } from "../store";
 
 export default {
   name: "RecentlyRated",
@@ -72,6 +73,7 @@ export default {
     reset: new Date(),
     sortOrder: "date",
     includeMe: false,
+    isLoggedIn: store?.state?.user !== undefined,
   }),
   watch: {
     includeMe: function () {

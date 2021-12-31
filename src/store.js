@@ -3,7 +3,7 @@ const store = {
   state: {
     user:
       process.env["VUE_APP_NO_GOOGLE"] === undefined
-        ? null
+        ? undefined
         : {
             email: "brian@olore.net",
             givenName: "Cinco",
