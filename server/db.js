@@ -187,15 +187,16 @@ const db = {
 
 const createIndex = async (collection, field, isUnique) => {
   return new Promise((resolve, reject) => {
-    collection.ensureIndex({ fieldName: field, unique: isUnique }, function (
-      err
-    ) {
-      if (err) {
-        reject(err);
-      } else {
-        resolve();
+    collection.ensureIndex(
+      { fieldName: field, unique: isUnique },
+      function (err) {
+        if (err) {
+          reject(err);
+        } else {
+          resolve();
+        }
       }
-    });
+    );
   });
 };
 
