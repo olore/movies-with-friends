@@ -7,6 +7,7 @@
         :loading="isLoading"
         :search-input.sync="search"
         :flat="true"
+        :filter="customFilter"
         color="white"
         dense
         hide-no-data
@@ -78,6 +79,9 @@ export default {
   },
 
   methods: {
+    customFilter(item, queryText, itemText) {
+      return true;
+    },
     selected: function (movie) {
       this.$router.push({ name: "title", params: { id: movie.imdbID } });
     },
@@ -100,7 +104,7 @@ export default {
                 return result.Poster !== "N/A" && result.Type !== "game";
               });
             } else {
-              // this.entries = [];
+              this.entries = [];
             }
           })
           .catch((err) => {
@@ -113,8 +117,11 @@ export default {
 
   watch: {
     search(val) {
-      if (val.length < 5) return;
-      this.fetchEntriesDebounced(val);
+      if (val.length < 3) {
+        this.entries = [];
+      } else {
+        this.fetchEntriesDebounced(val);
+      }
     },
   },
 };
