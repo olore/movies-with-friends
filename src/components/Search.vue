@@ -20,7 +20,7 @@
         class="pa-0 mr-5"
       >
         <template v-slot:item="{ item }">
-          <v-list-item-content @click="selected(item)">
+          <v-list-item-content @click.stop="selected(item)">
             <v-list-item-title
               class="py-1 body-1"
               v-text="item.Title"
