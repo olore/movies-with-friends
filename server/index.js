@@ -16,7 +16,7 @@ const getConfig = () => {
           "/etc/letsencrypt/live/movierex.olore.net/privkey.pem"
         ),
         cert: fs.readFileSync(
-          "/etc/letsencrypt/live/movierex.olore.net/cert.pem"
+          "/etc/letsencrypt/live/movierex.olore.net/fullchain.pem"
         ),
       },
       ...config,
