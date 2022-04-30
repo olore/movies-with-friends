@@ -21,7 +21,7 @@
   "dependencies": {
     "axe-core": "^4.1.4",
     "core-js": "^3.10.1",
-    "cypress": "^7.1.0",
+    "cypress": "^9.6.0",
     "cypress-axe": "^0.12.2",
     "cypress-visual-regression": "^1.5.7",
     "date-fns": "^2.21.1",
