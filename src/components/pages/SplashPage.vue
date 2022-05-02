@@ -28,17 +28,7 @@
           <div class="font-weight-black">
             See recently viewed and rated movies!
           </div>
-
-          <v-img
-            max-width="300"
-            v-if="$vuetify.breakpoint.smAndDown"
-            src="movie-list-small.png"
-          />
-          <v-img
-            max-width="800"
-            v-if="$vuetify.breakpoint.mdAndUp"
-            src="movie-list.png"
-          />
+          <v-img src="movie-list-small.png" />
         </div>
       </v-col>
     </v-row>
