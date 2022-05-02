@@ -10,6 +10,11 @@ async function routes(fastify, options) {
     let movie = await db.findOne(db.movies, { imdbID: id });
     if (!movie) {
       const json = await api.getById(id);
+      json.Actors = json.Actors.split(", ");
+      json.Director = json.Director.split(", ");
+      json.Country = json.Country.split(", ");
+      json.Genre = json.Genre.split(", ");
+      json.Writer = json.Writer.split(", ");
       fastify.log.debug("Found in API", id);
       movie = await db.insert(db.movies, json);
     } else {

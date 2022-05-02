@@ -6,19 +6,6 @@ const api = require("../omdb-api");
 
 let movies = [];
 
-updateUnRated = async () => {
-  movies = await db.find(db.movies, { imdbRating: "N/A" });
-  movies.forEach(async (m) => {
-    console.log(m.imdbRating, m.Title);
-    const json = await api.getById(m.imdbID);
-    await db.remove(db.movies, { imdbID: m.imdbID });
-    await db.insert(db.movies, json);
-
-    let movie = await db.findOne(db.movies, { imdbID: m.imdbID });
-    console.log(movie.imdbRating, movie.Title);
-  });
-};
-
 updateAll = async () => {
   movies = await db.find(db.movies, {});
   movies.forEach(async (m) => {
@@ -27,10 +14,23 @@ updateAll = async () => {
     await db.remove(db.movies, { imdbID: m.imdbID });
     await db.insert(db.movies, json);
 
+    // one time - make arrays
+    await db.update(
+      db.movies,
+      { imdbID: m.imdbID },
+      {
+        $set: {
+          Actors: m.Actors.split(", "),
+          Director: m.Director.split(", "),
+          Country: m.Country.split(", "),
+          Genre: m.Genre.split(", "),
+          Writer: m.Writer.split(", "),
+        },
+      }
+    );
     let movie = await db.findOne(db.movies, { imdbID: m.imdbID });
     console.log(movie.imdbRating, movie.Title);
   });
 };
 
-// updateUnRated();
 updateAll();
