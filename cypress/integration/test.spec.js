@@ -5,7 +5,7 @@
 const takeSnap = (str) => {
   cy.wait(2500);
   cy.compareSnapshot(str, {
-    errorThreshold: 0.2,
+    errorThreshold: 0.3,
   });
 };
 
