@@ -8,7 +8,7 @@ const getConfig = () => {
     },
   };
 
-  if (process.env.CI === "true" || process.env.NODE_ENV === "production") {
+  if (process.env.NODE_ENV === "production") {
     config = {
       https: {
         allowHTTP1: true,
