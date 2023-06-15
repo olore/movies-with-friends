@@ -1,4 +1,4 @@
-process.env["DB_FILE_PATH"] = "/Users/brian/dev";
+process.env["DB_FILE_PATH"] = "/Users/brian/dev/movies";
 process.env["API_KEY"] = "4ec99377";
 
 const db = require("../db");
@@ -11,8 +11,6 @@ updateAll = async () => {
   movies.forEach(async (m) => {
     console.log(m.imdbRating, m.Title);
     const json = await api.getById(m.imdbID);
-    await db.remove(db.movies, { imdbID: m.imdbID });
-    await db.insert(db.movies, json);
 
     // one time - make arrays
     await db.update(
@@ -20,6 +18,8 @@ updateAll = async () => {
       { imdbID: m.imdbID },
       {
         $set: {
+          Ratings: json.Ratings,
+          imdbRating: json.imdbRating,
           Actors: m.Actors.split(", "),
           Director: m.Director.split(", "),
           Country: m.Country.split(", "),
