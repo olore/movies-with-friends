@@ -5,7 +5,7 @@
 const takeSnap = (str) => {
   cy.wait(2500);
   cy.compareSnapshot(str, {
-    errorThreshold: 0.3,
+    errorThreshold: 0.2,
   });
 };
 
@@ -24,7 +24,7 @@ describe("First", () => {
       cy.get(".headline").should("have.text", "Recently Rated");
 
       cy.log("Has 8 movie cards");
-      cy.dataCy("movie-card", { timeout: 10000 }).should("have.length", 8);
+      cy.dataCy("movie-card").should("have.length", 8);
 
       cy.log("Click on the first one");
       let title;

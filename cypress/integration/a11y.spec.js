@@ -34,7 +34,7 @@ describe("Accessibility", () => {
     it("Recently Rated screen has no detectable a11y violations", () => {
       cy.dataCy("launch").click();
       cy.get(".headline").should("have.text", "Recently Rated");
-      cy.dataCy("movie-card", { timeout: 10000 }).should("have.length", 8);
+      cy.dataCy("movie-card").should("have.length", 8);
       cy.checkA11y(null, null, terminalLog);
     });
   });
