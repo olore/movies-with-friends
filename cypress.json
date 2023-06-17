@@ -1,7 +1,0 @@
-{
-  "baseUrl": "http://localhost:8080",
-  "video": false,
-  "$schema": "https://on.cypress.io/cypress.schema.json",
-  "screenshotsFolder": "./cypress/snapshots/actual",
-  "trashAssetsBeforeRuns": true
-}
